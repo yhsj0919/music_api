@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:music_api_example/home_page.dart';
+import 'package:music_api_example/home/home_page.dart';
 
 void main() {
   testWidgets('Verify Platform version', (WidgetTester tester) async {

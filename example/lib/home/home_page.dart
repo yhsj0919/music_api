@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:music_api_example/home/kuwo_page.dart';
 
 import 'baidu_page.dart';
 import 'my_free_mp3_page.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,10 +14,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   TabController? tabController;
 
+  var pages = {
+    "MyFreeMp3": const MyFreeMp3Page(),
+    "百度": const BaiduPage(),
+    "酷我": const KuwoPage(),
+  };
+
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: pages.length, vsync: this);
   }
 
   @override
@@ -31,19 +37,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             child: TabBar(
               isScrollable: true,
               controller: tabController,
-              tabs: const [
-                Tab(text: 'MyFreeMp3'),
-                Tab(text: '百度'),
-              ],
+              tabs: pages.keys.map((e) => Tab(text: e)).toList(),
             ),
           ),
         ),
         body: TabBarView(
           controller: tabController,
-          children: const [
-            MyFreeMp3Page(),
-            BaiduPage(),
-          ],
+          children: pages.values.toList(),
         ));
   }
 }
