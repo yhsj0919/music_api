@@ -17,6 +17,12 @@ part 'module/bang.dart';
 
 part 'module/artist.dart';
 
+part 'module/mv.dart';
+
+part 'module/url.dart';
+
+part 'module/music.dart';
+
 class KuWo {
   KuWo._();
 
@@ -59,6 +65,41 @@ class KuWo {
   ///歌单详情
   static Future artistList({String? category, int? page, int? size}) {
     return _artistList.call({"category": category, "page": page, "size": size}, []);
+  }
+
+  ///歌手详情
+  static Future artistInfo({String? artistId}) {
+    return _artistInfo.call({"artistId": artistId}, []);
+  }
+
+  ///歌手单曲
+  static Future artistMusic({String? artistId, int? page, int? size}) {
+    return _artistMusic.call({"artistId": artistId, "page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future artistAlbum({String? artistId, int? page, int? size}) {
+    return _artistAlbum.call({"artistId": artistId, "page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future artistMv({String? artistId, int? page, int? size}) {
+    return _artistMv.call({"artistId": artistId, "page": page, "size": size}, []);
+  }
+
+  ///MV列表
+  static Future mvList({int? page, int? size}) {
+    return _mvList.call({"page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future playUrl({String? mid, String? type}) {
+    return _playUrl.call({"mid": mid, "String": type}, []);
+  }
+
+  ///歌曲信息
+  static Future musicInfo({String? mid}) {
+    return _musicInfo.call({"mid": mid}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {

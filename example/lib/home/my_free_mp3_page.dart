@@ -41,17 +41,20 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
             ),
           ),
           Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(bottom: 40),
-              children: [
-                ListTile(
-                  title: const Text('搜索(报错重试即可)'),
-                  onTap: () {
-                    MyFreeMp3?.search(keyWords: "周杰伦").then(onData).catchError(onError);
-                  },
-                ),
-              ],
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 40),
+                children: [
+                  ListTile(
+                    title: const Text('搜索(报错重试即可)'),
+                    onTap: () {
+                      MyFreeMp3?.search(keyWords: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
