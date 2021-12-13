@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
 
 import 'baidu_page.dart';
+import 'kugou_page.dart';
 import 'my_free_mp3_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "MyFreeMp3": const MyFreeMp3Page(),
     "百度": const BaiduPage(),
     "酷我": const KuwoPage(),
+    "酷狗": const KuGouPage(),
   };
 
   @override
