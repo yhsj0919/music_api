@@ -127,13 +127,55 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('歌曲，MV播放地址'),
                     onTap: () {
-                      KuWo?.playUrl(mid: "142655450", type: "music").then(onData).catchError(onError);
+                      KuWo?.playUrl(mid: "202943307", type: "music").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲信息'),
                     onTap: () {
                       KuWo?.musicInfo(mid: "142655450").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌词'),
+                    onTap: () {
+                      KuWo?.musicLrc(musicId: "142655450").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索热词'),
+                    onTap: () {
+                      KuWo?.hotSearch().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索单曲'),
+                    onTap: () {
+                      KuWo?.searchMusic(key: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索专辑'),
+                    onTap: () {
+                      KuWo?.searchAlbum(key: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索MV'),
+                    onTap: () {
+                      KuWo?.searchMv(key: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索歌单'),
+                    onTap: () {
+                      KuWo?.searchPlayList(key: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索歌手'),
+                    onTap: () {
+                      KuWo?.searchArtist(key: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                 ],

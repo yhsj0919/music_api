@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -92,14 +93,49 @@ class KuWo {
     return _mvList.call({"page": page, "size": size}, []);
   }
 
-  ///歌手专辑
+  ///播放地址
   static Future playUrl({String? mid, String? type}) {
-    return _playUrl.call({"mid": mid, "String": type}, []);
+    return _playUrl.call({"mid": mid, "type": type}, []);
   }
 
   ///歌曲信息
   static Future musicInfo({String? mid}) {
     return _musicInfo.call({"mid": mid}, []);
+  }
+
+  ///歌词
+  static Future musicLrc({String? musicId}) {
+    return _musicLrc.call({"musicId": musicId}, []);
+  }
+
+  ///搜索热词
+  static Future hotSearch() {
+    return _hotSearch.call({}, []);
+  }
+
+  ///搜索单曲
+  static Future searchMusic({String? key, int? page, int? size}) {
+    return _searchMusic.call({"key": key, "page": page, "size": size}, []);
+  }
+
+  ///搜索专辑
+  static Future searchAlbum({String? key, int? page, int? size}) {
+    return _searchAlbum.call({"key": key, "page": page, "size": size}, []);
+  }
+
+  ///搜索MV
+  static Future searchMv({String? key, int? page, int? size}) {
+    return _searchMv.call({"key": key, "page": page, "size": size}, []);
+  }
+
+  ///搜索歌单
+  static Future searchPlayList({String? key, int? page, int? size}) {
+    return _searchPlayList.call({"key": key, "page": page, "size": size}, []);
+  }
+
+  ///搜索歌手
+  static Future searchArtist({String? key, int? page, int? size}) {
+    return _searchArtist.call({"key": key, "page": page, "size": size}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {
@@ -112,7 +148,7 @@ class KuWo {
 
 //Api列表
 final _api = <String, Api>{
-  "/search": _search,
+  "/hotSearch": _hotSearch,
 };
 
 //请求
@@ -138,7 +174,11 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
         var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
+        if (data is String) {
+          ans = ans.copy(status: value?.statusCode, body: json.decode(data));
+        } else {
+          ans = ans.copy(status: value?.statusCode, body: data);
+        }
         return Future.value(ans);
       } else {
         return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
