@@ -94,8 +94,8 @@ class KuWo {
   }
 
   ///播放地址
-  static Future playUrl({String? mid, String? type}) {
-    return _playUrl.call({"mid": mid, "type": type}, []);
+  static Future playUrl({String? rid, String? format}) {
+    return _playUrl.call({"rid": rid, "format": format}, []);
   }
 
   ///歌曲信息

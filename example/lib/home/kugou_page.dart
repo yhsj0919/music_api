@@ -61,6 +61,12 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                     },
                   ),
                   ListTile(
+                    title: const Text('歌曲详情'),
+                    onTap: () {
+                      KuGou?.musicInfo(hash: "525A854C4A4EDF63CAF528D693F69CE0", albumAudioId: "358221756").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('推荐歌单'),
                     onTap: () {
                       KuGou?.playList().then(onData).catchError(onError);
@@ -70,6 +76,12 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                     title: const Text('歌单详情'),
                     onTap: () {
                       KuGou?.playListInfo(id: "4099219").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('排行榜列表'),
+                    onTap: () {
+                      KuGou?.bangList().then(onData).catchError(onError);
                     },
                   ),
                 ],

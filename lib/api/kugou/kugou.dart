@@ -14,6 +14,8 @@ part 'module/music.dart';
 
 part 'module/play_list.dart';
 
+part 'module/bang.dart';
+
 class KuGou {
   KuGou._();
 
@@ -25,6 +27,14 @@ class KuGou {
   ///新歌推荐
   static Future musicList() {
     return _musicList.call({}, []);
+  }
+
+  ///歌曲详情
+  static Future musicInfo({
+    String? hash,
+    String? albumAudioId,
+  }) {
+    return _musicInfo.call({"hash": hash, "albumAudioId": albumAudioId}, []);
   }
 
   ///推荐歌单
@@ -40,6 +50,16 @@ class KuGou {
   ///专辑详情
   static Future albumInfo({String? albumId, int? page, int? size}) {
     return _albumInfo.call({"albumId": albumId, "page": page, "size": size}, []);
+  }
+
+  ///排行榜列表
+  static Future bangList() {
+    return _bangList.call({}, []);
+  }
+
+  ///排行榜详情
+  static Future bangInfo({String? rankId, int? page}) {
+    return _bangInfo.call({"rankId": rankId, "page": page}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {
@@ -62,6 +82,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   options.receiveTimeout = 3000;
   Map<String, dynamic> header = {
     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.93",
+    "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac"
   };
 
   options.headers = header;
