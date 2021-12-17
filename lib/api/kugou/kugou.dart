@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
@@ -15,6 +16,10 @@ part 'module/music.dart';
 part 'module/play_list.dart';
 
 part 'module/bang.dart';
+
+part 'module/singer.dart';
+
+part 'module/mv.dart';
 
 class KuGou {
   KuGou._();
@@ -43,13 +48,8 @@ class KuGou {
   }
 
   ///歌单详情
-  static Future playListInfo({String? id}) {
-    return _playListInfo.call({"id": id}, []);
-  }
-
-  ///专辑详情
-  static Future albumInfo({String? albumId, int? page, int? size}) {
-    return _albumInfo.call({"albumId": albumId, "page": page, "size": size}, []);
+  static Future playListInfo({String? id, int? page}) {
+    return _playListInfo.call({"id": id, "page": page}, []);
   }
 
   ///排行榜列表
@@ -58,8 +58,65 @@ class KuGou {
   }
 
   ///排行榜详情
-  static Future bangInfo({String? rankId, int? page}) {
-    return _bangInfo.call({"rankId": rankId, "page": page}, []);
+  static Future bangInfo({String? rankId}) {
+    return _bangInfo.call({"rankId": rankId}, []);
+  }
+
+  ///排行榜歌曲
+  static Future bangSong({String? rankId, int? page, int? size}) {
+    return _bangSong.call({"rankId": rankId, "page": page, "size": size}, []);
+  }
+
+  ///专辑列表
+  static Future albumList({int? page}) {
+    return _albumList.call({"page": page}, []);
+  }
+
+  ///歌手列表
+  static Future singerList({String? classId, int? page}) {
+    return _singerList.call({"classId": classId, "page": page}, []);
+  }
+
+  ///歌手信息
+  static Future singerInfo({
+    String? id,
+  }) {
+    return _singerInfo.call({"id": id}, []);
+  }
+
+  ///歌手信息
+  static Future singerSong({String? id, int? page, int? size}) {
+    return _singerSong.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future singerAlbum({String? id, int? page, int? size}) {
+    return _singerAlbum.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///歌手MV
+  static Future singerMv({String? id, int? page, int? size}) {
+    return _singerMv.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///专辑信息
+  static Future albumInfo({String? albumId}) {
+    return _albumInfo.call({"albumId": albumId}, []);
+  }
+
+  ///专辑歌曲
+  static Future albumSong({String? albumId}) {
+    return _albumSong.call({"albumId": albumId}, []);
+  }
+
+  ///MV列表
+  static Future mvList({int? page}) {
+    return _mvList.call({"page": page}, []);
+  }
+
+  ///MV详情
+  static Future mvInfo({String? hash}) {
+    return _mvInfo.call({"hash": hash}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {
