@@ -156,6 +156,36 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                       KuGou?.mvInfo(hash: "BC31D031AE3C698D7B767308CD26FC08").then(onData).catchError(onError);
                     },
                   ),
+                  ListTile(
+                    title: const Text('搜索提示'),
+                    onTap: () {
+                      KuGou?.searchTip(keyword: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索单曲'),
+                    onTap: () {
+                      KuGou?.searchSong(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索专辑'),
+                    onTap: () {
+                      KuGou?.searchAlbum(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索mv'),
+                    onTap: () {
+                      KuGou?.searchMv(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索歌单'),
+                    onTap: () {
+                      KuGou?.searchPlayList(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                    },
+                  ),
                 ],
               ),
             ),

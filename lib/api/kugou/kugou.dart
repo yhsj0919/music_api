@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
@@ -9,17 +8,19 @@ import 'package:music_api/http/http.dart';
 
 part 'module/album.dart';
 
+part 'module/bang.dart';
+
 part 'module/banner.dart';
 
 part 'module/music.dart';
 
+part 'module/mv.dart';
+
 part 'module/play_list.dart';
 
-part 'module/bang.dart';
+part 'module/search.dart';
 
 part 'module/singer.dart';
-
-part 'module/mv.dart';
 
 class KuGou {
   KuGou._();
@@ -119,6 +120,31 @@ class KuGou {
     return _mvInfo.call({"hash": hash}, []);
   }
 
+  ///搜索提示
+  static Future searchTip({String? keyword}) {
+    return _searchTip.call({"keyword": keyword}, []);
+  }
+
+  ///搜索单曲
+  static Future searchSong({String? keyword, int? page, int? size}) {
+    return _searchSong.call({"keyword": keyword, "page": page, "size": size}, []);
+  }
+
+  ///搜索专辑
+  static Future searchAlbum({String? keyword, int? page, int? size}) {
+    return _searchAlbum.call({"keyword": keyword, "page": page, "size": size}, []);
+  }
+
+  ///搜索mv
+  static Future searchMv({String? keyword, int? page, int? size}) {
+    return _searchMv.call({"keyword": keyword, "page": page, "size": size}, []);
+  }
+
+  ///搜索歌单
+  static Future searchPlayList({String? keyword, int? page, int? size}) {
+    return _searchPlayList.call({"keyword": keyword, "page": page, "size": size}, []);
+  }
+
   static Future api(String path, {Map? params, String? auth}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
@@ -137,10 +163,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   final options = Options();
   options.sendTimeout = 3000;
   options.receiveTimeout = 3000;
-  Map<String, dynamic> header = {
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.93",
-    "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac"
-  };
+  Map<String, dynamic> header = {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.93", "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac"};
 
   options.headers = header;
 
