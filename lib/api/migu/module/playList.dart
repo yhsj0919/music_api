@@ -1,9 +1,9 @@
 part of '../migu.dart';
 
 /*
-* 新专辑、新碟
+* 歌单推荐，web
  */
-Future<Answer> playListNewWeb(Map params, List<Cookie> cookie) {
+Future<Answer> _playListNewWeb(Map params, List<Cookie> cookie) {
   return _get(
     "https://m.music.migu.cn/migu/remoting/client_play_list_tag",
     params: {},
@@ -16,12 +16,12 @@ Future<Answer> playListNewWeb(Map params, List<Cookie> cookie) {
  */
 Future<Answer> playListHotTag(Map params, List<Cookie> cookie) {
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM3.0/v1.0/template/musiclistplaza-hottaglist/release",
     params: {},
     cookie: cookie,
   );
 }
+
 /*
 * 歌单热门推荐(歌单最顶上的几个)
  */
@@ -42,7 +42,6 @@ Future<Answer> playListPlayNum(Map params, List<Cookie> cookie) {
     'resourceType': (params['contentType'] as List).join("|"),
   };
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM3.0/v1.0/content/queryOPNumItemsAction.do",
     params: data,
     cookie: cookie,
@@ -59,7 +58,6 @@ Future<Answer> playList(Map params, List<Cookie> cookie) {
     'templateVersion': '1',
   };
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM3.0/v1.0/template/musiclistplaza-listbytag/release",
     params: data,
     cookie: cookie,
@@ -74,7 +72,6 @@ Future<Answer> playListTagList(Map params, List<Cookie> cookie) {
     'templateVersion': '1',
   };
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM3.0/v1.0/template/musiclistplaza-taglist/release",
     params: data,
     cookie: cookie,
@@ -91,7 +88,6 @@ Future<Answer> playListInfo(Map params, List<Cookie> cookie) {
     'resourceType': params['type'],
   };
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do",
     params: data,
     cookie: cookie,
@@ -108,7 +104,6 @@ Future<Answer> playListSong(Map params, List<Cookie> cookie) {
     'playlistId': params['id'],
   };
   return _get(
-
     "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/song/v2.0",
     params: data,
     cookie: cookie,

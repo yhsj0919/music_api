@@ -63,9 +63,29 @@ class MiGu {
     return _albumInfo.call({"albumId": albumId, "type": type}, []);
   }
 
-  ///专辑详情
+  ///专辑详情2
   static Future albumInfo2({String? albumId}) {
     return _albumInfo2.call({"albumId": albumId}, []);
+  }
+
+  ///mv信息
+  static Future mvInfo({String? mvId}) {
+    return _mvInfo.call({"mvId": mvId}, []);
+  }
+
+  ///专辑详情
+  static Future mvPlayUrl({required String? contentId, required String? mvCopyrightId, required String? format, required String? size, String? type, required String? url}) {
+    return _mvPlayUrl.call({"contentId": contentId, "mvCopyrightId": mvCopyrightId, "format": format, "size": size, "type": type, "url": url}, []);
+  }
+
+  ///mv推荐
+  static Future mvRec({String? mvId, String? page}) {
+    return _mvRec.call({"mvId": mvId, "page": page}, []);
+  }
+
+  ///歌单推荐，web
+  static Future playListNewWeb() {
+    return _playListNewWeb.call({}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {

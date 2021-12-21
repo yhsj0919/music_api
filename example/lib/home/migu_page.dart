@@ -97,25 +97,32 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('MV信息'),
                     onTap: () {
-                      // MiGu?.mvResource().then(onData).catchError(onError);
+                      MiGu?.mvInfo(mvId: "600906000000337596").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
-                    title: const Text('MV播放地址'),
+                    title: const Text('MV播放地址,上面接口返回的'),
                     onTap: () {
-                      // MiGu?.mvPlayUrl().then(onData).catchError(onError);
+                      MiGu?.mvPlayUrl(
+                        contentId: "600906000000337596",
+                        mvCopyrightId: "600846Y0958",
+                        format: "050012",
+                        size: "90945275",
+                        url:
+                            "/PmeXt%2FJkph%2FGY9oGZIn%2BrnuIohQqAlHDNzPQW3eR0XClFjPwu50LmEzWRhw28uE7R5cJktVMTOzJXeMAMD4s6%2FHoohaZwztCZeX0%2F8V4SgKvOe9CTKEabthWaTmi1bnRY1CkU%2BF8w6Q7n9bzYo3zMsjcjimuJF%2BDSkO6UYVjmzWz97CQL6%2By771Gjr1Q0FfaBkhsIIPbf8bdbEaaJDQB2Q%3D%3D/600846Y0958033950.mp4?ec=2&flag=+&F=050012",
+                      ).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV推荐'),
                     onTap: () {
-                      // MiGu?.mvRec().then(onData).catchError(onError);
+                      MiGu?.mvRec(mvId: "600906000000337596").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                       title: const Text('歌单推荐(web)'),
                       onTap: () {
-                        // MiGu?.playListNewWeb().then(onData).catchError(onError);
+                        MiGu?.playListNewWeb().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单热门标签'),

@@ -3,7 +3,7 @@ part of '../migu.dart';
 /*
 * Mv资源信息
  */
-Future<Answer> _mvResource(Map params, List<Cookie> cookie) {
+Future<Answer> _mvInfo(Map params, List<Cookie> cookie) {
   final data = {
     "resourceId": params['mvId'],
     "resourceType": 'D',
@@ -21,13 +21,13 @@ Future<Answer> _mvResource(Map params, List<Cookie> cookie) {
  */
 Future<Answer> _mvPlayUrl(Map params, List<Cookie> cookie) {
   final data = {
-    "concertId": params['mvId'],
-    "mvContentId": params['mvId'],
+    "concertId": params['contentId'],
+    "mvContentId": params['contentId'],
     "mvCopyrightId": params['mvCopyrightId'],
     "format": params['format'],
     "size": params['size'],
     "type": params['type'] ?? '01',
-    "url": Uri.encodeComponent(params['url'])
+    "url": params['url']
   };
   return _get(
     "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/mvplayinfo.do",
