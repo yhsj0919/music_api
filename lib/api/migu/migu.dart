@@ -23,9 +23,10 @@ part 'module/song.dart';
 
 part 'module/singer.dart';
 
-part 'module/topList.dart';
+part 'module/rank.dart';
 
 class MiGu {
+  ///u.musicapp.migu.cn,新版换了域名7.7.0
   MiGu._();
 
   ///banner
@@ -86,6 +87,81 @@ class MiGu {
   ///歌单推荐，web
   static Future playListNewWeb() {
     return _playListNewWeb.call({}, []);
+  }
+
+  ///歌单热门标签
+  static Future playListHotTag() {
+    return _playListHotTag.call({}, []);
+  }
+
+  ///歌单热门推荐(歌单最顶上的几个)
+  static Future playListRec() {
+    return _playListRec.call({}, []);
+  }
+
+  ///歌单列表
+  static Future playList({String? tagId, int? page}) {
+    return _playList.call({"tagId": tagId, "page": page}, []);
+  }
+
+  ///歌单标签列表
+  static Future playListTagList() {
+    return _playListTagList.call({}, []);
+  }
+
+  ///歌单信息
+  static Future playListInfo({String? resourceId, String? resourceType}) {
+    return _playListInfo.call({"resourceId": resourceId, "resourceType": resourceType}, []);
+  }
+
+  ///歌单歌曲
+  static Future playListSong({String? id, int? page, int? size}) {
+    return _playListSong.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///歌单播放量
+  static Future playListPlayNum({List<String> contentIds = const [], List<String> contentTypes = const []}) {
+    return _playListPlayNum.call({"contentIds": contentIds, "contentTypes": contentTypes}, []);
+  }
+
+  ///新歌(web)
+  static Future songNewWeb({int? page, int? size}) {
+    return _songNewWeb.call({"page": page, "size": size}, []);
+  }
+
+  ///新歌类型
+  static Future songNewType() {
+    return _songNewType.call({}, []);
+  }
+
+  ///新歌
+  static Future songNew({String? columnId, int? page, int? size}) {
+    return _songNew.call({"columnId": columnId, "page": page, "size": size}, []);
+  }
+
+  ///播放地址
+  static Future playUrl({String? songId, String? toneFlag}) {
+    return _playUrl.call({"songId": songId, "toneFlag": toneFlag}, []);
+  }
+
+  ///榜单
+  static Future rankList() {
+    return _rankList.call({}, []);
+  }
+
+  ///榜单
+  static Future rankDetail({String? rankId}) {
+    return _rankDetail.call({"rankId": rankId}, []);
+  }
+
+  ///歌手标签
+  static Future singerTabs() {
+    return _singerTabs.call({}, []);
+  }
+
+  ///歌手列表
+  static Future singer({String? tab}) {
+    return _singer.call({"tab": tab}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {

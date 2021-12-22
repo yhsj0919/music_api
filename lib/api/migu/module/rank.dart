@@ -3,7 +3,7 @@ part of '../migu.dart';
 /*
 * 榜单
  */
-Future<Answer> topList(Map params, List<Cookie> cookie) {
+Future<Answer> _rankList(Map params, List<Cookie> cookie) {
   final data = {
     "templateVersion": '11',
   };
@@ -17,9 +17,9 @@ Future<Answer> topList(Map params, List<Cookie> cookie) {
 /*
 * 榜单详情
  */
-Future<Answer> topListDetail(Map params, List<Cookie> cookie) {
+Future<Answer> _rankDetail(Map params, List<Cookie> cookie) {
   final data = {
-    "columnId": params['columnId'],
+    "columnId": params['rankId'],
     "needAll": '0',
   };
   return _get(
