@@ -9,7 +9,7 @@ Future<Answer> mvRec(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "rec": {"module": "MvService.MvInfoProServer", "method": "GetRecMv", "param": {}},
       "new": {
         "module": "MvService.MvInfoProServer",
@@ -28,7 +28,7 @@ Future<Answer> mvRec(Map params, List<Cookie> cookie) {
         "param": {"page": 1}
       },
       "comm": {"g_tk": 5381, "uin": 0, "format": "json", "ct": 20, "cv": 1807, "platform": "wk_v17"}
-   }
+   })
   };
   return _get(
 
@@ -48,7 +48,7 @@ Future<Answer> mvlist(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24},
       "mv_tag": {"module": "MvService.MvInfoProServer", "method": "GetAllocTag", "param": {}},
       "mv_list": {
@@ -56,7 +56,7 @@ Future<Answer> mvlist(Map params, List<Cookie> cookie) {
         "method": "GetAllocMvInfo",
         "param": {"start": sin, "size": size, "version_id": 7, "area_id": 15, "order": 1}
       }
-   }
+   })
   };
   return _get(
 
@@ -71,7 +71,7 @@ Future<Answer> mvlist(Map params, List<Cookie> cookie) {
  */
 Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 4747474},
       "mvinfo": {
         "module": "video.VideoDataServer",
@@ -126,7 +126,7 @@ Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
           "support": 1
         }
       }
-   }
+   })
   };
   return _get(
 
@@ -141,7 +141,7 @@ Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
 Future<Answer> mvUrl(Map params, List<Cookie> cookie) {
   final data = {
     "comm": {"ct": 24, "cv": 4747474, "g_tk": 812935580, "uin": 0, "format": "json", "platform": "yqq"},
-    "data": {
+    "data": json.encode({
       "mvUrl": {
         "module": "gosrf.Stream.MvUrlProxy",
         "method": "GetMvUrls",
@@ -152,7 +152,7 @@ Future<Answer> mvUrl(Map params, List<Cookie> cookie) {
           "format": 264
         }
       },
-   }
+   })
   };
   return _get(
 

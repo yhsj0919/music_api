@@ -9,7 +9,7 @@ Future<Answer> newAlbum(Map params, List<Cookie> cookie) {
   final start = (page - 1) * num;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "new_album": {
         "module": "newalbum.NewAlbumServer",
         "method": "get_new_album_info",
@@ -21,7 +21,7 @@ Future<Answer> newAlbum(Map params, List<Cookie> cookie) {
         "param": {},
       },
       "comm": {"ct": 24, "cv": 0}
-    }
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -37,7 +37,7 @@ Future<Answer> albumSongList(Map params, List<Cookie> cookie) {
   final start = (page - 1) * num;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 10000},
       "albumSonglist": {
         "method": "GetAlbumSongList",
@@ -50,7 +50,7 @@ Future<Answer> albumSongList(Map params, List<Cookie> cookie) {
         },
         "module": "music.musichallAlbum.AlbumSongList"
       }
-    }
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -66,7 +66,7 @@ Future<Answer> albumInfo(Map params, List<Cookie> cookie) {
   final start = (page - 1) * num;
 
   final data = {
-    "data": {
+    "data": json.encode({
       //该歌手其他专辑
       "req_0": {
         "module": "music.musichallAlbum.OtherAlbumList",
@@ -99,7 +99,7 @@ Future<Answer> albumInfo(Map params, List<Cookie> cookie) {
         "module": "mall.MusicMallSvr"
       },
       "comm": {"g_tk": 709041629, "uin": "0", "format": "json", "ct": 20, "cv": 1803, "platform": "wk_v17"}
-    }
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",

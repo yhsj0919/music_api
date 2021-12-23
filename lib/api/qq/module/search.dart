@@ -26,7 +26,7 @@ Future<Answer> search(Map params, List<Cookie> cookie) {
   final page = params['page'] ?? 1;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"mina": 1, "ct": 25},
       "req": {
         "method": "DoSearchForQQMusicMobile",
@@ -38,7 +38,7 @@ Future<Answer> search(Map params, List<Cookie> cookie) {
           "num_per_page": num,
         }
       }
-   }
+   })
   };
   return _get(
 

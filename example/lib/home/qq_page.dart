@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_api/api/baidu/baidu.dart';
-import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/api/qq/qq.dart';
 
 class QQPage extends StatefulWidget {
@@ -49,7 +47,7 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
                   ListTile(
-                    title: const Text('搜索(报错重试即可)'),
+                    title: const Text('首页'),
                     onTap: () {
                       QQ?.home().then(onData).catchError(onError);
                     },

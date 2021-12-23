@@ -8,14 +8,14 @@ Future<Answer> singerList(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * 80;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 10000},
       "singerList": {
         "module": "Music.SingerListServer",
         "method": "get_singer_list",
         "param": {"area": params['area'] ?? -100, "sex": params['sex'] ?? -100, "genre": params['genre'] ?? -100, "index": params['index'] ?? -100, "sin": sin, "cur_page": page}
       }
-   }
+   })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -48,14 +48,14 @@ Future<Answer> singerInfo(Map params, List<Cookie> cookie) {
 */
 Future<Answer> singerSong(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "singerSongList": {
         "module": "musichall.song_list_server",
         "method": "GetSingerSongList",
         "param": {"order": 1, "singerMid": params["singerMid"], "begin": (params['page'] - 1) * 20, "num": 20}
       }
-   }
+   })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -69,7 +69,7 @@ Future<Answer> singerSong(Map params, List<Cookie> cookie) {
 */
 Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "singerSongList": {
         "method": "GetAlbumList",
@@ -83,7 +83,7 @@ Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
           "singerID": params['singerId'] ?? 0,
         }
       }
-   }
+   })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -120,7 +120,7 @@ Future<Answer> singerMV(Map params, List<Cookie> cookie) {
 */
 Future<Answer> singerSimilarSinger(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 10000},
       "similarSingerList": {
         "method": "GetSimilarSingerList",
@@ -131,7 +131,7 @@ Future<Answer> singerSimilarSinger(Map params, List<Cookie> cookie) {
           "singerId": params['singerId'] ?? 0,
         }
       }
-   }
+   })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",

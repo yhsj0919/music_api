@@ -9,7 +9,7 @@ Future<Answer> toplistInfo(Map params, List<Cookie> cookie) {
   final start = (page - 1) * num;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "req_0": {
         "module": "musicToplist.ToplistInfoServer",
         "method": "GetAll",
@@ -23,10 +23,9 @@ Future<Answer> toplistInfo(Map params, List<Cookie> cookie) {
         "cv": 1803,
         "platform": "wk_v17",
       }
-   }
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -42,7 +41,7 @@ Future<Answer> toplistDetail(Map params, List<Cookie> cookie) {
   final start = (page - 1) * num;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "req_0": {
         "module": "musicToplist.ToplistInfoServer",
         "method": "GetDetail",
@@ -56,10 +55,9 @@ Future<Answer> toplistDetail(Map params, List<Cookie> cookie) {
         "cv": 1803,
         "platform": "wk_v17",
       }
-   }
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_api/api/baidu/baidu.dart';
 import 'package:music_api/api/kugou/kugou.dart';
-import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 
 class KuGouPage extends StatefulWidget {
   const KuGouPage({Key? key}) : super(key: key);

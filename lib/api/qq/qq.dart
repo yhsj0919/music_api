@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
+import 'package:music_api/api/utils/utils.dart';
 import 'package:music_api/http/http.dart';
 import 'package:xml2json/xml2json.dart';
 
@@ -47,10 +48,7 @@ final _api = <String, Api>{
   // "/search": _search,
 };
 
-Options _buildOptions(String path, List<Cookie> cookies) {
-  final options = Options();
-  options.sendTimeout = 3000;
-  options.receiveTimeout = 3000;
+Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   final headers = {
     "user-agent": "Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; MI 5 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
     "Cookie": cookies.join("; "),
@@ -59,45 +57,43 @@ Options _buildOptions(String path, List<Cookie> cookies) {
   if (path.contains('y.qq.com')) {
     headers['Referer'] = 'https://y.qq.com';
   }
-
-  options.headers = headers;
-  return options;
+  return headers;
 }
 
-Future<Answer> _get(String path,
-    {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, String contentType = "json"}) async {
-  final options = _buildOptions(path, cookie);
+Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, String contentType = "json"}) async {
+  final options = _buildHeader(path, cookie);
 
   if (header.isNotEmpty) {
-    options.headers?.addAll(header);
+    options.addAll(header);
   }
 
-  return Http.get(path, params: params, options: options).then((value) {
+  var url = path + "?${toParamsString(LinkedHashMap.from(params))}";
+
+  return _get2(url, headers: options).then((value) async {
     try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
 
+        // final content = await value.cast<List<int>>().transform(utf8.decoder).join();
+        String content = await value.transform(utf8.decoder).join();
         if (contentType == 'json') {
-          var data = value?.data;
-          ans = ans.copy(status: value?.statusCode, body: data);
+          ans = ans.copy(status: value.statusCode, body: json.decode(content));
         }
         if (contentType == 'xml') {
-          var content = value?.data?.toString() ?? "";
-
           final xml2Json = Xml2Json();
           xml2Json.parse(content);
           var body = json.decode(xml2Json.toParker())['result'];
 
           body['code'] = int.tryParse(body['code']) ?? -1;
 
-          ans = ans.copy(status: value?.statusCode, body: body);
+          ans = ans.copy(status: value.statusCode, body: body);
         }
 
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
+        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
@@ -105,24 +101,9 @@ Future<Answer> _get(String path,
   });
 }
 
-//请求
-Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const []}) async {
-  final options = _buildOptions(path, cookie);
-
-  return Http.postForm(path, params: params, options: options).then((value) {
-    try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
-        var ans = const Answer();
-        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
-        return Future.value(ans);
-      } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
-      }
-    } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
-    }
+Future<HttpClientResponse> _get2(String url, {Map<String, String>? headers}) {
+  return HttpClient().getUrl(Uri.parse(url)).then((request) {
+    headers?.forEach(request.headers.add);
+    return request.close();
   });
 }

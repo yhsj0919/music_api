@@ -31,7 +31,7 @@ Future<Answer> radioDetail(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "songlist": {
         "module": "pf.radiosvr",
         "method": "GetRadiosonglist",
@@ -43,7 +43,7 @@ Future<Answer> radioDetail(Map params, List<Cookie> cookie) {
         "param": {"ct": "24"}
       },
       "comm": {"ct": 24, "cv": 0}
-   }
+   })
   };
   return _get(
 

@@ -9,7 +9,7 @@ Future<Answer> playlist(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "playlist": {
         "method": "get_playlist_by_tag",
         "param": {
@@ -31,7 +31,7 @@ Future<Answer> playlist(Map params, List<Cookie> cookie) {
         "ct": 20,
         "cv": 1803,
       }
-   }
+   })
   };
   return _get(
 
@@ -50,7 +50,7 @@ Future<Answer> playlistByTag(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "playlist": {
         "method": "get_category_content",
         "param": {"last_id": "", "size": size, "order": 5, "is_parent": 0, "caller": "0", "titleid": 3270, "category_id": 3270},
@@ -66,7 +66,7 @@ Future<Answer> playlistByTag(Map params, List<Cookie> cookie) {
         "ct": 20,
         "cv": 1803,
       }
-   }
+   })
   };
   return _get(
 
@@ -85,7 +85,7 @@ Future<Answer> playlistDetail(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "playlist": {
         "module": "srf_diss_info.DissInfoServer",
         "method": "CgiGetDiss",
@@ -103,7 +103,7 @@ Future<Answer> playlistDetail(Map params, List<Cookie> cookie) {
         "cv": 1807,
         "platform": "wk_v17",
       }
-   }
+   })
   };
   return _get(
 
@@ -122,7 +122,7 @@ Future<Answer> playlistTag(Map params, List<Cookie> cookie) {
   final sin = (page - 1) * size;
 
   final data = {
-    "data": {
+    "data": json.encode({
       "req_0": {
         "method": "get_all_categories",
         "param": {
@@ -138,7 +138,7 @@ Future<Answer> playlistTag(Map params, List<Cookie> cookie) {
         "cv": 1807,
         "platform": "wk_v17"
       }
-   }
+   })
   };
   return _get(
 

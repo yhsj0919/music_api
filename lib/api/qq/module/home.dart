@@ -4,12 +4,8 @@ part of '../qq.dart';
 * 首页
  */
 Future<Answer> _home(Map params, List<Cookie> cookie) {
-  final num = params['num'] ?? 20;
-  final page = params['page'] ?? 1;
-  final start = (page - 1) * num;
-
   final data = {
-    "data": {
+    "data": json.encode({
       "req_0": {
         "module": "MvService.MvInfoProServer",
         "method": "GetNewMv",
@@ -41,7 +37,7 @@ Future<Answer> _home(Map params, List<Cookie> cookie) {
         "ct": 20,
         "cv": 1807,
       }
-    }
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",

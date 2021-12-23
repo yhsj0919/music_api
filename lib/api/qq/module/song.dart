@@ -5,7 +5,7 @@ part of '../qq.dart';
 */
 Future<Answer> songInfo(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "songInfo": {
         "module": "music.pf_song_detail_svr",
@@ -16,7 +16,7 @@ Future<Answer> songInfo(Map params, List<Cookie> cookie) {
           "song_id": 97773,
         }
       }
-   }
+   })
   };
   return _get(
 
@@ -67,7 +67,7 @@ Future<Answer> songLyricNew(Map params, List<Cookie> cookie) {
  */
 Future<Answer> songMv(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "mv": {
         "module": "MvService.MvInfoProServer",
@@ -76,7 +76,7 @@ Future<Answer> songMv(Map params, List<Cookie> cookie) {
           "mids": ["${params['songMid']}"],
         }
       }
-   }
+   })
   };
   return _get(
 
@@ -92,7 +92,7 @@ Future<Answer> songMv(Map params, List<Cookie> cookie) {
 * */
 Future<Answer> songPlayList(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "playList": {
         "module": "music.mb_gedan_recommend_svr",
@@ -104,7 +104,7 @@ Future<Answer> songPlayList(Map params, List<Cookie> cookie) {
           "last_id": 0,
         }
       }
-   }
+   })
   };
   return _get(
 
@@ -142,7 +142,7 @@ Future<Answer> songComment(Map params, List<Cookie> cookie) {
  */
 Future<Answer> songListen(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "req": {
         "module": "CDN.SrfCdnDispatchServer",
         "method": "GetCdnDispatch",
@@ -180,7 +180,7 @@ Future<Answer> songListen(Map params, List<Cookie> cookie) {
           "uin": "0"
         }
       }
-   }
+   })
   };
   return _get(
 
@@ -200,7 +200,7 @@ Future<Answer> songListen(Map params, List<Cookie> cookie) {
  */
 Future<Answer> songDownload(Map params, List<Cookie> cookie) {
   final data = {
-    "data": {
+    "data": json.encode({
       "req": {
         "module": "CDN.SrfCdnDispatchServer",
         "method": "GetCdnDispatch",
@@ -229,7 +229,7 @@ Future<Answer> songDownload(Map params, List<Cookie> cookie) {
           "uin": "0"
         }
       }
-   }
+   })
   };
   return _get(
 
