@@ -3,7 +3,7 @@ part of '../migu.dart';
 /*
 * 搜索热词
  */
-Future<Answer> searchHotword(Map params, List<Cookie> cookie) {
+Future<Answer> _searchHotWord(Map params, List<Cookie> cookie) {
   return _get(
     "https://jadeite.migu.cn/music_search/v3/search/hotword",
     params: {},
@@ -65,7 +65,7 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
   final header = {
     'uiVersion': 'A_music_3.6.1',
     'deviceId': deviceId,
-    'timestamp': timestamp,
+    'timestamp': timestamp.toString(),
     'sign': sign,
   };
   return _get(
@@ -79,10 +79,10 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
 /*
 * 搜索建议
  */
-Future<Answer> searchSuggest(Map params, List<Cookie> cookie) {
+Future<Answer> _searchSuggest(Map params, List<Cookie> cookie) {
   final keyword = params['keyword'];
   final data = {
-    'pageSize': params['size'] ?? 10,
+    'pageSize': 10,
     'text': keyword,
     'isCopyright': 1,
   };
@@ -96,7 +96,7 @@ Future<Answer> searchSuggest(Map params, List<Cookie> cookie) {
   final header = {
     'uiVersion': 'A_music_3.6.1',
     'deviceId': deviceId,
-    'timestamp': timestamp,
+    'timestamp': timestamp.toString(),
     'sign': sign,
   };
   return _get(

@@ -42,13 +42,28 @@ Future<Answer> _singer(Map params, List<Cookie> cookie) {
 }
 
 /*
+* 歌手信息
+ */
+Future<Answer> _singerInfo(Map params, List<Cookie> cookie) {
+  final data = {
+    "resourceId": params['id'],
+    "resourceType": 2002,
+  };
+  return _get(
+    "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do",
+    params: data,
+    cookie: cookie,
+  );
+}
+
+/*
 * 歌手单曲
  */
-Future<Answer> singerSongs(Map params, List<Cookie> cookie) {
+Future<Answer> _singerSongs(Map params, List<Cookie> cookie) {
   final data = {
     "pageNo": params['page'] ?? 1,
     "pageSize": params['size'] ?? 50,
-    "singerId": params['singerId'],
+    "singerId": params['id'],
     "songType": 0,
     "templateVersion": 3,
   };
@@ -60,26 +75,13 @@ Future<Answer> singerSongs(Map params, List<Cookie> cookie) {
 }
 
 /*
-* 歌手单曲
- */
-Future<Answer> singerInfo(Map params, List<Cookie> cookie) {
-  final data = {
-    "resourceId": params['singerId'],
-    "resourceType": 2002,
-  };
-  return _get(
-    "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do",
-    params: data,
-    cookie: cookie,
-  );
-}
-
-/*
 * 歌手专辑
  */
-Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
+Future<Answer> _singerAlbum(Map params, List<Cookie> cookie) {
   final data = {
-    "singerId": params['singerId'],
+    "singerId": params['id'],
+    "pageNo": params['page'] ?? 1,
+    "pageSize": params['size'] ?? 10,
     "templateVersion": 2,
   };
   return _get(
@@ -92,9 +94,11 @@ Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
 /*
 * 歌手专辑
  */
-Future<Answer> singerMv(Map params, List<Cookie> cookie) {
+Future<Answer> _singerMv(Map params, List<Cookie> cookie) {
   final data = {
-    "singerId": params['singerId'],
+    "singerId": params['id'],
+    "pageNo": params['page'] ?? 1,
+    "pageSize": params['size'] ?? 10,
     "templateVersion": 2,
   };
   return _get(

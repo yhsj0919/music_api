@@ -69,7 +69,7 @@ Future<Answer> _playListTagList(Map params, List<Cookie> cookie) {
 Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
   final data = {
     'needSimple': '00',
-    'resourceId': params['resourceId'],
+    'resourceId': params['id'],
     'resourceType': params['resourceType'] ?? DateTime.now().year,
   };
   return _get(

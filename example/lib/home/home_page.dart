@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
+import 'package:music_api_example/home/qq_page.dart';
 
 import 'baidu_page.dart';
 import 'kugou_page.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "酷我": const KuwoPage(),
     "酷狗": const KuGouPage(),
     "咪咕": const MiGuPage(),
+    "企鹅": const QQPage(),
   };
 
   @override

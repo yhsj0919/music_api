@@ -110,12 +110,12 @@ class MiGu {
   }
 
   ///歌单信息
-  static Future playListInfo({String? resourceId, String? resourceType}) {
-    return _playListInfo.call({"resourceId": resourceId, "resourceType": resourceType}, []);
+  static Future playListInfo({required String? id, String? resourceType}) {
+    return _playListInfo.call({"id": id, "resourceType": resourceType}, []);
   }
 
   ///歌单歌曲
-  static Future playListSong({String? id, int? page, int? size}) {
+  static Future playListSong({required String? id, int? page, int? size}) {
     return _playListSong.call({"id": id, "page": page, "size": size}, []);
   }
 
@@ -135,12 +135,12 @@ class MiGu {
   }
 
   ///新歌
-  static Future songNew({String? columnId, int? page, int? size}) {
+  static Future songNew({required String? columnId, int? page, int? size}) {
     return _songNew.call({"columnId": columnId, "page": page, "size": size}, []);
   }
 
   ///播放地址
-  static Future playUrl({String? songId, String? toneFlag}) {
+  static Future playUrl({required String? songId, String? toneFlag}) {
     return _playUrl.call({"songId": songId, "toneFlag": toneFlag}, []);
   }
 
@@ -150,7 +150,7 @@ class MiGu {
   }
 
   ///榜单
-  static Future rankDetail({String? rankId}) {
+  static Future rankDetail({required String? rankId}) {
     return _rankDetail.call({"rankId": rankId}, []);
   }
 
@@ -162,6 +162,41 @@ class MiGu {
   ///歌手列表
   static Future singer({String? tab}) {
     return _singer.call({"tab": tab}, []);
+  }
+
+  ///歌手信息
+  static Future singerInfo({required String? id}) {
+    return _singerInfo.call({"id": id}, []);
+  }
+
+  ///歌手单曲
+  static Future singerSongs({required String? id, int? page, int? size}) {
+    return _singerSongs.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future singerAlbum({required String? id, int? page, int? size}) {
+    return _singerAlbum.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///歌手MV
+  static Future singerMv({required String? id, int? page, int? size}) {
+    return _singerMv.call({"id": id, "page": page, "size": size}, []);
+  }
+
+  ///搜索热词
+  static Future searchHotWord() {
+    return _searchHotWord.call({}, []);
+  }
+
+  ///搜索
+  static Future search({required String? keyword, int? type}) {
+    return _search.call({"keyword": keyword, "type": type}, []);
+  }
+
+  ///搜索
+  static Future searchSuggest({required String? keyword}) {
+    return _searchSuggest.call({"keyword": keyword}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {
@@ -198,7 +233,7 @@ Options _buildOptions(String path, List<Cookie> cookies) {
   return options;
 }
 
-Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, dynamic> header = const {}}) async {
+Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}}) async {
   final options = _buildOptions(path, cookie);
 
   if (header.isNotEmpty) {
