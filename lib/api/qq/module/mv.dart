@@ -3,10 +3,10 @@ part of '../qq.dart';
 /*
  * MV推荐
  */
-Future<Answer> mvRec(Map params, List<Cookie> cookie) {
+Future<Answer> _mvRec(Map params, List<Cookie> cookie) {
   final page = params['page'] ?? 1;
   final size = params['size'] ?? 20;
-  final sin = (page - 1) * size;
+  final num = (page - 1) * size;
 
   final data = {
     "data": json.encode({
@@ -14,12 +14,12 @@ Future<Answer> mvRec(Map params, List<Cookie> cookie) {
       "new": {
         "module": "MvService.MvInfoProServer",
         "method": "GetNewMv",
-        "param": {"style": 1, "tag": 0, "size": 10, "start": 0}
+        "param": {"style": 0, "tag": 0, "size": size, "start": num}
       },
       "hot": {
         "module": "MvService.MvInfoProServer",
         "method": "GetHotMv",
-        "param": {"style": 1, "tag": 16, "size": 10, "start": 0}
+        "param": {"style": 1, "tag": 16, "size": size, "start": num}
       },
       "collection": {"module": "video.VideoLogicServer", "method": "get_video_collection_main", "param": {}},
       "discovery": {
@@ -28,10 +28,9 @@ Future<Answer> mvRec(Map params, List<Cookie> cookie) {
         "param": {"page": 1}
       },
       "comm": {"g_tk": 5381, "uin": 0, "format": "json", "ct": 20, "cv": 1807, "platform": "wk_v17"}
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -42,7 +41,7 @@ Future<Answer> mvRec(Map params, List<Cookie> cookie) {
  * 全部MV
  * order 1，最新，0最热
  */
-Future<Answer> mvlist(Map params, List<Cookie> cookie) {
+Future<Answer> _mvList(Map params, List<Cookie> cookie) {
   final page = params['page'] ?? 1;
   final size = params['size'] ?? 20;
   final sin = (page - 1) * size;
@@ -50,16 +49,19 @@ Future<Answer> mvlist(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24},
-      "mv_tag": {"module": "MvService.MvInfoProServer", "method": "GetAllocTag", "param": {}},
+      "mv_tag": {
+        "module": "MvService.MvInfoProServer",
+        "method": "GetAllocTag",
+        "param": {},
+      },
       "mv_list": {
         "module": "MvService.MvInfoProServer",
         "method": "GetAllocMvInfo",
-        "param": {"start": sin, "size": size, "version_id": 7, "area_id": 15, "order": 1}
+        "param": {"start": sin, "size": size, "version_id": params["version"] ?? 7, "area_id": params["area"] ?? 15, "order": params["order"] ?? 1}
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -126,15 +128,15 @@ Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
           "support": 1
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
   );
 }
+
 /*
 * MV播放地址
  */
@@ -152,10 +154,9 @@ Future<Answer> mvUrl(Map params, List<Cookie> cookie) {
           "format": 264
         }
       },
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,

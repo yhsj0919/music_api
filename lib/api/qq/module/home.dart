@@ -6,7 +6,7 @@ part of '../qq.dart';
 Future<Answer> _home(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
-      "req_0": {
+      "newMv": {
         "module": "MvService.MvInfoProServer",
         "method": "GetNewMv",
         "param": {"style": 0, "tag": 0, "start": 0, "size": 8}
@@ -18,20 +18,25 @@ Future<Answer> _home(Map params, List<Cookie> cookie) {
           "Device": {"OS": "3", "AppName": "QQ音乐"}
         }
       },
-      "req_2": {
+      "hotRecommend": {
         "module": "playlist.HotRecommendServer",
         "method": "get_new_hot_recommend",
         "param": {"cmd": 0, "page": 0, "daily_page": 0, "size": 12}
       },
-      "req_3": {
+      "newSong": {
         "module": "newsong.NewSongServer",
         "method": "get_new_song_info",
         "param": {"type": 5}
       },
-      "req_4": {
+      "radioLis": {
         "module": "music.longRadio.recommend",
         "method": "getRadioList",
         "param": {"pos": 6}
+      },
+      "toplist": {
+        "module": "musicToplist.ToplistInfoServer",
+        "method": "GetAll",
+        "param": {}
       },
       "comm": {
         "ct": 20,

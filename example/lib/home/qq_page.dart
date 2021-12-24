@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:music_api/api/qq/qq.dart';
 
@@ -52,6 +54,30 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                       QQ?.home().then(onData).catchError(onError);
                     },
                   ),
+                  ListTile(
+                    title: const Text('新专辑、新碟'),
+                    onTap: () {
+                      QQ?.newAlbum().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('专辑歌曲'),
+                    onTap: () {
+                      QQ?.albumSongList(albumMid: "003cu5bo2QImjv").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('专辑信息'),
+                    onTap: () {
+                      QQ?.albumInfo(albumMid: "003cu5bo2QImjv").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('MV推荐'),
+                    onTap: () {
+                      QQ?.mvRec().then(onData).catchError(onError);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -66,7 +92,9 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
 
   void onData(value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+
+      print(result);
     });
   }
 

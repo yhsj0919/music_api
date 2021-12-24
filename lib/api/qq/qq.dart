@@ -31,8 +31,28 @@ class QQ {
   QQ._();
 
   ///首页
-  static Future home({String? keyWords, int? page, int? sort}) {
+  static Future home() {
     return _home.call({}, []);
+  }
+
+  ///新专辑、新碟
+  static Future newAlbum({int? area, int? page, int? size}) {
+    return _newAlbum.call({"area": area, "page": page, "size": size}, []);
+  }
+
+  ///专辑歌曲列表
+  static Future albumSongList({String? albumMid, int? page, int? size}) {
+    return _albumSongList.call({"albumMid": albumMid, "page": page, "size": size}, []);
+  }
+
+  ///专辑信息
+  static Future albumInfo({String? albumMid, int? page, int? size}) {
+    return _albumInfo.call({"albumMid": albumMid, "page": page, "size": size}, []);
+  }
+
+  ///mv推荐
+  static Future mvRec({int? page, int? size}) {
+    return _mvRec.call({"page": page, "size": size}, []);
   }
 
   static Future api(String path, {Map? params, String? auth}) {
@@ -60,23 +80,25 @@ Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   return headers;
 }
 
-Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, String contentType = "json"}) async {
+Future<Answer> _get(
+  String path, {
+  Map<String, dynamic> params = const {},
+  List<Cookie> cookie = const [],
+  Map<String, String> header = const {},
+  String contentType = "json",
+}) async {
   final options = _buildHeader(path, cookie);
 
   if (header.isNotEmpty) {
     options.addAll(header);
   }
 
-  var url = path + "?${toParamsString(LinkedHashMap.from(params))}";
-
-  return _get2(url, headers: options).then((value) async {
+  return _httpGet(path, params: params, headers: options).then((value) async {
     try {
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-
-        // final content = await value.cast<List<int>>().transform(utf8.decoder).join();
         String content = await value.transform(utf8.decoder).join();
         if (contentType == 'json') {
           ans = ans.copy(status: value.statusCode, body: json.decode(content));
@@ -101,7 +123,9 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
   });
 }
 
-Future<HttpClientResponse> _get2(String url, {Map<String, String>? headers}) {
+Future<HttpClientResponse> _httpGet(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) {
+  url += "?${toParamsString(LinkedHashMap.from(params ?? {}))}";
+
   return HttpClient().getUrl(Uri.parse(url)).then((request) {
     headers?.forEach(request.headers.add);
     return request.close();
