@@ -71,7 +71,7 @@ Future<Answer> _mvList(Map params, List<Cookie> cookie) {
 /*
  *mv信息，更多推荐
  */
-Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _mvInfo(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 4747474},
@@ -140,7 +140,7 @@ Future<Answer> mvInfo(Map params, List<Cookie> cookie) {
 /*
 * MV播放地址
  */
-Future<Answer> mvUrl(Map params, List<Cookie> cookie) {
+Future<Answer> _mvUrl(Map params, List<Cookie> cookie) {
   final data = {
     "comm": {"ct": 24, "cv": 4747474, "g_tk": 812935580, "uin": 0, "format": "json", "platform": "yqq"},
     "data": json.encode({

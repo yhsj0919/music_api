@@ -55,6 +55,66 @@ class QQ {
     return _mvRec.call({"page": page, "size": size}, []);
   }
 
+  ///mv列表
+  static Future mvList({int? version, int? area, int? order, int? page, int? size}) {
+    return _mvList.call({"version": version, "area": area, "order": order, "page": page, "size": size}, []);
+  }
+
+  ///mv信息
+  static Future mvInfo({String? vid}) {
+    return _mvInfo.call({"vid": vid}, []);
+  }
+
+  ///mv播放地址
+  static Future mvUrl({String? vid}) {
+    return _mvUrl.call({"vid": vid}, []);
+  }
+
+  ///歌单列表，
+  static Future playlist({int? order, int? page, int? size}) {
+    return _playlist.call({"order": order, "page": page, "size": size}, []);
+  }
+
+  ///根据tag获取歌单
+  static Future playlistByTag({int? tag, int? page, int? size}) {
+    return _playlistByTag.call({"tag": tag, "page": page, "size": size}, []);
+  }
+
+  ///歌单详情
+  static Future playlistDetail({int? id}) {
+    return _playlistDetail.call({"id": id}, []);
+  }
+
+  ///全部歌单分类
+  static Future playlistTag() {
+    return _playlistTag.call({}, []);
+  }
+
+  ///电台列表
+  static Future radioList() {
+    return _radioList.call({}, []);
+  }
+
+  ///电台详情
+  static Future radioDetail({int? id, int? size, int? first}) {
+    return _radioDetail.call({"id": id, "size": size, "first": first}, []);
+  }
+
+  ///热门搜索
+  static Future searchHot() {
+    return _searchHot.call({}, []);
+  }
+
+  ///搜索建议
+  static Future searchSuggest({String? keyWord}) {
+    return _searchSuggest.call({"keyWord": keyWord}, []);
+  }
+
+  ///搜索
+  static Future search({String? keyWord}) {
+    return _search.call({"keyWord": keyWord}, []);
+  }
+
   static Future api(String path, {Map? params, String? auth}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
@@ -75,7 +135,7 @@ Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   };
 
   if (path.contains('y.qq.com')) {
-    headers['Referer'] = 'https://y.qq.com';
+    headers['Referer'] = 'https://y.qq.com/';
   }
   return headers;
 }

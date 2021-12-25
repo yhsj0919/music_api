@@ -13,9 +13,16 @@ Future<Answer> singerList(Map params, List<Cookie> cookie) {
       "singerList": {
         "module": "Music.SingerListServer",
         "method": "get_singer_list",
-        "param": {"area": params['area'] ?? -100, "sex": params['sex'] ?? -100, "genre": params['genre'] ?? -100, "index": params['index'] ?? -100, "sin": sin, "cur_page": page}
+        "param": {
+          "area": params['area'] ?? -100,
+          "sex": params['sex'] ?? -100,
+          "genre": params['genre'] ?? -100,
+          "index": params['index'] ?? -100,
+          "sin": sin,
+          "cur_page": page,
+        }
       }
-   })
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -55,7 +62,7 @@ Future<Answer> singerSong(Map params, List<Cookie> cookie) {
         "method": "GetSingerSongList",
         "param": {"order": 1, "singerMid": params["singerMid"], "begin": (params['page'] - 1) * 20, "num": 20}
       }
-   })
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -83,7 +90,7 @@ Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
           "singerID": params['singerId'] ?? 0,
         }
       }
-   })
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
@@ -131,7 +138,7 @@ Future<Answer> singerSimilarSinger(Map params, List<Cookie> cookie) {
           "singerId": params['singerId'] ?? 0,
         }
       }
-   })
+    })
   };
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",

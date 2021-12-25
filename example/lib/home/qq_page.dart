@@ -78,6 +78,78 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                       QQ?.mvRec().then(onData).catchError(onError);
                     },
                   ),
+                  ListTile(
+                    title: const Text('MV列表'),
+                    onTap: () {
+                      QQ?.mvList().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('MV信息'),
+                    onTap: () {
+                      QQ?.mvInfo(vid: "a0041iztbq1").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('MV播放地址'),
+                    onTap: () {
+                      QQ?.mvUrl(vid: "a0041iztbq1").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌单列表'),
+                    onTap: () {
+                      QQ?.playlist().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('根据tag获取歌单'),
+                    onTap: () {
+                      QQ?.playlistByTag(tag: 3317).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌单详情'),
+                    onTap: () {
+                      QQ?.playlistDetail(id: 8251015081).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('全部歌单分类'),
+                    onTap: () {
+                      QQ?.playlistTag().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('电台列表'),
+                    onTap: () {
+                      QQ?.radioList().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('电台详情'),
+                    onTap: () {
+                      QQ?.radioDetail(id: 99).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('热门搜索'),
+                    onTap: () {
+                      QQ?.searchHot().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索建议'),
+                    onTap: () {
+                      QQ?.searchSuggest(keyWord: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('搜索'),
+                    onTap: () {
+                      QQ?.search(keyWord: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
                 ],
               ),
             ),
