@@ -3,7 +3,7 @@ part of '../qq.dart';
 /*
 *歌曲信息
 */
-Future<Answer> songInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _songInfo(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
@@ -12,14 +12,13 @@ Future<Answer> songInfo(Map params, List<Cookie> cookie) {
         "method": "get_song_detail_yqq",
         "param": {
           "song_type": 0,
-          "song_mid": params['singerMid'],
-          "song_id": 97773,
+          "song_mid": params['songMid'],
+          "song_id": params['songId'] ?? 0,
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -27,17 +26,16 @@ Future<Answer> songInfo(Map params, List<Cookie> cookie) {
 }
 
 /*
-* 歌曲信息
-* 参数为歌曲Id，不是Mid
+* 歌词
 */
-Future<Answer> songLyric(Map params, List<Cookie> cookie) {
+Future<Answer> _songLyric(Map params, List<Cookie> cookie) {
   final data = {
     "nobase64": 1,
     "format": 'json',
     "musicid": params['songId'],
+    "songmid": params['songMid'],
   };
   return _get(
-
     "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_yqq.fcg",
     params: data,
     cookie: cookie,
@@ -45,17 +43,16 @@ Future<Answer> songLyric(Map params, List<Cookie> cookie) {
 }
 
 /*
-* 歌曲信息
-* 参数为歌曲Id，不是Mid
+* 歌词2
 */
-Future<Answer> songLyricNew(Map params, List<Cookie> cookie) {
+Future<Answer> _songLyricNew(Map params, List<Cookie> cookie) {
   final data = {
     "nobase64": 1, //是否base64显示
     "format": 'json',
     "musicid": params['songId'],
+    "songmid": params['songMid'],
   };
   return _get(
-
     "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg",
     params: data,
     cookie: cookie,
@@ -65,7 +62,7 @@ Future<Answer> songLyricNew(Map params, List<Cookie> cookie) {
 /*
  * 相关MV
  */
-Future<Answer> songMv(Map params, List<Cookie> cookie) {
+Future<Answer> _songMv(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
@@ -76,10 +73,9 @@ Future<Answer> songMv(Map params, List<Cookie> cookie) {
           "mids": ["${params['songMid']}"],
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -90,7 +86,7 @@ Future<Answer> songMv(Map params, List<Cookie> cookie) {
 * 相关歌单
 * 参数为歌曲Id，不是Mid
 * */
-Future<Answer> songPlayList(Map params, List<Cookie> cookie) {
+Future<Answer> _songPlayList(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
@@ -104,15 +100,15 @@ Future<Answer> songPlayList(Map params, List<Cookie> cookie) {
           "last_id": 0,
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
   );
 }
+
 /*
 * 歌曲评论，mv评论也是这个，pid不一样
 * 参数为歌曲Id，不是Mid
@@ -129,7 +125,6 @@ Future<Answer> songComment(Map params, List<Cookie> cookie) {
     "domain": 'qq.com',
   };
   return _get(
-
     "https://c.y.qq.com/base/fcgi-bin/fcg_global_comment_h5.fcg",
     params: data,
     cookie: cookie,
@@ -140,7 +135,7 @@ Future<Answer> songComment(Map params, List<Cookie> cookie) {
  * 暂时只能获取非VIP的，req/freeflowsip+req_0/midurlinfo
  * https://res.wx.qq.com/voice/getvoice?mediaid=MzI3NjYzODY0Nl8xMDAwMDAyMDI=
  */
-Future<Answer> songListen(Map params, List<Cookie> cookie) {
+Future<Answer> _songListen(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "req": {
@@ -180,10 +175,9 @@ Future<Answer> songListen(Map params, List<Cookie> cookie) {
           "uin": "0"
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
@@ -198,7 +192,7 @@ Future<Answer> songListen(Map params, List<Cookie> cookie) {
 /*
  * 歌曲下载
  */
-Future<Answer> songDownload(Map params, List<Cookie> cookie) {
+Future<Answer> _songDownload(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "req": {
@@ -229,10 +223,9 @@ Future<Answer> songDownload(Map params, List<Cookie> cookie) {
           "uin": "0"
         }
       }
-   })
+    })
   };
   return _get(
-
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,

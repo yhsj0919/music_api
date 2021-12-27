@@ -3,16 +3,17 @@ part of '../qq.dart';
 /*
  * 歌手列表
  */
-Future<Answer> singerList(Map params, List<Cookie> cookie) {
+Future<Answer> _singerList(Map params, List<Cookie> cookie) {
   final page = params['page'] ?? 1;
-  final sin = (page - 1) * 80;
+  final size = params['size'] ?? 80;
+  final sin = (page - 1) * size;
 
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 10000},
       "singerList": {
-        "module": "Music.SingerListServer",
-        "method": "get_singer_list",
+        "module": "music.musichallSinger.SingerList",
+        "method": "GetSingerListIndex",
         "param": {
           "area": params['area'] ?? -100,
           "sex": params['sex'] ?? -100,
@@ -34,33 +35,51 @@ Future<Answer> singerList(Map params, List<Cookie> cookie) {
 /*
 * 歌手信息
 */
-Future<Answer> singerInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _singerInfo(Map params, List<Cookie> cookie) {
   final data = {
-    'singermid': params['singerMid'],
-    'utf8': 1,
-    'outCharset': 'utf-8',
-    'format': 'xml',
-    'r': DateTime.now().millisecondsSinceEpoch,
+    "data": json.encode({
+      "comm": {"ct": 24, "cv": 0},
+      "detail": {
+        "method": "GetSingerDetail",
+        "param": {
+          "singer_mids": [params["singerMid"]],
+          "ex_singer": 1,
+          "wiki_singer": 1,
+          "group_singer": 0,
+          "pic": 1,
+          "photos": 0
+        },
+        "module": "music.musichallSinger.SingerInfoInter"
+      },
+    })
   };
   return _get(
-    "https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_singer_desc.fcg",
+    "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
-    contentType: 'xml',
   );
 }
 
 /*
 * 歌手热门音乐
 */
-Future<Answer> singerSong(Map params, List<Cookie> cookie) {
+Future<Answer> _singerSong(Map params, List<Cookie> cookie) {
+  final page = params['page'] ?? 1;
+  final size = params['size'] ?? 10;
+  final sin = (page - 1) * size;
+
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
       "singerSongList": {
         "module": "musichall.song_list_server",
         "method": "GetSingerSongList",
-        "param": {"order": 1, "singerMid": params["singerMid"], "begin": (params['page'] - 1) * 20, "num": 20}
+        "param": {
+          "order": 1,
+          "singerMid": params["singerMid"],
+          "begin": sin,
+          "num": size,
+        }
       }
     })
   };
@@ -74,20 +93,23 @@ Future<Answer> singerSong(Map params, List<Cookie> cookie) {
 /*
 * 歌手专辑
 */
-Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
+Future<Answer> _singerAlbum(Map params, List<Cookie> cookie) {
+  final page = params['page'] ?? 1;
+  final size = params['size'] ?? 10;
+  final sin = (page - 1) * size;
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 0},
-      "singerSongList": {
+      "albumList": {
         "method": "GetAlbumList",
         "module": "music.musichallAlbum.AlbumListServer",
         "param": {
           "singerMid": params["singerMid"],
           "order": 0,
-          "begin": ((params['page'] ?? 1) - 1) * 20,
-          "num": 20,
+          "begin": sin,
+          "num": size,
           "songNumTag": 0,
-          "singerID": params['singerId'] ?? 0,
+          "singerID": 0,
         }
       }
     })
@@ -102,21 +124,28 @@ Future<Answer> singerAlbum(Map params, List<Cookie> cookie) {
 /*
 * 歌手MV
 */
-Future<Answer> singerMV(Map params, List<Cookie> cookie) {
+
+Future<Answer> _singerMV(Map params, List<Cookie> cookie) {
+  final page = params['page'] ?? 1;
+  final size = params['size'] ?? 20;
+  final sin = (page - 1) * size;
   final data = {
-    'format': 'json',
-    'platform': 'yqq.json',
-    'needNewCode': 0,
-    'singermid': params['singerMid'],
-    'outCharset': 'utf-8',
-    'order': 'listen', //listen,time两种排序
-    "begin": ((params['page'] ?? 1) - 1) * 20,
-    "num": 20,
-    "cid": '205360581',
-    "cmd": 0, //0,官方mv，1粉丝上传
+    "data": json.encode({
+      "comm": {"ct": 24, "cv": 10000},
+      "similarSingerList": {
+        "method": "GetSingerMvList",
+        "param": {
+          "singermid": params["singerMid"],
+          "count": size,
+          "start": sin,
+          "order": 1,
+        },
+        "module": "MvService.MvInfoProServer"
+      }
+    })
   };
   return _get(
-    "https://c.y.qq.com/mv/fcgi-bin/fcg_singer_mv.fcg",
+    "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
     cookie: cookie,
   );
@@ -125,7 +154,7 @@ Future<Answer> singerMV(Map params, List<Cookie> cookie) {
 /*
 * 相似歌手
 */
-Future<Answer> singerSimilarSinger(Map params, List<Cookie> cookie) {
+Future<Answer> _singerSimilar(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "comm": {"ct": 24, "cv": 10000},
@@ -135,7 +164,7 @@ Future<Answer> singerSimilarSinger(Map params, List<Cookie> cookie) {
         "param": {
           "singerMid": params["singerMid"],
           "num": 5,
-          "singerId": params['singerId'] ?? 0,
+          "singerId": 0,
         }
       }
     })

@@ -2,12 +2,9 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/api/utils/utils.dart';
-import 'package:music_api/http/http.dart';
-import 'package:xml2json/xml2json.dart';
 
 part 'module/album.dart';
 
@@ -25,7 +22,7 @@ part 'module/singer.dart';
 
 part 'module/song.dart';
 
-part 'module/toplist.dart';
+part 'module/rank.dart';
 
 class QQ {
   QQ._();
@@ -115,6 +112,86 @@ class QQ {
     return _search.call({"keyWord": keyWord}, []);
   }
 
+  ///歌手列表
+  static Future singerList({int? area, int? sex, int? genre, int? index, int? page, int? size}) {
+    return _singerList.call({"area": area, "sex": sex, "genre": genre, "index": index, "page": page, "size": size}, []);
+  }
+
+  ///歌手详情
+  static Future singerInfo({String? singerMid}) {
+    return _singerInfo.call({"singerMid": singerMid}, []);
+  }
+
+  ///歌手详情
+  static Future singerSong({String? singerMid, int? page, int? size}) {
+    return _singerSong.call({"singerMid": singerMid, "page": page, "size": size}, []);
+  }
+
+  ///歌手专辑
+  static Future singerAlbum({String? singerMid, int? page, int? size}) {
+    return _singerAlbum.call({"singerMid": singerMid, "page": page, "size": size}, []);
+  }
+
+  ///歌手MV
+  static Future singerMV({String? singerMid, int? page, int? size}) {
+    return _singerMV.call({"singerMid": singerMid, "page": page, "size": size}, []);
+  }
+
+  ///相似歌手
+  static Future singerSimilar({String? singerMid}) {
+    return _singerSimilar.call({"singerMid": singerMid}, []);
+  }
+
+  ///歌曲信息
+  static Future songInfo({String? songMid, int? songId}) {
+    return _songInfo.call({"songMid": songMid, "songId": songId}, []);
+  }
+
+  ///歌词
+  static Future songLyric({String? songMid, int? songId}) {
+    return _songLyric.call({"songMid": songMid, "songId": songId}, []);
+  }
+
+  ///歌词
+  static Future songLyric2({String? songMid, int? songId}) {
+    return _songLyricNew.call({"songMid": songMid, "songId": songId}, []);
+  }
+
+  ///相关MV
+  static Future songMv({String? songMid}) {
+    return _songMv.call({"songMid": songMid}, []);
+  }
+
+  ///相关歌单
+  static Future songPlayList({int? songId}) {
+    return _songPlayList.call({"songId": songId}, []);
+  }
+
+  ///试听地址
+  static Future songListen({String? songMid, String? mediaMid}) {
+    return _songListen.call({"songMid": songMid, "mediaMid": mediaMid}, []);
+  }
+
+  ///歌曲下载
+  static Future songDownload({String? songMid, String? mediaMid}) {
+    return _songDownload.call({"songMid": songMid, "mediaMid": mediaMid}, []);
+  }
+
+  ///榜单列表
+  static Future rankList() {
+    return _rankList.call({}, []);
+  }
+
+  ///榜单详情
+  static Future rankInfo({int? topId, String? period}) {
+    return _rankInfo.call({"topId": topId, "period": period}, []);
+  }
+
+  ///mv榜单
+  static Future mvRank({int? area, String? period}) {
+    return _mvRank.call({"area": area, "period": period}, []);
+  }
+
   static Future api(String path, {Map? params, String? auth}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
@@ -145,7 +222,6 @@ Future<Answer> _get(
   Map<String, dynamic> params = const {},
   List<Cookie> cookie = const [],
   Map<String, String> header = const {},
-  String contentType = "json",
 }) async {
   final options = _buildHeader(path, cookie);
 
@@ -156,23 +232,11 @@ Future<Answer> _get(
   return _httpGet(path, params: params, headers: options).then((value) async {
     try {
       if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+        var cookies = value.cookies;
         var ans = const Answer();
-        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+        ans = ans.copy(cookie: cookies);
         String content = await value.transform(utf8.decoder).join();
-        if (contentType == 'json') {
-          ans = ans.copy(status: value.statusCode, body: json.decode(content));
-        }
-        if (contentType == 'xml') {
-          final xml2Json = Xml2Json();
-          xml2Json.parse(content);
-          var body = json.decode(xml2Json.toParker())['result'];
-
-          body['code'] = int.tryParse(body['code']) ?? -1;
-
-          ans = ans.copy(status: value.statusCode, body: body);
-        }
-
+        ans = ans.copy(status: value.statusCode, body: json.decode(content));
         return Future.value(ans);
       } else {
         return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
@@ -185,7 +249,6 @@ Future<Answer> _get(
 
 Future<HttpClientResponse> _httpGet(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) {
   url += "?${toParamsString(LinkedHashMap.from(params ?? {}))}";
-
   return HttpClient().getUrl(Uri.parse(url)).then((request) {
     headers?.forEach(request.headers.add);
     return request.close();
