@@ -16,7 +16,7 @@ part 'module/album.dart';
 
 part 'module/artist.dart';
 
-part 'module/bd.dart';
+part 'module/rank.dart';
 
 part 'module/favorite.dart';
 
@@ -28,7 +28,7 @@ part 'module/search.dart';
 
 part 'module/song.dart';
 
-part 'module/track_list.dart';
+part 'module/playlist.dart';
 
 part 'module/user.dart';
 
@@ -75,7 +75,7 @@ class Baidu {
     return _songDownload.call({"tsId": tsId, "rate": rate}, []);
   }
 
-  ///歌曲列表，新歌推荐
+  ///歌手列表
   /*
   //  * 歌手列表
   //  * @param page 从1开始
@@ -118,28 +118,28 @@ class Baidu {
   }
 
   ///榜单分类
-  static Future bdType() {
-    return _bdCategory.call({}, []);
+  static Future rankType() {
+    return _rankType.call({}, []);
   }
 
   ///榜单列表
-  static Future bdList({String? bdid, int? page, int? size}) {
-    return _bdList.call({"bdid": bdid, "page": page, "size": size}, []);
+  static Future rankList({String? bdid, int? page, int? size}) {
+    return _rankList.call({"bdid": bdid, "page": page, "size": size}, []);
   }
 
   /// 歌单分类
-  static Future trackListType() {
-    return _trackListCategory.call({}, []);
+  static Future playListType() {
+    return _playListType.call({}, []);
   }
 
-  ///榜单列表
-  static Future trackListList({String? subCateId, int? page, int? size}) {
-    return _trackListList.call({"subCateId": subCateId, "page": page, "size": size}, []);
+  ///歌单列表
+  static Future playList({String? subCateId, int? page, int? size}) {
+    return _playList.call({"subCateId": subCateId, "page": page, "size": size}, []);
   }
 
-  ///榜单列表
-  static Future trackListInfo({String? id, int? page, int? size}) {
-    return _trackListInfo.call({"id": id, "page": page, "size": size}, []);
+  ///歌单详情
+  static Future playListInfo({String? id, int? page, int? size}) {
+    return _playListInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///精选视频
@@ -223,8 +223,8 @@ class Baidu {
   }
 
   ///签到
-  static Future userSignIn({List<Cookie> cookie = const []}) {
-    return _userSignIn.call({}, cookie);
+  static Future signIn({List<Cookie> cookie = const []}) {
+    return _signIn.call({}, cookie);
   }
 
   ///服务使用
@@ -240,8 +240,40 @@ class Baidu {
 final _api = <String, Api>{
   "/openScreen": _openScreen,
   "/index": _index,
-  "/album/info": _albumInfo,
   "/album/list": _albumList,
+  "/album/info": _albumInfo,
+  "/song/list": _songList,
+  "/song/info": _songInfo,
+  "/song/download": _songDownload,
+  "/artist/list": _artistList,
+  "/artist/info": _artistInfo,
+  "/artist/song": _artistSong,
+  "/artist/album": _artistAlbum,
+  "/artist/video": _artistVideo,
+  "/search": _search,
+  "/search/sug": _searchSug,
+  "/rank/type": _rankType,
+  "/rank/list": _rankList,
+  "/playlist/type": _playListType,
+  "/playlist": _playList,
+  "/playlist/info": _playListInfo,
+  "/video/list": _videoList,
+  "/video/info": _videoInfo,
+  "/video/recommend": _videoRecommend,
+  "/video/download": _videoDownload,
+  "/logout": _logout,
+  "/account/info": _accountInfo,
+  "/account/info/change": _changeAccountInfo,
+  "/account/song/list": _accountSongList,
+  "/account/amount": _accountAmount,
+  "/account/purchase/album": _accountPurchaseAlbum,
+  "/account/purchase": _accountPurchase,
+  "/favorite": _favorite,
+  "/favorite/delete": _favoriteDelete,
+  "/favorite/list": _favoriteList,
+  "/sendSms": _sendSms,
+  "/login": _login,
+  "/signin": _signIn,
 };
 
 Map<String, String> _buildHeader(List<Cookie> cookies) {

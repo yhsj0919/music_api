@@ -6,12 +6,19 @@ import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/http/http.dart';
 
 part 'module/album.dart';
+
 part 'module/bang.dart';
+
 part 'module/banner.dart';
+
 part 'module/music.dart';
+
 part 'module/mv.dart';
+
 part 'module/play_list.dart';
+
 part 'module/search.dart';
+
 part 'module/singer.dart';
 
 class KuGou {
@@ -147,7 +154,7 @@ class KuGou {
 
 //Api列表
 final _api = <String, Api>{
-  // "/hotSearch": _hotSearch,
+  "/banner": _banner,
 };
 
 //请求

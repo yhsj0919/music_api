@@ -47,6 +47,12 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
                   ListTile(
+                    title: const Text('所有Api'),
+                    onTap: () {
+                      MyFreeMp3?.api().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('搜索(报错重试即可)'),
                     onTap: () {
                       MyFreeMp3?.search(keyWords: "周杰伦").then(onData).catchError(onError);

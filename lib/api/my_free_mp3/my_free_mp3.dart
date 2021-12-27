@@ -14,7 +14,7 @@ class MyFreeMp3 {
     return _search.call({"keyWords": keyWords, "page": page, "sort": sort}, []);
   }
 
-  static Future api(String path, {Map? params, String? auth}) {
+  static Future api({String? path, Map? params, String? auth}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
     }

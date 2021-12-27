@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
-
-import 'api/my_free_mp3/my_free_mp3.dart';
 import 'api/my_free_mp3/my_free_mp3.dart';
 
 class MusicApi {

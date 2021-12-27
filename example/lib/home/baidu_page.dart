@@ -135,31 +135,31 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('榜单类型'),
                     onTap: () {
-                      Baidu?.bdType().then(onData).catchError(onError);
+                      Baidu?.rankType().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单歌曲列表'),
                     onTap: () {
-                      Baidu?.bdList(bdid: "257851").then(onData).catchError(onError);
+                      Baidu?.rankList(bdid: "257851").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单分类'),
                     onTap: () {
-                      Baidu?.trackListType().then(onData).catchError(onError);
+                      Baidu?.playListType().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单列表'),
                     onTap: () {
-                      Baidu?.trackListList(subCateId: "2368").then(onData).catchError(onError);
+                      Baidu?.playList(subCateId: "2368").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      Baidu?.trackListInfo(id: '285994').then(onData).catchError(onError);
+                      Baidu?.playListInfo(id: '285994').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -207,7 +207,7 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('签到'),
                     onTap: () {
-                      Baidu?.userSignIn(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
+                      Baidu?.signIn(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
                     },
                   ),
                 ],

@@ -3,7 +3,7 @@ part of '../baidu.dart';
 /*
  * 歌单分类
 */
-Future<Answer> _trackListCategory(Map params, List<Cookie> cookie) {
+Future<Answer> _playListType(Map params, List<Cookie> cookie) {
   return _get(
     "https://api-qianqian.taihe.com/v1/tracklist/category",
     params: {},
@@ -14,7 +14,7 @@ Future<Answer> _trackListCategory(Map params, List<Cookie> cookie) {
 /*
  * 歌单分类详情
 */
-Future<Answer> _trackListList(Map params, List<Cookie> cookie) {
+Future<Answer> _playList(Map params, List<Cookie> cookie) {
   LinkedHashMap<String, dynamic> data = LinkedHashMap();
   data['pageNo'] = params['page'] ?? 1;
   data['pageSize'] = params['size'] ?? 20;
@@ -32,7 +32,7 @@ Future<Answer> _trackListList(Map params, List<Cookie> cookie) {
 /*
  * 歌单详情、推荐歌单
 */
-Future<Answer> _trackListInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
   LinkedHashMap<String, dynamic> data = LinkedHashMap();
   data['id'] = params['id'];
   data['pageNo'] = params['page'] ?? 1;

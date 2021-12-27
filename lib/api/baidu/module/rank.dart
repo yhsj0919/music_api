@@ -3,7 +3,7 @@ part of '../baidu.dart';
 /*
  * 榜单分类
 */
-Future<Answer> _bdCategory(Map params, List<Cookie> cookie) {
+Future<Answer> _rankType(Map params, List<Cookie> cookie) {
   return _get(
     "https://api-qianqian.taihe.com/v1/bd/category",
     params: {},
@@ -14,7 +14,7 @@ Future<Answer> _bdCategory(Map params, List<Cookie> cookie) {
 /*
  * 榜单列表
 */
-Future<Answer> _bdList(Map params, List<Cookie> cookie) {
+Future<Answer> _rankList(Map params, List<Cookie> cookie) {
   LinkedHashMap<String, dynamic> data = LinkedHashMap();
   data['bdid'] = params['bdid'];
   data['pageNo'] = params['page'] ?? 1;
