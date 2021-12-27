@@ -1,38 +1,38 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:crypto/crypto.dart';
-import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/api/utils/utils.dart';
 import 'package:music_api/http/http.dart';
 
-part 'module/ad.dart';
+part 'module/account.dart';
 
-part 'module/index.dart';
+part 'module/ad.dart';
 
 part 'module/album.dart';
 
-part 'module/song.dart';
-
 part 'module/artist.dart';
-
-part 'module/search.dart';
 
 part 'module/bd.dart';
 
-part 'module/track_list.dart';
-
-part 'module/video.dart';
-
-part 'module/account.dart';
-
 part 'module/favorite.dart';
+
+part 'module/index.dart';
 
 part 'module/oauth.dart';
 
+part 'module/search.dart';
+
+part 'module/song.dart';
+
+part 'module/track_list.dart';
+
 part 'module/user.dart';
+
+part 'module/video.dart';
 
 class Baidu {
   Baidu._();
@@ -244,14 +244,11 @@ final _api = <String, Api>{
   "/album/list": _albumList,
 };
 
-Options _buildOptions(List<Cookie> cookies) {
-  final options = Options();
-  options.sendTimeout = 3000;
-  options.receiveTimeout = 3000;
+Map<String, String> _buildHeader(List<Cookie> cookies) {
   final headers = {
-    "app-version": "v8.3.0.3",
+    "app-version": "v8.3.0.4",
     "from": "android",
-    "user-agent": "Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; MI 5 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+    "user-agent": "Mozilla/5.0 (Linux; U; Android 11.0.0; zh-cn; MI Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
   };
 
   var authorization = cookies.firstWhere((element) => element.name == "auth", orElse: () => Cookie("auth", "")).value;
@@ -259,13 +256,12 @@ Options _buildOptions(List<Cookie> cookies) {
     headers["authorization"] = "/access_token $authorization";
   }
 
-  options.headers = headers;
-  return options;
+  return headers;
 }
 
 ///请求,baidu的参数有严格的顺序，错了就请求不到，所以，如果接口里存在appid，不要动，不是随便写的
 Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const []}) async {
-  final options = _buildOptions(cookie);
+  final header = _buildHeader(cookie);
 
   LinkedHashMap signStr = LinkedHashMap();
   if (!params.containsKey("appid")) {
@@ -285,17 +281,17 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
 
   signStr["sign"] = sign;
 
-  return Http.get(path, params: Map.from(signStr), options: options).then((value) {
+  return Http.get(path, params: Map.from(signStr), headers: header).then((value) async {
     try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
+        String content = await value.transform(utf8.decoder).join();
+        ans = ans.copy(status: value.statusCode, body: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
+        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
@@ -305,7 +301,7 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
 
 //请求
 Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const []}) async {
-  final options = _buildOptions(cookie);
+  final header = _buildHeader(cookie);
 
   LinkedHashMap signStr = LinkedHashMap();
   if (!params.containsKey("appid")) {
@@ -313,7 +309,6 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
   } else {
     params['appid'] = '16073360';
   }
-
   params.forEach((key, value) {
     signStr[key] = value;
   });
@@ -325,17 +320,17 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
 
   signStr["sign"] = sign;
 
-  return Http.postForm(path, params: Map.from(signStr), options: options).then((value) {
+  return Http.post(path, params: Map.from(signStr), headers: header).then((value) async {
     try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
+        String content = await value.transform(utf8.decoder).join();
+        ans = ans.copy(status: value.statusCode, body: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
+        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));

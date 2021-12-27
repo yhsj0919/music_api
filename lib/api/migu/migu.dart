@@ -1,9 +1,8 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:dio/dio.dart';
+
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/http/http.dart';
@@ -17,13 +16,13 @@ part 'module/mv.dart';
 
 part 'module/playList.dart';
 
-part 'module/search.dart';
+part 'module/rank.dart';
 
-part 'module/song.dart';
+part 'module/search.dart';
 
 part 'module/singer.dart';
 
-part 'module/rank.dart';
+part 'module/song.dart';
 
 class MiGu {
   ///u.musicapp.migu.cn,新版换了域名7.7.0
@@ -212,12 +211,9 @@ final _api = <String, Api>{
   "/search": _search,
 };
 
-Options _buildOptions(String path, List<Cookie> cookies) {
-  final options = Options();
-  options.sendTimeout = 3000;
-  options.receiveTimeout = 3000;
+Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   final headers = {
-    "user-agent": "Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; MI 5 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+    "user-agent": "Mozilla/5.0 (Linux; U; Android 11.0.0; zh-cn; MI 11 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
     "channel": "0146921",
     "Cookie": cookies.join("; "),
   };
@@ -229,50 +225,27 @@ Options _buildOptions(String path, List<Cookie> cookies) {
     headers['Referer'] = 'https://app.c.nf.migu.cn/';
   }
 
-  options.headers = headers;
-  return options;
+  return headers;
 }
 
 Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}}) async {
-  final options = _buildOptions(path, cookie);
+  final headers = _buildHeader(path, cookie);
 
   if (header.isNotEmpty) {
-    options.headers?.addAll(header);
+    headers.addAll(header);
   }
 
-  return Http.get(path, params: params, options: options).then((value) {
+  return Http.get(path, params: params, headers: headers).then((value) async {
     try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
+        String data = await value.transform(utf8.decoder).join();
+        ans = ans.copy(status: value.statusCode, body: json.decode(data));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
-      }
-    } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
-    }
-  });
-}
-
-//请求
-Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const []}) async {
-  final options = _buildOptions(path, cookie);
-
-  return Http.postForm(path, params: params, options: options).then((value) {
-    try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
-        var ans = const Answer();
-        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        var data = value?.data;
-        ans = ans.copy(status: value?.statusCode, body: data);
-        return Future.value(ans);
-      } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
+        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));

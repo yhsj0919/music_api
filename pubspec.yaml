@@ -10,10 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #网络请求
-  #https://github.com/flutterchina/dio
-  dio: ^4.0.4
-  dio_cookie_manager: ^2.0.0
   crypto: ^3.0.1
   encrypt: ^5.0.1
   uuid: 3.0.5

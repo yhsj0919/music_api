@@ -261,8 +261,6 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
   void onData(value) {
     setState(() {
       result = json.encode(value.body);
-
-      print(result);
     });
   }
 

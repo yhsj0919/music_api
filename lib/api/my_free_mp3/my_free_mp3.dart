@@ -1,8 +1,6 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/http/http.dart';
@@ -31,23 +29,23 @@ final _api = <String, Api>{
 
 //请求
 Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
-  final options = Options();
-  options.sendTimeout = 3000;
-  options.receiveTimeout = 3000;
-
-  return Http.postForm(path, params: params, options: options).then((value) {
+  Map<String, String> header = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
+  };
+  return Http.post(path, params: params, headers: header).then((value) async {
     try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader];
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer();
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        var data = value?.data.toString().replaceFirst("({", "{").replaceAll("});", "}").replaceAll('["apple",', "[");
-        ans = ans.copy(status: value?.statusCode, body: json.decode(data ?? ""));
+        String content = await value.transform(utf8.decoder).join();
+        var data = content.replaceFirst("({", "{").replaceAll("});", "}").replaceAll('["apple",', "[");
+        ans = ans.copy(status: value.statusCode, body: json.decode(data));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value?.statusCode, 'msg': value?.data}));
+        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
