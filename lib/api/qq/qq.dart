@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:music_api/api/utils/answer.dart';
 import 'package:music_api/api/utils/types.dart';

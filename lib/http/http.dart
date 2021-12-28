@@ -1,7 +1,7 @@
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:music_api/api/utils/utils.dart';
+import 'package:universal_io/io.dart';
 
 class Http {
   static Future<HttpClientResponse> get(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) {
