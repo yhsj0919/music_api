@@ -6,21 +6,34 @@ import 'package:music_api/api/utils/types.dart';
 import 'package:music_api/http/http.dart';
 
 part 'module/album.dart';
+
 part 'module/artist.dart';
-part 'module/bang.dart';
+
+part 'module/rank.dart';
+
 part 'module/banner.dart';
+
 part 'module/music.dart';
+
 part 'module/mv.dart';
+
 part 'module/play_list.dart';
+
 part 'module/search.dart';
+
 part 'module/url.dart';
 
 class KuWo {
   KuWo._();
 
   ///Banner
-  static Future banner() {
+  static Future<Answer> banner() {
     return _banner.call({}, []);
+  }
+
+  ///专辑列表
+  static Future<Answer> albumList({int? page, int? size}) {
+    return _albumList.call({"page": page, "size": size}, []);
   }
 
   ///专辑详情
@@ -45,16 +58,16 @@ class KuWo {
   }
 
   ///榜单列表
-  static Future bangList() {
-    return _bangList.call({}, []);
+  static Future rankList() {
+    return _rankList.call({}, []);
   }
 
-  ///歌单详情
-  static Future bangInfo({String? id, int? page, int? size}) {
-    return _bangInfo.call({"id": id, "page": page, "size": size}, []);
+  ///榜单详情
+  static Future rankInfo({String? id, int? page, int? size}) {
+    return _rankInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
-  ///歌单详情
+  ///歌手详情
   static Future artistList({String? category, int? page, int? size}) {
     return _artistList.call({"category": category, "page": page, "size": size}, []);
   }
@@ -100,7 +113,7 @@ class KuWo {
   }
 
   ///搜索热词
-  static Future hotSearch() {
+  static Future searchHot() {
     return _hotSearch.call({}, []);
   }
 
@@ -129,17 +142,38 @@ class KuWo {
     return _searchArtist.call({"key": key, "page": page, "size": size}, []);
   }
 
-  static Future api(String path, {Map? params, String? auth}) {
+  static Future<Answer> api(String path, {Map? params,List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
-    return _api[path]!.call(params ?? {}, []);
+    return _api[path]!.call(params ?? {}, cookie);
   }
 }
 
 //Api列表
 final _api = <String, Api>{
-  "/hotSearch": _hotSearch,
+  "/banner": _banner,
+  "/album/list": _albumList,
+  "/album/info": _albumInfo,
+  "/playlist/tag": _playListTag,
+  "/playlist": _playList,
+  "/playlist/info": _playListInfo,
+  "/rank/list": _rankList,
+  "/rank/info": _rankInfo,
+  "/artist/list": _artistList,
+  "/artist/info": _artistInfo,
+  "/artist/album": _artistAlbum,
+  "/artist/mv": _artistMv,
+  "/mv/list": _mvList,
+  "/music/url": _playUrl,
+  "/music/info": _musicInfo,
+  "/music/lrc": _musicLrc,
+  "/search/hot": _hotSearch,
+  "/search/music": _searchMusic,
+  "/search/album": _searchAlbum,
+  "/search/mv": _searchMv,
+  "/search/playlist": _searchPlayList,
+  "/search/artist": _searchArtist,
 };
 
 //请求

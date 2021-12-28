@@ -87,7 +87,7 @@ Future<Answer> _playlistByTag(Map params, List<Cookie> cookie) {
 /*
  *歌单详情
  */
-Future<Answer> _playlistDetail(Map params, List<Cookie> cookie) {
+Future<Answer> _playlistInfo(Map params, List<Cookie> cookie) {
   final page = params['page'] ?? 1;
   final size = params['size'] ?? 60;
   final sin = (page - 1) * size;

@@ -61,19 +61,19 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('排行榜列表'),
                     onTap: () {
-                      KuGou?.bangList().then(onData).catchError(onError);
+                      KuGou?.rankList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('排行榜详情'),
                     onTap: () {
-                      KuGou?.bangInfo(rankId: "8888").then(onData).catchError(onError);
+                      KuGou?.rankInfo(rankId: "8888").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('排行榜歌曲'),
                     onTap: () {
-                      KuGou?.bangSong(rankId: "8888").then(onData).catchError(onError);
+                      KuGou?.rankSong(rankId: "8888").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

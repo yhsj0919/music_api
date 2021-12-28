@@ -149,8 +149,8 @@ class MiGu {
   }
 
   ///榜单
-  static Future rankDetail({required String? rankId}) {
-    return _rankDetail.call({"rankId": rankId}, []);
+  static Future rankInfo({required String? rankId}) {
+    return _rankInfo.call({"rankId": rankId}, []);
   }
 
   ///歌手标签
@@ -193,22 +193,55 @@ class MiGu {
     return _search.call({"keyword": keyword, "type": type}, []);
   }
 
-  ///搜索
+  ///搜索建议
   static Future searchSuggest({required String? keyword}) {
     return _searchSuggest.call({"keyword": keyword}, []);
   }
 
-  static Future api(String path, {Map? params, String? auth}) {
+  static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
-    return _api[path]!.call(params ?? {}, []);
+    return _api[path]!.call(params ?? {}, cookie);
   }
 }
 
 //Api列表
 final _api = <String, Api>{
+  "/banner": _banner,
+  "/album/new/web": _albumNewWeb,
+  "/album/new/type": _albumNewType,
+  "/album/new": _albumNew,
+  "/album/song": _albumSong,
+  "/album/song2": _albumSong2,
+  "/album/info": _albumInfo,
+  "/album/info2": _albumInfo2,
+  "/mv/info": _mvInfo,
+  "/mv/url": _mvPlayUrl,
+  "/mv/rec": _mvRec,
+  "/playlist/new/web": _playListNewWeb,
+  "/playlist/tag/hot": _playListHotTag,
+  "/playlist/rec": _playListRec,
+  "/playlist": _playList,
+  "/playlist/tag/list": _playListTagList,
+  "/playlist/info": _playListInfo,
+  "/playlist/song": _playListSong,
+  "/playlist/play/num": _playListPlayNum,
+  "/song/new/web": _songNewWeb,
+  "/song/new/type": _songNewType,
+  "/song/new": _songNew,
+  "/song/url": _playUrl,
+  "/rank/list": _rankList,
+  "/rank/info": _rankInfo,
+  "/singer/tabs": _singerTabs,
+  "/singer/list": _singer,
+  "/singer/info": _singerInfo,
+  "/singer/songs": _singerSongs,
+  "/singer/album": _singerAlbum,
+  "/singer/mv": _singerMv,
+  "/search/hot": _searchHotWord,
   "/search": _search,
+  "/search/suggest": _searchSuggest,
 };
 
 Map<String, String> _buildHeader(String path, List<Cookie> cookies) {

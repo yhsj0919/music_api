@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:music_api/api/kuwo/kuwo.dart';
 
@@ -53,6 +55,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     },
                   ),
                   ListTile(
+                    title: const Text('专辑列表'),
+                    onTap: () {
+                      KuWo?.albumList().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('专辑详情'),
                     onTap: () {
                       KuWo?.albumInfo(albumId: "14365066").then(onData).catchError(onError);
@@ -79,13 +87,13 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('榜单列表'),
                     onTap: () {
-                      KuWo?.bangList().then(onData).catchError(onError);
+                      KuWo?.rankList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单详情'),
                     onTap: () {
-                      KuWo?.bangInfo(id: "93").then(onData).catchError(onError);
+                      KuWo?.rankInfo(id: "93").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -145,7 +153,7 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('搜索热词'),
                     onTap: () {
-                      KuWo?.hotSearch().then(onData).catchError(onError);
+                      KuWo?.searchHot().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -192,7 +200,8 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
 
   void onData(value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+      print(result);
     });
   }
 

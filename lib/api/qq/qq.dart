@@ -28,181 +28,213 @@ class QQ {
   QQ._();
 
   ///首页
-  static Future home() {
+  static Future<Answer> home() {
     return _home.call({}, []);
   }
 
   ///新专辑、新碟
-  static Future newAlbum({int? area, int? page, int? size}) {
+  static Future<Answer> albumNew({int? area, int? page, int? size}) {
     return _newAlbum.call({"area": area, "page": page, "size": size}, []);
   }
 
   ///专辑歌曲列表
-  static Future albumSongList({String? albumMid, int? page, int? size}) {
-    return _albumSongList.call({"albumMid": albumMid, "page": page, "size": size}, []);
+  static Future<Answer> albumSong({String? albumMid, int? page, int? size}) {
+    return _albumSong.call({"albumMid": albumMid, "page": page, "size": size}, []);
   }
 
   ///专辑信息
-  static Future albumInfo({String? albumMid, int? page, int? size}) {
+  static Future<Answer> albumInfo({String? albumMid, int? page, int? size}) {
     return _albumInfo.call({"albumMid": albumMid, "page": page, "size": size}, []);
   }
 
   ///mv推荐
-  static Future mvRec({int? page, int? size}) {
+  static Future<Answer> mvRec({int? page, int? size}) {
     return _mvRec.call({"page": page, "size": size}, []);
   }
 
   ///mv列表
-  static Future mvList({int? version, int? area, int? order, int? page, int? size}) {
+  static Future<Answer> mvList({int? version, int? area, int? order, int? page, int? size}) {
     return _mvList.call({"version": version, "area": area, "order": order, "page": page, "size": size}, []);
   }
 
   ///mv信息
-  static Future mvInfo({String? vid}) {
+  static Future<Answer> mvInfo({String? vid}) {
     return _mvInfo.call({"vid": vid}, []);
   }
 
   ///mv播放地址
-  static Future mvUrl({String? vid}) {
+  static Future<Answer> mvUrl({String? vid}) {
     return _mvUrl.call({"vid": vid}, []);
   }
 
   ///歌单列表，
-  static Future playlist({int? order, int? page, int? size}) {
+  static Future<Answer> playlist({int? order, int? page, int? size}) {
     return _playlist.call({"order": order, "page": page, "size": size}, []);
   }
 
   ///根据tag获取歌单
-  static Future playlistByTag({int? tag, int? page, int? size}) {
+  static Future<Answer> playlistByTag({int? tag, int? page, int? size}) {
     return _playlistByTag.call({"tag": tag, "page": page, "size": size}, []);
   }
 
   ///歌单详情
-  static Future playlistDetail({int? id}) {
-    return _playlistDetail.call({"id": id}, []);
+  static Future<Answer> playlistInfo({int? id}) {
+    return _playlistInfo.call({"id": id}, []);
   }
 
   ///全部歌单分类
-  static Future playlistTag() {
+  static Future<Answer> playlistTag() {
     return _playlistTag.call({}, []);
   }
 
   ///电台列表
-  static Future radioList() {
+  static Future<Answer> radioList() {
     return _radioList.call({}, []);
   }
 
   ///电台详情
-  static Future radioDetail({int? id, int? size, int? first}) {
-    return _radioDetail.call({"id": id, "size": size, "first": first}, []);
+  static Future<Answer> radioInfo({int? id, int? size, int? first}) {
+    return _radioInfo.call({"id": id, "size": size, "first": first}, []);
   }
 
   ///热门搜索
-  static Future searchHot() {
+  static Future<Answer> searchHot() {
     return _searchHot.call({}, []);
   }
 
   ///搜索建议
-  static Future searchSuggest({String? keyWord}) {
+  static Future<Answer> searchSuggest({String? keyWord}) {
     return _searchSuggest.call({"keyWord": keyWord}, []);
   }
 
   ///搜索
-  static Future search({String? keyWord}) {
+  static Future<Answer> search({String? keyWord}) {
     return _search.call({"keyWord": keyWord}, []);
   }
 
   ///歌手列表
-  static Future singerList({int? area, int? sex, int? genre, int? index, int? page, int? size}) {
+  static Future<Answer> singerList({int? area, int? sex, int? genre, int? index, int? page, int? size}) {
     return _singerList.call({"area": area, "sex": sex, "genre": genre, "index": index, "page": page, "size": size}, []);
   }
 
   ///歌手详情
-  static Future singerInfo({String? singerMid}) {
+  static Future<Answer> singerInfo({String? singerMid}) {
     return _singerInfo.call({"singerMid": singerMid}, []);
   }
 
   ///歌手详情
-  static Future singerSong({String? singerMid, int? page, int? size}) {
+  static Future<Answer> singerSong({String? singerMid, int? page, int? size}) {
     return _singerSong.call({"singerMid": singerMid, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
-  static Future singerAlbum({String? singerMid, int? page, int? size}) {
+  static Future<Answer> singerAlbum({String? singerMid, int? page, int? size}) {
     return _singerAlbum.call({"singerMid": singerMid, "page": page, "size": size}, []);
   }
 
   ///歌手MV
-  static Future singerMV({String? singerMid, int? page, int? size}) {
+  static Future<Answer> singerMV({String? singerMid, int? page, int? size}) {
     return _singerMV.call({"singerMid": singerMid, "page": page, "size": size}, []);
   }
 
   ///相似歌手
-  static Future singerSimilar({String? singerMid}) {
+  static Future<Answer> singerSimilar({String? singerMid}) {
     return _singerSimilar.call({"singerMid": singerMid}, []);
   }
 
   ///歌曲信息
-  static Future songInfo({String? songMid, int? songId}) {
+  static Future<Answer> songInfo({String? songMid, int? songId}) {
     return _songInfo.call({"songMid": songMid, "songId": songId}, []);
   }
 
   ///歌词
-  static Future songLyric({String? songMid, int? songId}) {
-    return _songLyric.call({"songMid": songMid, "songId": songId}, []);
-  }
-
-  ///歌词
-  static Future songLyric2({String? songMid, int? songId}) {
+  static Future<Answer> songLyric({String? songMid, int? songId}) {
     return _songLyricNew.call({"songMid": songMid, "songId": songId}, []);
   }
 
+  ///歌词
+  static Future<Answer> songLyric2({String? songMid, int? songId}) {
+    return _songLyric.call({"songMid": songMid, "songId": songId}, []);
+  }
+
   ///相关MV
-  static Future songMv({String? songMid}) {
+  static Future<Answer> songMv({String? songMid}) {
     return _songMv.call({"songMid": songMid}, []);
   }
 
   ///相关歌单
-  static Future songPlayList({int? songId}) {
+  static Future<Answer> songPlayList({int? songId}) {
     return _songPlayList.call({"songId": songId}, []);
   }
 
   ///试听地址
-  static Future songListen({String? songMid, String? mediaMid}) {
+  static Future<Answer> songListen({String? songMid, String? mediaMid}) {
     return _songListen.call({"songMid": songMid, "mediaMid": mediaMid}, []);
   }
 
   ///歌曲下载
-  static Future songDownload({String? songMid, String? mediaMid}) {
+  static Future<Answer> songDownload({String? songMid, String? mediaMid}) {
     return _songDownload.call({"songMid": songMid, "mediaMid": mediaMid}, []);
   }
 
   ///榜单列表
-  static Future rankList() {
+  static Future<Answer> rankList() {
     return _rankList.call({}, []);
   }
 
   ///榜单详情
-  static Future rankInfo({int? topId, String? period}) {
+  static Future<Answer> rankInfo({int? topId, String? period}) {
     return _rankInfo.call({"topId": topId, "period": period}, []);
   }
 
   ///mv榜单
-  static Future mvRank({int? area, String? period}) {
+  static Future<Answer> mvRank({int? area, String? period}) {
     return _mvRank.call({"area": area, "period": period}, []);
   }
 
-  static Future api(String path, {Map? params, String? auth}) {
+  static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
-    return _api[path]!.call(params ?? {}, []);
+    return _api[path]!.call(params ?? {}, cookie);
   }
 }
 
 //Api列表
 final _api = <String, Api>{
-  // "/search": _search,
+  "/home": _home,
+  "/album/new": _newAlbum,
+  "/album/song": _albumSong,
+  "/album/info": _albumInfo,
+  "/mv/rec": _mvRec,
+  "/mv/list": _mvList,
+  "/mv/info": _mvInfo,
+  "/mv/url": _mvUrl,
+  "/playlist": _playlist,
+  "/playlist/bytag": _playlistByTag,
+  "/playlist/info": _playlistInfo,
+  "/playlist/tag": _playlistTag,
+  "/radio/list": _radioList,
+  "/radio/info": _radioInfo,
+  "/search/hot": _searchHot,
+  "/search/suggest": _searchSuggest,
+  "/search": _search,
+  "/singer/list": _singerList,
+  "/singer/info": _singerInfo,
+  "/singer/song": _singerSong,
+  "/singer/album": _singerAlbum,
+  "/singer/mv": _singerMV,
+  "/singer/similar": _singerSimilar,
+  "/song/info": _songInfo,
+  "/song/lrc2": _songLyric,
+  "/song/lrc": _songLyricNew,
+  "/song/mv": _songMv,
+  "/song/playlist": _songPlayList,
+  "/song/url": _songListen,
+  "/song/download": _songDownload,
+  "/rank/list": _rankList,
+  "/rank/info": _rankInfo,
+  "/rank/mv": _mvRank,
 };
 
 Map<String, String> _buildHeader(String path, List<Cookie> cookies) {

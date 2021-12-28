@@ -1,7 +1,7 @@
 part of '../kuwo.dart';
 
 ///榜单列表
-Future<Answer> _bangList(Map params, List<Cookie> cookie) {
+Future<Answer> _rankList(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/bang/bang/bangMenu",
     params: {},
@@ -10,7 +10,7 @@ Future<Answer> _bangList(Map params, List<Cookie> cookie) {
 }
 
 ///榜单列表
-Future<Answer> _bangInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _rankInfo(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/bang/bang/musicList",
     params: {

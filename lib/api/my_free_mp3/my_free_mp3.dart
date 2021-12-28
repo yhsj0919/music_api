@@ -10,15 +10,15 @@ part 'module/search.dart';
 class MyFreeMp3 {
   MyFreeMp3._();
 
-  static Future search({String? keyWords, int? page, int? sort}) {
+  static Future<Answer> search({String? keyWords, int? page, int? sort}) {
     return _search.call({"keyWords": keyWords, "page": page, "sort": sort}, []);
   }
 
-  static Future api({String? path, Map? params, String? auth}) {
+  static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
-    return _api[path]!.call(params ?? {}, []);
+    return _api[path]!.call(params ?? {}, cookie);
   }
 }
 

@@ -31,7 +31,7 @@ Future<Answer> _newAlbum(Map params, List<Cookie> cookie) {
 }
 
 ///专辑歌曲列表
-Future<Answer> _albumSongList(Map params, List<Cookie> cookie) {
+Future<Answer> _albumSong(Map params, List<Cookie> cookie) {
   final num = params['size'] ?? 20;
   final page = params['page'] ?? 1;
   final start = (page - 1) * num;

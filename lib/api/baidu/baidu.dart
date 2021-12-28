@@ -38,17 +38,17 @@ class Baidu {
   Baidu._();
 
   ///开屏
-  static Future openScreen() {
+  static Future<Answer> openScreen() {
     return _openScreen.call({}, []);
   }
 
   ///首页
-  static Future index() {
+  static Future<Answer> index() {
     return _index.call({}, []);
   }
 
   ///专辑推荐
-  static Future albumList({int? page, int? size}) {
+  static Future<Answer> albumList({int? page, int? size}) {
     return _albumList.call({
       "page": page,
       "size": size,
@@ -56,22 +56,22 @@ class Baidu {
   }
 
   ///专辑详情
-  static Future albumInfo({String? albumAssetCode}) {
+  static Future<Answer> albumInfo({String? albumAssetCode}) {
     return _albumInfo.call({"albumAssetCode": albumAssetCode}, []);
   }
 
   ///歌曲列表，新歌推荐
-  static Future songList({int? page, int? size}) {
+  static Future<Answer> songList({int? page, int? size}) {
     return _songList.call({"page": page, "size": size}, []);
   }
 
   ///歌曲信息(播放地址。Vip歌曲只能获取30秒)
-  static Future songInfo({String? tsId, int? rate}) {
+  static Future<Answer> songInfo({String? tsId, int? rate}) {
     return _songInfo.call({"tsId": tsId, "rate": rate}, []);
   }
 
   ///歌曲列表，新歌推荐
-  static Future songDownload({String? tsId, int? rate}) {
+  static Future<Answer> songDownload({String? tsId, int? rate}) {
     return _songDownload.call({"tsId": tsId, "rate": rate}, []);
   }
 
@@ -83,137 +83,137 @@ class Baidu {
   //  * @param artistGender 性别(男、女、组合、乐队),值是写死的; 这个不传不分页; 这个参数必须在地区之前，不然获取不到值
   //  * @param artistRegion 地区(内地、港台、欧美、韩国、日本、其他),值是写死的,这个不传不分页
   // */
-  static Future artistList({int? page, int? size, String? artistGender, String? artistRegion}) {
+  static Future<Answer> artistList({int? page, int? size, String? artistGender, String? artistRegion}) {
     return _artistList.call({"page": page, "size": size, "artistGender": artistGender, "artistRegion": artistRegion}, []);
   }
 
   ///歌手详情
-  static Future artistInfo({String? artistCode}) {
+  static Future<Answer> artistInfo({String? artistCode}) {
     return _artistInfo.call({"artistCode": artistCode}, []);
   }
 
   ///歌手热门歌曲
-  static Future artistSong({String? artistCode, int? page, int? size}) {
+  static Future<Answer> artistSong({String? artistCode, int? page, int? size}) {
     return _artistSong.call({"artistCode": artistCode, "page": page, "size": size}, []);
   }
 
   ///歌手热门专辑
-  static Future artistAlbum({String? artistCode, int? page, int? size}) {
+  static Future<Answer> artistAlbum({String? artistCode, int? page, int? size}) {
     return _artistAlbum.call({"artistCode": artistCode, "page": page, "size": size}, []);
   }
 
   ///歌手热门视频
-  static Future artistVideo({String? artistCode, int? page, int? size}) {
+  static Future<Answer> artistVideo({String? artistCode, int? page, int? size}) {
     return _artistVideo.call({"artistCode": artistCode, "page": page, "size": size}, []);
   }
 
   ///搜索
-  static Future search({String? word, int? page, int? size, int? type}) {
+  static Future<Answer> search({String? word, int? page, int? size, int? type}) {
     return _search.call({"word": word, "page": page, "size": size, "type": type}, []);
   }
 
   ///搜索热词
-  static Future searchSug({String? word}) {
+  static Future<Answer> searchSug({String? word}) {
     return _searchSug.call({"word": word}, []);
   }
 
   ///榜单分类
-  static Future rankType() {
+  static Future<Answer> rankType() {
     return _rankType.call({}, []);
   }
 
   ///榜单列表
-  static Future rankList({String? bdid, int? page, int? size}) {
+  static Future<Answer> rankList({String? bdid, int? page, int? size}) {
     return _rankList.call({"bdid": bdid, "page": page, "size": size}, []);
   }
 
   /// 歌单分类
-  static Future playListType() {
+  static Future<Answer> playListType() {
     return _playListType.call({}, []);
   }
 
   ///歌单列表
-  static Future playList({String? subCateId, int? page, int? size}) {
+  static Future<Answer> playList({String? subCateId, int? page, int? size}) {
     return _playList.call({"subCateId": subCateId, "page": page, "size": size}, []);
   }
 
   ///歌单详情
-  static Future playListInfo({String? id, int? page, int? size}) {
+  static Future<Answer> playListInfo({String? id, int? page, int? size}) {
     return _playListInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///精选视频
-  static Future videoList({int? page, int? size}) {
+  static Future<Answer> videoList({int? page, int? size}) {
     return _videoList.call({"page": page, "size": size}, []);
   }
 
   ///视频详情
-  static Future videoInfo({String? assetCode, String? rate}) {
+  static Future<Answer> videoInfo({String? assetCode, String? rate}) {
     return _videoInfo.call({"assetCode": assetCode, "rate": rate}, []);
   }
 
   ///热门视频、视频推荐
-  static Future videoRecommend() {
+  static Future<Answer> videoRecommend() {
     return _videoRecommend.call({}, []);
   }
 
   ///视频下载
-  static Future videoDownload({String? assetCode, String? rate}) {
+  static Future<Answer> videoDownload({String? assetCode, String? rate}) {
     return _videoDownload.call({"assetCode": assetCode, "rate": rate}, []);
   }
 
   ///登出
-  static Future logout() {
+  static Future<Answer> logout() {
     return _logout.call({}, []);
   }
 
   ///账户信息
-  static Future accountInfo({List<Cookie> cookie = const []}) {
+  static Future<Answer> accountInfo({List<Cookie> cookie = const []}) {
     return _accountInfo.call({}, cookie);
   }
 
   ///修改账户信息
-  static Future changeAccountInfo({String? age, String? avatar, String? birth, String? nickname, String? sex, String? intro}) {
+  static Future<Answer> changeAccountInfo({String? age, String? avatar, String? birth, String? nickname, String? sex, String? intro}) {
     return _changeAccountInfo.call({"age": age, "avatar": avatar, "birth": birth, "nickname": nickname, "sex": sex, "intro": intro}, []);
   }
 
   ///账户歌曲列表(喜欢的歌曲？)
-  static Future accountSongList({int? page, int? size}) {
+  static Future<Answer> accountSongList({int? page, int? size}) {
     return _accountSongList.call({"page": page, "size": size}, []);
   }
 
   ///账户收藏等信息
-  static Future accountAmount() {
+  static Future<Answer> accountAmount() {
     return _accountAmount.call({}, []);
   }
 
   ///已购专辑
-  static Future accountPurchaseAlbum({int? page, int? size}) {
+  static Future<Answer> accountPurchaseAlbum({int? page, int? size}) {
     return _accountPurchaseAlbum.call({"page": page, "size": size}, []);
   }
 
   ///已购单曲
-  static Future accountPurchase({int? page, int? size}) {
+  static Future<Answer> accountPurchase({int? page, int? size}) {
     return _accountPurchase.call({"page": page, "size": size}, []);
   }
 
   ///收藏
-  static Future favorite({String? code, String? resType}) {
+  static Future<Answer> favorite({String? code, String? resType}) {
     return _favorite.call({"code": code, "restype": resType}, []);
   }
 
   ///取消收藏
-  static Future favoriteDelete({String? code, String? resType}) {
+  static Future<Answer> favoriteDelete({String? code, String? resType}) {
     return _favoriteDelete.call({"code": code, "restype": resType}, []);
   }
 
   ///收藏的列表
-  static Future favoriteList({int? page, int? size}) {
+  static Future<Answer> favoriteList({int? page, int? size}) {
     return _favoriteList.call({"page": page, "size": size}, []);
   }
 
   ///发送短信验证码
-  static Future sendSms({String? phone}) {
+  static Future<Answer> sendSms({String? phone}) {
     return _sendSms.call({"phone": phone}, []);
   }
 
@@ -228,11 +228,11 @@ class Baidu {
   }
 
   ///服务使用
-  static Future api(String path, {Map? params, String? auth}) {
+  static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "此 api url 未被定义, 请检查: $path ", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
-    return _api[path]!.call(params ?? {}, []);
+    return _api[path]!.call(params ?? {}, cookie);
   }
 }
 

@@ -57,13 +57,13 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('新专辑、新碟'),
                     onTap: () {
-                      QQ?.newAlbum().then(onData).catchError(onError);
+                      QQ?.albumNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑歌曲'),
                     onTap: () {
-                      QQ?.albumSongList(albumMid: "003cu5bo2QImjv").then(onData).catchError(onError);
+                      QQ?.albumSong(albumMid: "003cu5bo2QImjv").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -111,7 +111,7 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      QQ?.playlistDetail(id: 8251015081).then(onData).catchError(onError);
+                      QQ?.playlistInfo(id: 8251015081).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -129,7 +129,7 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('电台详情'),
                     onTap: () {
-                      QQ?.radioDetail(id: 99).then(onData).catchError(onError);
+                      QQ?.radioInfo(id: 99).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

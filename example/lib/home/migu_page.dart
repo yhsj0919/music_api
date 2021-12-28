@@ -187,7 +187,7 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                       title: const Text('榜单详情'),
                       onTap: () {
-                        MiGu?.rankDetail(rankId: "27553319").then(onData).catchError(onError);
+                        MiGu?.rankInfo(rankId: "27553319").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手Tabs，这个返回值写死了，没走接口'),

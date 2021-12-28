@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
+import 'package:music_api/api/utils/answer.dart';
 
 class MyFreeMp3Page extends StatefulWidget {
   const MyFreeMp3Page({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
                   ListTile(
                     title: const Text('所有Api'),
                     onTap: () {
-                      MyFreeMp3?.api().then(onData).catchError(onError);
+                      MyFreeMp3?.api("").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -70,7 +71,7 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
   @override
   bool get wantKeepAlive => true;
 
-  void onData(value) {
+  void onData(Answer value) {
     setState(() {
       result = value.body.toString();
     });

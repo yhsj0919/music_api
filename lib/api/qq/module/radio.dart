@@ -24,7 +24,7 @@ Future<Answer> _radioList(Map params, List<Cookie> cookie) {
  * firstplay 猜测：是不是第一次请求，和加载更多对应
  * num 每页数量
  */
-Future<Answer> _radioDetail(Map params, List<Cookie> cookie) {
+Future<Answer> _radioInfo(Map params, List<Cookie> cookie) {
   final size = params['size'] ?? 10;
 
   final data = {

@@ -17,7 +17,7 @@ Future<Answer> _rankList(Map params, List<Cookie> cookie) {
 /*
 * 榜单详情
  */
-Future<Answer> _rankDetail(Map params, List<Cookie> cookie) {
+Future<Answer> _rankInfo(Map params, List<Cookie> cookie) {
   final data = {
     "columnId": params['rankId'],
     "needAll": '0',

@@ -1,7 +1,7 @@
 part of '../kugou.dart';
 
 ///榜单列表
-Future<Answer> _bangList(Map params, List<Cookie> cookie) {
+Future<Answer> _rankList(Map params, List<Cookie> cookie) {
   return _get(
     "http://mobilecdnbj.kugou.com/api/v3/rank/list",
     params: {},
@@ -10,7 +10,7 @@ Future<Answer> _bangList(Map params, List<Cookie> cookie) {
 }
 
 ///榜单详情
-Future<Answer> _bangInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _rankInfo(Map params, List<Cookie> cookie) {
   return _get(
     "http://mobilecdnbj.kugou.com/api/v3/rank/info",
     params: {
@@ -21,7 +21,7 @@ Future<Answer> _bangInfo(Map params, List<Cookie> cookie) {
 }
 
 ///榜单歌曲
-Future<Answer> _bangSong(Map params, List<Cookie> cookie) {
+Future<Answer> _rankSong(Map params, List<Cookie> cookie) {
   return _get(
     "http://mobilecdnbj.kugou.com/api/v3/rank/song",
     params: {
