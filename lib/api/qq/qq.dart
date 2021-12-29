@@ -1,28 +1,19 @@
-import 'dart:collection';
 import 'dart:convert';
+
+import 'package:music_api/http/http.dart';
+import 'package:music_api/utils/answer.dart';
+import 'package:music_api/utils/types.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:music_api/api/utils/answer.dart';
-import 'package:music_api/api/utils/types.dart';
-import 'package:music_api/api/utils/utils.dart';
-
 part 'module/album.dart';
-
 part 'module/home.dart';
-
 part 'module/mv.dart';
-
 part 'module/playlist.dart';
-
 part 'module/radio.dart';
-
-part 'module/search.dart';
-
-part 'module/singer.dart';
-
-part 'module/song.dart';
-
 part 'module/rank.dart';
+part 'module/search.dart';
+part 'module/singer.dart';
+part 'module/song.dart';
 
 class QQ {
   QQ._();
@@ -261,7 +252,7 @@ Future<Answer> _get(
     options.addAll(header);
   }
 
-  return _httpGet(path, params: params, headers: options).then((value) async {
+  return Http.get(path, params: params, headers: options).then((value) async {
     try {
       if (value.statusCode == 200) {
         var cookies = value.cookies;
@@ -276,13 +267,5 @@ Future<Answer> _get(
     } catch (e) {
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
     }
-  });
-}
-
-Future<HttpClientResponse> _httpGet(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) {
-  url += "?${toParamsString(LinkedHashMap.from(params ?? {}))}";
-  return HttpClient().getUrl(Uri.parse(url)).then((request) {
-    headers?.forEach(request.headers.add);
-    return request.close();
   });
 }

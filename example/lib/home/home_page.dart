@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
+import 'package:music_api_example/home/proxy_page.dart';
 import 'package:music_api_example/home/qq_page.dart';
 import 'package:music_api_example/home/server_page.dart';
 
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   TabController? tabController;
 
   var pages = {
+    "简单代理": const ProxyPage(),
     "服务": const ServerPage(),
     "MyFreeMp3": const MyFreeMp3Page(),
     "百度": const BaiduPage(),

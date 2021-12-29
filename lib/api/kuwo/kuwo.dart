@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:universal_io/io.dart';
 
-import 'package:music_api/api/utils/answer.dart';
-import 'package:music_api/api/utils/types.dart';
+import 'package:music_api/utils/answer.dart';
+import 'package:music_api/utils/types.dart';
 import 'package:music_api/http/http.dart';
 
 part 'module/album.dart';

@@ -8,7 +8,7 @@ import 'package:music_api/api/kuwo/kuwo.dart';
 import 'package:music_api/api/migu/migu.dart';
 import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/api/qq/qq.dart';
-import 'package:music_api/api/utils/answer.dart';
+import 'package:music_api/utils/answer.dart';
 
 class MusicApi {
   MusicApi._();
