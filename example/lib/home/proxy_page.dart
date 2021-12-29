@@ -19,7 +19,7 @@ class _ProxyPageState extends State<ProxyPage> with AutomaticKeepAliveClientMixi
         children: [
           const Padding(
             padding: EdgeInsets.only(bottom: 16),
-            child: Text("服务能单独使用，输入本机ip端口号即可访问"),
+            child: Text("这里启动一个代理服务器，\n用于WEB页面的跨域请求，\n暂时地址是写死的，以后再改了\n在本地启动此服务之后，\nweb版即可正常使用"),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
 import 'package:music_api_example/home/proxy_page.dart';
@@ -32,8 +33,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    super.initState();
+    if (kIsWeb) {
+      pages.remove("简单代理");
+      pages.remove("服务");
+    }
     tabController = TabController(length: pages.length, vsync: this);
+    super.initState();
   }
 
   @override

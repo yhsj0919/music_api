@@ -45,35 +45,45 @@ class Proxy {
     request.response.headers.add("withCredentials", true);
 
     String path = request.uri.path;
-    Map<String, String> params;
 
+    Map<String, String> params;
     if (path.startsWith("/")) {
       path = path.replaceFirst("/", "");
     }
-    var header = <String, String>{};
-    request.headers.forEach((name, values) {
-      if (name == "http_token") {
-        header["cookie"] = values.first;
-      } else {
-        header[name] = values.first;
-      }
-    });
 
-    var cookie = header["http_token"];
-
-    if (cookie != null) {
-      var cookies = Cookie.fromSetCookieValue(cookie);
-      print(cookies);
-    }
     if (path == "favicon.ico") {
       request.response.statusCode = 200;
       request.response.close();
+    } else if (path == "") {
+      request.response.statusCode = 200;
+      request.response.write('该服务用于简单的跨域请求,如果跨域需要cookie，请在请求头用http_token替代，使用方式"http://127.0.0.1:3001/http://www.baidu.com"');
+      request.response.close();
     } else {
+      String host = Uri.parse(path).origin;
+
+      var header = <String, String>{};
+      request.headers.forEach((name, values) {
+        if (name == "http_token") {
+          header["cookie"] = values.first;
+        } else {
+          header[name] = values.first;
+        }
+      });
+
+      var cookie = header["http_token"];
+
+      if (cookie != null) {
+        var cookies = Cookie.fromSetCookieValue(cookie);
+        print(cookies);
+      }
+
+      header["referer"] = host;
+      header["origin"] = host;
       header.remove("host");
       header.remove("connection");
       header.remove("cache-control");
       header.remove("accept-language");
-      // header.remove("content-length");
+      header.remove("content-length");
       // header.remove("sec-fetch-dest");
       // header.remove("sec-ch-ua-mobile");
       // header.remove("sec-fetch-mode");
@@ -82,15 +92,14 @@ class Proxy {
       // header.remove("referer");
       // header.remove("sec-fetch-site");
       // header.remove("sec-ch-ua");
-      // header.remove("accept-encoding");
-      // header.remove("accept");
-
+      header.remove("accept-encoding");
+      header.remove("accept");
 
       print(header);
 
       HttpClientResponse resp;
       print(">>>>>>>>${request.method}>>>>>>>");
-      if (request.method == "GET") {
+      if (request.method == "GET" || request.method == "OPTIONS") {
         params = request.uri.queryParameters;
         resp = await Http.get(path, params: params, headers: header);
       } else {
