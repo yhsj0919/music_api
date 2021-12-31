@@ -7,11 +7,12 @@ import 'package:universal_io/io.dart';
 class Http {
   static Future<HttpClientResponse> get(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) {
     if (kIsWeb) {
+      var tmp = <String, String>{};
       url = "http://localhost:3001/" + url;
-      if (headers?.containsKey("Cookie") == true || headers?.containsKey("cookie") == true) {
-        var cookie = headers?["Cookie"] ?? headers?["cookie"];
-        headers?["http_token"] = cookie ?? "";
-      }
+      headers?.forEach((key, value) {
+        tmp["x-proxy-$key"] = value;
+      });
+      headers = tmp;
     }
     url += "${params?.isNotEmpty == true ? "?" : ""}${toParamsString(LinkedHashMap.from(params ?? {}))}";
     return HttpClient().getUrl(Uri.parse(url)).then((request) {
@@ -23,10 +24,12 @@ class Http {
   static Future<HttpClientResponse> post(String url, {Map<String, dynamic>? params, Map<String, String>? headers}) async {
     if (kIsWeb) {
       url = "http://localhost:3001/" + url;
-      if (headers?.containsKey("Cookie") == true || headers?.containsKey("cookie") == true) {
-        var cookie = headers?["Cookie"] ?? headers?["cookie"];
-        headers?["http_token"] = cookie ?? "";
-      }
+      var tmp = <String, String>{};
+      url = "http://localhost:3001/" + url;
+      headers?.forEach((key, value) {
+        tmp["x-proxy-$key"] = value;
+      });
+      headers = tmp;
     }
     return HttpClient().postUrl(Uri.parse(url)).then((request) {
       headers?.forEach(request.headers.add);
