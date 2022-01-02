@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
+import 'package:music_api_example/home/netease_page.dart';
 import 'package:music_api_example/home/proxy_page.dart';
 import 'package:music_api_example/home/qq_page.dart';
 import 'package:music_api_example/home/server_page.dart';
@@ -29,6 +30,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "酷狗": const KuGouPage(),
     "咪咕": const MiGuPage(),
     "企鹅": const QQPage(),
+    "网易": const NeteasePage(),
   };
 
   @override

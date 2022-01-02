@@ -38,4 +38,12 @@ class Http {
       return request.close();
     });
   }
+
+  static Future<HttpClientResponse> request(String url, {required String method, Map<String, dynamic>? params, Map<String, String>? headers}) async {
+    if (method == "POST") {
+      return post(url, headers: headers, params: params);
+    } else {
+      return get(url, headers: headers, params: params);
+    }
+  }
 }
