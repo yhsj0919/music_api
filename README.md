@@ -16,8 +16,6 @@
 
 以后有机会会合并其他平台的接口
 
-开始添加qq接口，现有歌手相关，音乐相关，mv相关，只测试了能不能通过，参数还没有调整，有些是写死的
-
 ## 其他说明
 
 [网易云api](https://binaryify.github.io/NeteaseCloudMusicApi/#/)
