@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music_api/api/migu/migu.dart';
 
@@ -180,6 +183,11 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                         MiGu?.playUrl(songId: "1002508489", toneFlag: "PQ").then(onData).catchError(onError);
                       }),
                   ListTile(
+                      title: const Text('播放地址2(根据contentId获取播放地址，支持更多格式，更少限制)'),
+                      onTap: () {
+                        MiGu?.playUrl2(contentId: "600907000009041441", toneFlag: "PQ").then(onData).catchError(onError);
+                      }),
+                  ListTile(
                       title: const Text('榜单'),
                       onTap: () {
                         MiGu?.rankList().then(onData).catchError(onError);
@@ -248,7 +256,10 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
 
   void onData(value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+      if (kDebugMode) {
+        print(result);
+      }
     });
   }
 

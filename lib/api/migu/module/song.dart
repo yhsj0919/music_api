@@ -76,3 +76,43 @@ Future<Answer> _playUrl(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
+
+/*
+* 播放地址
+* {
+   "formatType": "LQ",
+   "resourceType": "2",
+  },
+  {
+   "formatType": "PQ",
+   "resourceType": "2",
+  },
+  {
+   "formatType": "HQ",
+   "resourceType": "2",
+  },
+  {
+   "formatType": "SQ",
+   "resourceType": "E",
+  },
+  {
+  "formatType": "ZQ24",
+  "resourceType": "2",
+  }
+ */
+Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
+  final data = {
+    "netType": '00',
+    "copyrightId": 0,
+    "contentId": params['contentId'],
+    "resourceType": params['resourceType'] ?? '2',
+    "channel": 0,
+    "toneFlag": params['toneFlag'] ?? 'PQ',
+  };
+  return _get(
+    "http://218.205.239.34/MIGUM2.0/v1.0/content/sub/listenSong.do",
+    params: data,
+    cookie: cookie,
+    followRedirects: false,
+  );
+}

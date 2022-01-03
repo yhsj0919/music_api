@@ -143,6 +143,11 @@ class MiGu {
     return _playUrl.call({"songId": songId, "toneFlag": toneFlag}, []);
   }
 
+  ///播放地址2
+  static Future playUrl2({required String? contentId, String? toneFlag, String? resourceType}) {
+    return _playUrl2.call({"contentId": contentId, "toneFlag": toneFlag, "resourceType": resourceType}, []);
+  }
+
   ///榜单
   static Future rankList() {
     return _rankList.call({}, []);
@@ -261,14 +266,14 @@ Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   return headers;
 }
 
-Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}}) async {
+Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, bool followRedirects = true}) async {
   final headers = _buildHeader(path, cookie);
 
   if (header.isNotEmpty) {
     headers.addAll(header);
   }
 
-  return Http.get(path, params: params, headers: headers).then((value) async {
+  return Http.get(path, params: params, headers: headers, followRedirects: followRedirects).then((value) async {
     try {
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
@@ -277,10 +282,18 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
         String data = await value.transform(utf8.decoder).join();
         ans = ans.copy(status: value.statusCode, body: json.decode(data));
         return Future.value(ans);
+      } else if (value.statusCode == 302) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+        var ans = const Answer();
+        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+        String data = value.headers[HttpHeaders.locationHeader]?.first ?? "";
+        ans = ans.copy(status: value.statusCode, body: {"url": data});
+        return Future.value(ans);
       } else {
         return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
+      print(e);
       return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
     }
   });
