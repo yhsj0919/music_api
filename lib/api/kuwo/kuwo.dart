@@ -37,108 +37,108 @@ class KuWo {
   }
 
   ///专辑详情
-  static Future albumInfo({String? albumId, int? page, int? size}) {
+  static Future<Answer> albumInfo({String? albumId, int? page, int? size}) {
     return _albumInfo.call({"albumId": albumId, "page": page, "size": size}, []);
   }
 
   ///歌单标签
-  static Future playListTag() {
+  static Future<Answer> playListTag() {
     return _playListTag.call({}, []);
   }
 
   ///歌单列表
   ///tagId,order不共存，优先id
-  static Future playList({String? tagId, String? order, int? page, int? size}) {
+  static Future<Answer> playList({String? tagId, String? order, int? page, int? size}) {
     return _playList.call({"id": tagId, "order": order, "page": page, "size": size}, []);
   }
 
   ///歌单详情
-  static Future playListInfo({String? id, int? page, int? size}) {
+  static Future<Answer> playListInfo({String? id, int? page, int? size}) {
     return _playListInfo.call({"pid": id, "page": page, "size": size}, []);
   }
 
   ///榜单列表
-  static Future rankList() {
+  static Future<Answer> rankList() {
     return _rankList.call({}, []);
   }
 
   ///榜单详情
-  static Future rankInfo({String? id, int? page, int? size}) {
+  static Future<Answer> rankInfo({String? id, int? page, int? size}) {
     return _rankInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///歌手详情
-  static Future artistList({String? category, int? page, int? size}) {
+  static Future<Answer> artistList({String? category, int? page, int? size}) {
     return _artistList.call({"category": category, "page": page, "size": size}, []);
   }
 
   ///歌手详情
-  static Future artistInfo({String? artistId}) {
+  static Future<Answer> artistInfo({String? artistId}) {
     return _artistInfo.call({"artistId": artistId}, []);
   }
 
   ///歌手单曲
-  static Future artistMusic({String? artistId, int? page, int? size}) {
+  static Future<Answer> artistMusic({String? artistId, int? page, int? size}) {
     return _artistMusic.call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
-  static Future artistAlbum({String? artistId, int? page, int? size}) {
+  static Future<Answer> artistAlbum({String? artistId, int? page, int? size}) {
     return _artistAlbum.call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
-  static Future artistMv({String? artistId, int? page, int? size}) {
+  static Future<Answer> artistMv({String? artistId, int? page, int? size}) {
     return _artistMv.call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///MV列表
-  static Future mvList({int? page, int? size}) {
+  static Future<Answer> mvList({int? page, int? size}) {
     return _mvList.call({"page": page, "size": size}, []);
   }
 
   ///播放地址
-  static Future playUrl({String? rid, String? format}) {
+  static Future<Answer> playUrl({String? rid, String? format}) {
     return _playUrl.call({"rid": rid, "format": format}, []);
   }
 
   ///歌曲信息
-  static Future musicInfo({String? mid}) {
+  static Future<Answer> musicInfo({String? mid}) {
     return _musicInfo.call({"mid": mid}, []);
   }
 
   ///歌词
-  static Future musicLrc({String? musicId}) {
+  static Future<Answer> musicLrc({String? musicId}) {
     return _musicLrc.call({"musicId": musicId}, []);
   }
 
   ///搜索热词
-  static Future searchHot() {
+  static Future<Answer> searchHot() {
     return _hotSearch.call({}, []);
   }
 
   ///搜索单曲
-  static Future searchMusic({String? key, int? page, int? size}) {
+  static Future<Answer> searchMusic({String? key, int? page, int? size}) {
     return _searchMusic.call({"key": key, "page": page, "size": size}, []);
   }
 
   ///搜索专辑
-  static Future searchAlbum({String? key, int? page, int? size}) {
+  static Future<Answer> searchAlbum({String? key, int? page, int? size}) {
     return _searchAlbum.call({"key": key, "page": page, "size": size}, []);
   }
 
   ///搜索MV
-  static Future searchMv({String? key, int? page, int? size}) {
+  static Future<Answer> searchMv({String? key, int? page, int? size}) {
     return _searchMv.call({"key": key, "page": page, "size": size}, []);
   }
 
   ///搜索歌单
-  static Future searchPlayList({String? key, int? page, int? size}) {
+  static Future<Answer> searchPlayList({String? key, int? page, int? size}) {
     return _searchPlayList.call({"key": key, "page": page, "size": size}, []);
   }
 
   ///搜索歌手
-  static Future searchArtist({String? key, int? page, int? size}) {
+  static Future<Answer> searchArtist({String? key, int? page, int? size}) {
     return _searchArtist.call({"key": key, "page": page, "size": size}, []);
   }
 
