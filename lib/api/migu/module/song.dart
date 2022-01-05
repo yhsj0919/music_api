@@ -110,7 +110,7 @@ Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
     "toneFlag": params['toneFlag'] ?? 'PQ',
   };
   return _get(
-    "http://218.205.239.34/MIGUM2.0/v1.0/content/sub/listenSong.do",
+    "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/sub/listenSong.do",
     params: data,
     cookie: cookie,
     followRedirects: false,
