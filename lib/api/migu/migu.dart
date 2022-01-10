@@ -109,8 +109,8 @@ class MiGu {
   }
 
   ///歌单信息
-  static Future<Answer> playListInfo({required String? id, String? resourceType}) {
-    return _playListInfo.call({"id": id, "resourceType": resourceType}, []);
+  static Future<Answer> playListInfo({required String? id}) {
+    return _playListInfo.call({"id": id}, []);
   }
 
   ///歌单歌曲
