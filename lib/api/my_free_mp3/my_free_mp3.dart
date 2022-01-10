@@ -31,6 +31,8 @@ final _api = <String, Api>{
 Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   Map<String, String> header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
+    "origin": "https://myfreemp3juices.cc",
+    "referer": "https://myfreemp3juices.cc/",
   };
   return Http.post(path, params: params, headers: header).then((value) async {
     try {

@@ -5,7 +5,7 @@ import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 
 class Http {
-  static Future<HttpClientResponse> get(String url, {Map<String, dynamic>? params, Map<String, String>? headers, bool followRedirects = true}) {
+  static Future<HttpClientResponse> get(String url, {Map<String, dynamic>? params, Map<String, String>? headers, bool followRedirects = true, int timeout = 10}) {
     if (kIsWeb) {
       var tmp = <String, String>{};
       url = "http://localhost:3001/" + url;
@@ -19,11 +19,11 @@ class Http {
     return HttpClient().getUrl(Uri.parse(url)).then((request) {
       request.followRedirects = followRedirects;
       headers?.forEach(request.headers.add);
-      return request.close();
+      return request.close().timeout(Duration(seconds: timeout));
     });
   }
 
-  static Future<HttpClientResponse> post(String url, {Map<String, dynamic>? params, Map<String, String>? headers, bool followRedirects = true}) async {
+  static Future<HttpClientResponse> post(String url, {Map<String, dynamic>? params, Map<String, String>? headers, bool followRedirects = true, int timeout = 10}) async {
     if (kIsWeb) {
       url = "http://localhost:3001/" + url;
       var tmp = <String, String>{};
@@ -38,7 +38,7 @@ class Http {
       headers?.forEach(request.headers.add);
       request.headers.add('Content-Type', 'application/x-www-form-urlencoded');
       request.write(Uri(queryParameters: (params ?? {}).map((key, value) => MapEntry(key, value.toString())).cast()).query);
-      return request.close();
+      return request.close().timeout(Duration(seconds: timeout));
     });
   }
 

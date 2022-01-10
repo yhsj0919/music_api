@@ -29,177 +29,177 @@ class MiGu {
   MiGu._();
 
   ///banner
-  static Future banner() {
+  static Future<Answer> banner() {
     return _banner.call({}, []);
   }
 
   ///新碟上架
-  static Future albumNewWeb({int? page, int? size}) {
+  static Future<Answer> albumNewWeb({int? page, int? size}) {
     return _albumNewWeb.call({"page": page, "size": size}, []);
   }
 
   ///新碟类型
-  static Future albumNewType() {
+  static Future<Answer> albumNewType() {
     return _albumNewType.call({}, []);
   }
 
   ///新碟上架
-  static Future albumNew({String? columnId, int? page, int? size}) {
+  static Future<Answer> albumNew({String? columnId, int? page, int? size}) {
     return _albumNew.call({"columnId": columnId, "page": page, "size": size}, []);
   }
 
   ///专辑歌曲
-  static Future albumSong({String? albumId, String? type, int? page, int? size}) {
+  static Future<Answer> albumSong({String? albumId, String? type, int? page, int? size}) {
     return _albumSong.call({"albumId": albumId, "type": type, "page": page, "size": size}, []);
   }
 
   ///专辑歌曲
-  static Future albumSong2({String? albumId, int? page, int? size}) {
+  static Future<Answer> albumSong2({String? albumId, int? page, int? size}) {
     return _albumSong2.call({"albumId": albumId, "page": page, "size": size}, []);
   }
 
   ///专辑详情
-  static Future albumInfo({String? albumId, String? type}) {
+  static Future<Answer> albumInfo({String? albumId, String? type}) {
     return _albumInfo.call({"albumId": albumId, "type": type}, []);
   }
 
   ///专辑详情2
-  static Future albumInfo2({String? albumId}) {
+  static Future<Answer> albumInfo2({String? albumId}) {
     return _albumInfo2.call({"albumId": albumId}, []);
   }
 
   ///mv信息
-  static Future mvInfo({String? mvId}) {
+  static Future<Answer> mvInfo({String? mvId}) {
     return _mvInfo.call({"mvId": mvId}, []);
   }
 
   ///专辑详情
-  static Future mvPlayUrl({required String? contentId, required String? mvCopyrightId, required String? format, required String? size, String? type, required String? url}) {
+  static Future<Answer> mvPlayUrl({required String? contentId, required String? mvCopyrightId, required String? format, required String? size, String? type, required String? url}) {
     return _mvPlayUrl.call({"contentId": contentId, "mvCopyrightId": mvCopyrightId, "format": format, "size": size, "type": type, "url": url}, []);
   }
 
   ///mv推荐
-  static Future mvRec({String? mvId, String? page}) {
+  static Future<Answer> mvRec({String? mvId, String? page}) {
     return _mvRec.call({"mvId": mvId, "page": page}, []);
   }
 
   ///歌单推荐，web
-  static Future playListNewWeb() {
+  static Future<Answer> playListNewWeb() {
     return _playListNewWeb.call({}, []);
   }
 
   ///歌单热门标签
-  static Future playListHotTag() {
+  static Future<Answer> playListHotTag() {
     return _playListHotTag.call({}, []);
   }
 
   ///歌单热门推荐(歌单最顶上的几个)
-  static Future playListRec() {
+  static Future<Answer> playListRec() {
     return _playListRec.call({}, []);
   }
 
   ///歌单列表
-  static Future playList({String? tagId, int? page}) {
+  static Future<Answer> playList({String? tagId, int? page}) {
     return _playList.call({"tagId": tagId, "page": page}, []);
   }
 
   ///歌单标签列表
-  static Future playListTagList() {
+  static Future<Answer> playListTagList() {
     return _playListTagList.call({}, []);
   }
 
   ///歌单信息
-  static Future playListInfo({required String? id, String? resourceType}) {
+  static Future<Answer> playListInfo({required String? id, String? resourceType}) {
     return _playListInfo.call({"id": id, "resourceType": resourceType}, []);
   }
 
   ///歌单歌曲
-  static Future playListSong({required String? id, int? page, int? size}) {
+  static Future<Answer> playListSong({required String? id, int? page, int? size}) {
     return _playListSong.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///歌单播放量
-  static Future playListPlayNum({List<String> contentIds = const [], List<String> contentTypes = const []}) {
+  static Future<Answer> playListPlayNum({List<String> contentIds = const [], List<String> contentTypes = const []}) {
     return _playListPlayNum.call({"contentIds": contentIds, "contentTypes": contentTypes}, []);
   }
 
   ///新歌(web)
-  static Future songNewWeb({int? page, int? size}) {
+  static Future<Answer> songNewWeb({int? page, int? size}) {
     return _songNewWeb.call({"page": page, "size": size}, []);
   }
 
   ///新歌类型
-  static Future songNewType() {
+  static Future<Answer> songNewType() {
     return _songNewType.call({}, []);
   }
 
   ///新歌
-  static Future songNew({required String? columnId, int? page, int? size}) {
+  static Future<Answer> songNew({required String? columnId, int? page, int? size}) {
     return _songNew.call({"columnId": columnId, "page": page, "size": size}, []);
   }
 
   ///播放地址
-  static Future playUrl({required String? songId, String? toneFlag}) {
+  static Future<Answer> playUrl({required String? songId, String? toneFlag}) {
     return _playUrl.call({"songId": songId, "toneFlag": toneFlag}, []);
   }
 
   ///播放地址2
-  static Future playUrl2({required String? contentId, String? toneFlag, String? resourceType}) {
+  static Future<Answer> playUrl2({required String? contentId, String? toneFlag, String? resourceType}) {
     return _playUrl2.call({"contentId": contentId, "toneFlag": toneFlag, "resourceType": resourceType}, []);
   }
 
   ///榜单
-  static Future rankList() {
+  static Future<Answer> rankList() {
     return _rankList.call({}, []);
   }
 
   ///榜单
-  static Future rankInfo({required String? rankId}) {
+  static Future<Answer> rankInfo({required String? rankId}) {
     return _rankInfo.call({"rankId": rankId}, []);
   }
 
   ///歌手标签
-  static Future singerTabs() {
+  static Future<Answer> singerTabs() {
     return _singerTabs.call({}, []);
   }
 
   ///歌手列表
-  static Future singer({String? tab}) {
+  static Future<Answer> singer({String? tab}) {
     return _singer.call({"tab": tab}, []);
   }
 
   ///歌手信息
-  static Future singerInfo({required String? id}) {
+  static Future<Answer> singerInfo({required String? id}) {
     return _singerInfo.call({"id": id}, []);
   }
 
   ///歌手单曲
-  static Future singerSongs({required String? id, int? page, int? size}) {
+  static Future<Answer> singerSongs({required String? id, int? page, int? size}) {
     return _singerSongs.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
-  static Future singerAlbum({required String? id, int? page, int? size}) {
+  static Future<Answer> singerAlbum({required String? id, int? page, int? size}) {
     return _singerAlbum.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///歌手MV
-  static Future singerMv({required String? id, int? page, int? size}) {
+  static Future<Answer> singerMv({required String? id, int? page, int? size}) {
     return _singerMv.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///搜索热词
-  static Future searchHotWord() {
+  static Future<Answer> searchHotWord() {
     return _searchHotWord.call({}, []);
   }
 
   ///搜索
-  static Future search({required String? keyword, int? type}) {
-    return _search.call({"keyword": keyword, "type": type}, []);
+  static Future<Answer> search({required String? keyword, int? type, int? page, int? size}) {
+    return _search.call({"keyword": keyword, "type": type, "page": page, "size": size}, []);
   }
 
   ///搜索建议
-  static Future searchSuggest({required String? keyword}) {
+  static Future<Answer> searchSuggest({required String? keyword}) {
     return _searchSuggest.call({"keyword": keyword}, []);
   }
 
