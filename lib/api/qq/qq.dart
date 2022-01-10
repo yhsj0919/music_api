@@ -6,13 +6,21 @@ import 'package:music_api/utils/types.dart';
 import 'package:universal_io/io.dart';
 
 part 'module/album.dart';
+
 part 'module/home.dart';
+
 part 'module/mv.dart';
+
 part 'module/playlist.dart';
+
 part 'module/radio.dart';
+
 part 'module/rank.dart';
+
 part 'module/search.dart';
+
 part 'module/singer.dart';
+
 part 'module/song.dart';
 
 class QQ {
@@ -99,8 +107,8 @@ class QQ {
   }
 
   ///搜索
-  static Future<Answer> search({String? keyWord}) {
-    return _search.call({"keyWord": keyWord}, []);
+  static Future<Answer> search({String? keyWord, int? type, int? page, int? size}) {
+    return _search.call({"keyWord": keyWord, "type": type, "page": page, "size": size}, []);
   }
 
   ///歌手列表

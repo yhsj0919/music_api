@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/utils/answer.dart';
@@ -73,7 +75,8 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
 
   void onData(Answer value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+      print(result);
     });
   }
 
