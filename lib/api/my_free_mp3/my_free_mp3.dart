@@ -11,8 +11,8 @@ part 'module/search.dart';
 class MyFreeMp3 {
   MyFreeMp3._();
 
-  static Future<Answer> search({String? keyWords, int? page, int? sort}) {
-    return _search.call({"keyWords": keyWords, "page": page, "sort": sort}, []);
+  static Future<Answer> search({String? keyWord, int? page, int? sort}) {
+    return _search.call({"keyWord": keyWord, "page": page, "sort": sort}, []);
   }
 
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {

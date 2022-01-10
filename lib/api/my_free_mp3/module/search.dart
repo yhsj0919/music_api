@@ -6,7 +6,7 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
   return _post(
     "https://myfreemp3juices.cc/api/search.php",
     params: {
-      "q": params['keyWords'],
+      "q": params['keyWord'],
       "page": params['page'] ?? 0,
       "sort": params['sort'] ?? 0,
     },

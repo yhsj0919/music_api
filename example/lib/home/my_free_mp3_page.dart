@@ -58,7 +58,7 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
                   ListTile(
                     title: const Text('搜索(报错重试即可)'),
                     onTap: () {
-                      MyFreeMp3?.search(keyWords: "周杰伦").then(onData).catchError(onError);
+                      MyFreeMp3?.search(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                 ],
