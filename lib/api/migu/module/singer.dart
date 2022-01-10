@@ -12,7 +12,7 @@ Future<Answer> _singerTabs(Map params, List<Cookie> cookie) {
       {"title": "日韩", "tab": "rihan"},
     ],
     "tab2": [
-      {"title": "nan", "tab": "nan"},
+      {"title": "男", "tab": "nan"},
       {"title": "女", "tab": "nv"},
       {"title": "组合", "tab": "group"},
     ],
