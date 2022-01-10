@@ -68,12 +68,10 @@ Future<Answer> _playListTagList(Map params, List<Cookie> cookie) {
  */
 Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
   final data = {
-    'needSimple': '00',
-    'resourceId': params['id'],
-    'resourceType': params['resourceType'] ?? DateTime.now().year,
+    'playlistId': params['id'],
   };
   return _get(
-    "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do",
+    "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/v2.0",
     params: data,
     cookie: cookie,
   );
