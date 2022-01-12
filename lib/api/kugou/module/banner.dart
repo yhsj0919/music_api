@@ -7,8 +7,8 @@ Future<Answer> _banner(Map params, List<Cookie> cookie) {
     params: {"json": "true"},
     cookie: cookie,
   ).then((value) {
-    var body = value.body;
+    var body = value.data;
     body.remove("data");
-    return Future.value(value.copy(body: body));
+    return Future.value(value.copy(data: body));
   });
 }

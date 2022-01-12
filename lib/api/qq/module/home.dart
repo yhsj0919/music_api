@@ -11,7 +11,7 @@ Future<Answer> _home(Map params, List<Cookie> cookie) {
         "method": "GetNewMv",
         "param": {"style": 0, "tag": 0, "start": 0, "size": 8}
       },
-      "req_1": {
+      "banner": {
         "module": "music.musicHall.MusicHallPlatform",
         "method": "GetFocus",
         "param": {
@@ -33,10 +33,32 @@ Future<Answer> _home(Map params, List<Cookie> cookie) {
         "method": "getRadioList",
         "param": {"pos": 6}
       },
-      "toplist": {
-        "module": "musicToplist.ToplistInfoServer",
-        "method": "GetAll",
-        "param": {}
+      "toplist": {"module": "musicToplist.ToplistInfoServer", "method": "GetAll", "param": {}},
+      "comm": {
+        "ct": 20,
+        "cv": 1807,
+      }
+    })
+  };
+  return _get(
+    "https://u.y.qq.com/cgi-bin/musicu.fcg",
+    params: data,
+    cookie: cookie,
+  );
+}
+
+/*
+* Banner
+ */
+Future<Answer> _banner(Map params, List<Cookie> cookie) {
+  final data = {
+    "data": json.encode({
+      "banner": {
+        "module": "music.musicHall.MusicHallPlatform",
+        "method": "GetFocus",
+        "param": {
+          "Device": {"OS": "3", "AppName": "QQ音乐"}
+        }
       },
       "comm": {
         "ct": 20,

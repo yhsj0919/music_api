@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
+import 'package:music_api/music_api.dart';
 import 'package:music_api/utils/answer.dart';
 
-class MyFreeMp3Page extends StatefulWidget {
-  const MyFreeMp3Page({Key? key}) : super(key: key);
+class MixPage extends StatefulWidget {
+  const MixPage({Key? key}) : super(key: key);
 
   @override
-  _MyFreeMp3PageState createState() => _MyFreeMp3PageState();
+  _MixPageState createState() => _MixPageState();
 }
 
-class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveClientMixin {
+class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
   String result = "";
 
   @override
@@ -49,16 +50,11 @@ class _MyFreeMp3PageState extends State<MyFreeMp3Page> with AutomaticKeepAliveCl
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
+
                   ListTile(
-                    title: const Text('所有Api'),
+                    title: const Text('Banner'),
                     onTap: () {
-                      MyFreeMp3?.api("").then(onData).catchError(onError);
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('搜索(报错重试即可)'),
-                    onTap: () {
-                      MyFreeMp3?.search(keyWord: "周杰伦").then(onData).catchError(onError);
+                      MusicApi?.banner().then(onData).catchError(onError);
                     },
                   ),
                 ],

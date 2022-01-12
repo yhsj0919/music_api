@@ -10,6 +10,8 @@ import 'package:music_api/http/http.dart';
 
 part 'module/account.dart';
 
+part 'module/banner.dart';
+
 part 'module/ad.dart';
 
 part 'module/album.dart';
@@ -45,6 +47,11 @@ class Baidu {
   ///首页
   static Future<Answer> index() {
     return _index.call({}, []);
+  }
+
+  ///首页
+  static Future<Answer> banner() {
+    return _banner.call({}, []);
   }
 
   ///专辑推荐
@@ -218,19 +225,19 @@ class Baidu {
   }
 
   ///登录
-  static Future login({String? phone, String? code}) {
+  static Future<Answer> login({String? phone, String? code}) {
     return _login.call({"phone": phone, "code": code}, []);
   }
 
   ///签到
-  static Future signIn({List<Cookie> cookie = const []}) {
+  static Future<Answer> signIn({List<Cookie> cookie = const []}) {
     return _signIn.call({}, cookie);
   }
 
   ///服务使用
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -240,6 +247,7 @@ class Baidu {
 final _api = <String, Api>{
   "/openScreen": _openScreen,
   "/index": _index,
+  "/banner": _banner,
   "/album/list": _albumList,
   "/album/info": _albumInfo,
   "/song/list": _songList,
@@ -320,13 +328,13 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(status: value.statusCode, body: json.decode(content));
+        ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
     }
   });
 }
@@ -359,13 +367,13 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
         var ans = const Answer();
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(status: value.statusCode, body: json.decode(content));
+        ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
+        return Future.value(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
     }
   });
 }

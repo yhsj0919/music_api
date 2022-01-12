@@ -256,7 +256,7 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
 
   void onData(value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       if (kDebugMode) {
         print(result);
       }

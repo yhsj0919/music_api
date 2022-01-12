@@ -111,7 +111,7 @@ class Netease {
 
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }

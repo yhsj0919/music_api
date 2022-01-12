@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/kuwo/kuwo.dart';
+import 'package:music_api/utils/answer.dart';
 
 class KuwoPage extends StatefulWidget {
   const KuwoPage({Key? key}) : super(key: key);
@@ -159,31 +160,31 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('搜索单曲'),
                     onTap: () {
-                      KuWo?.searchMusic(key: "周杰伦").then(onData).catchError(onError);
+                      KuWo?.searchMusic(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索专辑'),
                     onTap: () {
-                      KuWo?.searchAlbum(key: "周杰伦").then(onData).catchError(onError);
+                      KuWo?.searchAlbum(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索MV'),
                     onTap: () {
-                      KuWo?.searchMv(key: "周杰伦").then(onData).catchError(onError);
+                      KuWo?.searchMv(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索歌单'),
                     onTap: () {
-                      KuWo?.searchPlayList(key: "周杰伦").then(onData).catchError(onError);
+                      KuWo?.searchPlayList(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索歌手'),
                     onTap: () {
-                      KuWo?.searchArtist(key: "周杰伦").then(onData).catchError(onError);
+                      KuWo?.searchArtist(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                 ],
@@ -198,9 +199,9 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
   @override
   bool get wantKeepAlive => true;
 
-  void onData(value) {
+  void onData(Answer value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       print(result);
     });
   }

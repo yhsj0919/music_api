@@ -9,6 +9,7 @@ import 'package:music_api_example/home/server_page.dart';
 import 'baidu_page.dart';
 import 'kugou_page.dart';
 import 'migu_page.dart';
+import 'mix_page.dart';
 import 'my_free_mp3_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "咪咕": const MiGuPage(),
     "企鹅": const QQPage(),
     "网易": const NeteasePage(),
+    "混合api": const MixPage(),
   };
 
   @override

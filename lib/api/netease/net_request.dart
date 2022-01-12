@@ -99,23 +99,23 @@ Future<Answer> eApiRequest(
       data = bytes;
     }
 
-    var ans = Answer(cookie: response.cookies, status: response.statusCode);
+    var ans = Answer(cookie: response.cookies, code: response.statusCode);
     try {
       Map content = json.decode(decrypt(data));
       ans = ans.copy(
-        body: content,
-        status: content['code'],
+        data: content,
+        code: content['code'],
       );
     } catch (e) {
-      ans = ans.copy(body: json.decode(utf8.decode(data)));
+      ans = ans.copy(data: json.decode(utf8.decode(data)));
     }
 
-    ans = ans.copy(status: ans.status > 100 && ans.status < 600 ? ans.status : 400);
+    ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);
     return ans;
   }).catchError((e, s) {
     debugPrint("request error " + e.toString());
     debugPrint(s.toString());
-    return Answer(status: 502, body: {'code': 502, 'msg': e.toString()});
+    return Answer(code: 502, msg:e.toString(), data: {'code': 502, 'msg': e.toString()});
   });
 }
 
@@ -144,12 +144,12 @@ Future<Answer> request(
 
     String content = await response.transform(utf8.decoder).join();
     final body = json.decode(content);
-    ans = ans.copy(status: int.parse(body['code'].toString()), body: body);
-    ans = ans.copy(status: ans.status > 100 && ans.status < 600 ? ans.status : 400);
+    ans = ans.copy(code: int.parse(body['code'].toString()), data: body);
+    ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);
     return ans;
   }).catchError((e, s) {
     debugPrint(e.toString());
     debugPrint(s.toString());
-    return Answer(status: 502, body: {'code': 502, 'msg': e.toString()});
+    return Answer(code: 502, data: {'code': 502, 'msg': e.toString()});
   });
 }

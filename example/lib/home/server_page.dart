@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_api/music_api.dart';
+import 'package:music_api/server.dart';
 
 class ServerPage extends StatefulWidget {
   const ServerPage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _ServerPageState extends State<ServerPage> with AutomaticKeepAliveClientMi
               Container(width: 16),
               SizedBox(
                 width: 120,
-                child: Text('${MusicApi.ip()}:${MusicApi.port()}', style: const TextStyle(fontSize: 20)),
+                child: Text('${MusicServer.ip()}:${MusicServer.port()}', style: const TextStyle(fontSize: 20)),
               ),
             ],
           ),
@@ -35,7 +35,7 @@ class _ServerPageState extends State<ServerPage> with AutomaticKeepAliveClientMi
             margin: const EdgeInsets.only(top: 16, bottom: 16),
             child: TextButton(
               onPressed: () async {
-                MusicApi.startServer(address: '0.0.0.0', port: 3001).then((value) {
+                MusicServer.startServer(address: '0.0.0.0', port: 3001).then((value) {
                   setState(() {});
                 });
               },
@@ -44,7 +44,7 @@ class _ServerPageState extends State<ServerPage> with AutomaticKeepAliveClientMi
           ),
           TextButton(
             onPressed: () async {
-              MusicApi.stopServer()?.then((value) {
+              MusicServer.stopServer()?.then((value) {
                 setState(() {});
               });
             },

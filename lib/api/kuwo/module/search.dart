@@ -14,7 +14,7 @@ Future<Answer> _searchMusic(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/search/searchMusicBykeyWord",
     params: {
-      "key": params["key"],
+      "key": params["keyWord"],
       "pn": params["page"] ?? 1,
       "rn": params["size"] ?? 30,
     },
@@ -27,7 +27,7 @@ Future<Answer> _searchAlbum(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/search/searchAlbumBykeyWord",
     params: {
-      "key": params["key"],
+      "key": params["keyWord"],
       "pn": params["page"] ?? 1,
       "rn": params["size"] ?? 30,
     },
@@ -40,7 +40,7 @@ Future<Answer> _searchMv(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/search/searchMvBykeyWord",
     params: {
-      "key": params["key"],
+      "key": params["keyWord"],
       "pn": params["page"] ?? 1,
       "rn": params["size"] ?? 30,
     },
@@ -53,7 +53,7 @@ Future<Answer> _searchPlayList(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/search/searchPlayListBykeyWord",
     params: {
-      "key": params["key"],
+      "key": params["keyWord"],
       "pn": params["page"] ?? 1,
       "rn": params["size"] ?? 30,
     },
@@ -66,7 +66,7 @@ Future<Answer> _searchArtist(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/search/searchArtistBykeyWord",
     params: {
-      "key": params["key"],
+      "key": params["keyWord"],
       "pn": params["page"] ?? 1,
       "rn": params["size"] ?? 30,
     },

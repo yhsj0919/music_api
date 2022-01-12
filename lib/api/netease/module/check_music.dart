@@ -14,17 +14,17 @@ Future<Answer> _checkMusic(Map params, List<Cookie> cookie) {
     cookies: cookie,
   ).then((response) {
     var playable = false;
-    if (response.body['code'] == 200) {
-      if (response.body['data'][0].code == 200) {
+    if (response.data['code'] == 200) {
+      if (response.data['data'][0].code == 200) {
         playable = true;
       }
     }
     if (playable) {
-      response = response.copy(body: {'success': true, 'message': 'ok'});
+      response = response.copy(data: {'success': true, 'message': 'ok'});
       return response;
     } else {
       return response
-          .copy(status: 404, body: {'success': false, 'message': '亲爱的,暂无版权'});
+          .copy(code: 404, data: {'success': false, 'message': '亲爱的,暂无版权'});
     }
   });
 }

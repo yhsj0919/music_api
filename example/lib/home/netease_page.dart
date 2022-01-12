@@ -69,7 +69,7 @@ class _NeteasePageState extends State<NeteasePage> with AutomaticKeepAliveClient
 
   void onData(Answer value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       print(result);
     });
   }

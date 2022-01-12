@@ -8,10 +8,7 @@ Future<Answer> _loginCellphone(Map params, List<Cookie> cookie) {
     'countrycode': params['countrycode'] ?? 86,
     'rememberLogin': 'true',
     'captcha': params['captcha'],
-    params['captcha'] == null ? 'password' : 'captcha':
-    params['captcha'] ?? Encrypted(Uint8List.fromList(md5
-        .convert(utf8.encode(params['password']))
-        .bytes)).base16,
+    params['captcha'] == null ? 'password' : 'captcha': params['captcha'] ?? Encrypted(Uint8List.fromList(md5.convert(utf8.encode(params['password'])).bytes)).base16,
   };
 
   return request(
@@ -43,8 +40,8 @@ Future<Answer> _loginQrCreate(Map params, List<Cookie> cookie) {
   final url = 'https://music.163.com/login?codekey=${params["key"]}';
   return Future.value(
     Answer(
-      status: 200,
-      body: {'qrurl': url},
+      code: 200,
+      data: {'qrurl': url},
     ),
   );
 }
@@ -89,9 +86,7 @@ Future<Answer> _loginStatus(Map params, List<Cookie> cookie) {
 // 邮箱登录
 Future<Answer> _login(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'pc'));
-  final data = {'username': params['email'], 'password': Encrypted(Uint8List.fromList(md5
-      .convert(utf8.encode(params['password']))
-      .bytes)).base16, 'rememberLogin': 'true'};
+  final data = {'username': params['email'], 'password': Encrypted(Uint8List.fromList(md5.convert(utf8.encode(params['password'])).bytes)).base16, 'rememberLogin': 'true'};
 
   return request(
     'POST',

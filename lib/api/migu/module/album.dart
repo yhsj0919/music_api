@@ -29,7 +29,7 @@ Future<Answer> _albumNewType(Map params, List<Cookie> cookie) {
     params: data,
     cookie: cookie,
   ).then((value) {
-    final data = value.body;
+    final data = value.data;
     final contentItemList = data['data']['contentItemList'] as List;
     final itemList = contentItemList[0]['itemList'] as List;
     var items = itemList.map((e) {
@@ -41,7 +41,7 @@ Future<Answer> _albumNewType(Map params, List<Cookie> cookie) {
 
     data['data'] = items;
 
-    final resp = value.copy(body: data);
+    final resp = value.copy(data: data);
     return Future.value(resp);
   });
 }

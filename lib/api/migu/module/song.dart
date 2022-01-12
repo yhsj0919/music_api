@@ -28,7 +28,7 @@ Future<Answer> _songNewType(Map params, List<Cookie> cookie) {
     params: data,
     cookie: cookie,
   ).then((value) {
-    final data = value.body;
+    final data = value.data;
     final contentItemList = data['data']['contentItemList'] as List;
     final itemList = contentItemList[0]['itemList'] as List;
     data['data']['contentItemList'] = itemList.map((e) {
@@ -37,7 +37,7 @@ Future<Answer> _songNewType(Map params, List<Cookie> cookie) {
       e['columnId'] = columnId;
       return e;
     }).toString();
-    final resp = value.copy(body: data);
+    final resp = value.copy(data: data);
     return Future.value(resp);
   });
 }

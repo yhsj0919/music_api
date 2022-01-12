@@ -4,7 +4,7 @@ part of '../migu.dart';
 * 歌手标签
  */
 Future<Answer> _singerTabs(Map params, List<Cookie> cookie) {
-  var ans = const Answer(status: 200, body: {
+  var ans = const Answer(code: 200, data: {
     "tip": "请求示例 huayu-nan ",
     "tab1": [
       {"title": "华语", "tab": "huayu"},

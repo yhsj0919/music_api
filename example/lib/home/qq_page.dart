@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/qq/qq.dart';
+import 'package:music_api/utils/answer.dart';
 
 class QQPage extends StatefulWidget {
   const QQPage({Key? key}) : super(key: key);
@@ -52,6 +53,12 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                     title: const Text('首页'),
                     onTap: () {
                       QQ?.home().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Banner'),
+                    onTap: () {
+                      QQ?.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -258,9 +265,9 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
-  void onData(value) {
+  void onData(Answer value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       print(result);
     });
   }

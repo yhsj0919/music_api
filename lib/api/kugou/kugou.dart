@@ -144,7 +144,7 @@ class KuGou {
 
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -193,14 +193,14 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
         String data = await value.transform(utf8.decoder).join();
-        ans = ans.copy(status: value.statusCode, body: json.decode(data));
+        ans = ans.copy(code: value.statusCode, data: json.decode(data));
 
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
+        return Future.value(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
     }
   });
 }

@@ -31,6 +31,11 @@ class QQ {
     return _home.call({}, []);
   }
 
+  ///Banner
+  static Future<Answer> banner() {
+    return _banner.call({}, []);
+  }
+
   ///新专辑、新碟
   static Future<Answer> albumNew({int? area, int? page, int? size}) {
     return _newAlbum.call({"area": area, "page": page, "size": size}, []);
@@ -193,7 +198,7 @@ class QQ {
 
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(body: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer().copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -202,6 +207,7 @@ class QQ {
 //Api列表
 final _api = <String, Api>{
   "/home": _home,
+  "/banner": _banner,
   "/album/new": _newAlbum,
   "/album/song": _albumSong,
   "/album/info": _albumInfo,
@@ -267,13 +273,13 @@ Future<Answer> _get(
         var ans = const Answer();
         ans = ans.copy(cookie: cookies);
         String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(status: value.statusCode, body: json.decode(content));
+        ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(status: 500, body: {'code': value.statusCode, 'msg': value}));
+        return Future.error(const Answer(code: 500, msg: "服务异常"));
       }
     } catch (e) {
-      return Future.value(const Answer(status: 500, body: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.error(const Answer(code: 500, msg: "对象转换异常"));
     }
   });
 }

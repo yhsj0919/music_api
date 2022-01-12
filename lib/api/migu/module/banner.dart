@@ -13,7 +13,7 @@ Future<Answer> _banner(Map params, List<Cookie> cookie) {
     params: data,
     cookie: cookie,
   ).then((value) {
-    var body = value.body;
+    var body = value.data;
     body = body["result"];
     body['results'] = (body["results"] as List)
         .map((e) => {
@@ -23,6 +23,6 @@ Future<Answer> _banner(Map params, List<Cookie> cookie) {
               "id": e["linkData"]["linkUrl"].toString().replaceAll("https://m.music.migu.cn/v3/music/song/", ""),
             })
         .toList();
-    return Future.value(value.copy(body: body));
+    return Future.value(value.copy(data: body));
   });
 }

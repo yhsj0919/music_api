@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:music_api/utils/answer.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:flutter/material.dart';
@@ -60,6 +61,12 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                     title: const Text('首页'),
                     onTap: () {
                       Baidu?.index().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('banner'),
+                    onTap: () {
+                      Baidu?.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
@@ -224,9 +231,9 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
   @override
   bool get wantKeepAlive => true;
 
-  void onData(value) {
+  void onData(Answer value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       print(result);
     });
   }

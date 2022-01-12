@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/kugou/kugou.dart';
+import 'package:music_api/utils/answer.dart';
 
 class KuGouPage extends StatefulWidget {
   const KuGouPage({Key? key}) : super(key: key);
@@ -198,9 +199,9 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
   @override
   bool get wantKeepAlive => true;
 
-  void onData(value) {
+  void onData(Answer value) {
     setState(() {
-      result = json.encode(value.body);
+      result = json.encode(value.data);
       print(result);
     });
   }
