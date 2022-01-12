@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:music_api/api/kugou/kugou.dart';
 
@@ -198,7 +200,8 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
 
   void onData(value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+      print(result);
     });
   }
 

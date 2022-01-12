@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:universal_io/io.dart';
 
 import 'package:flutter/material.dart';
@@ -224,7 +226,8 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
 
   void onData(value) {
     setState(() {
-      result = value.body.toString();
+      result = json.encode(value.body);
+      print(result);
     });
   }
 
