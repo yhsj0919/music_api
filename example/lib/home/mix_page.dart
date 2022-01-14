@@ -50,11 +50,16 @@ class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
-
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
                       MusicApi?.banner().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('匹配音乐播放地址'),
+                    onTap: () {
+                      MusicApi?.matchMusic(name: "一口气全念对", artist: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                 ],

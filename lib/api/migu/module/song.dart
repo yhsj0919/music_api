@@ -107,7 +107,7 @@ Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
     "contentId": params['contentId'],
     "resourceType": params['resourceType'] ?? '2',
     "channel": 0,
-    "toneFlag": params['toneFlag'] ?? 'PQ',
+    "toneFlag": params['toneFlag'] ?? 'HQ',
   };
   return _get(
     "https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/sub/listenSong.do",

@@ -26,7 +26,7 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
     {"ticket": 1}
   ];
 
-  final keyword = params['keyword'];
+  final keyword = params['keyWord'];
   final type = params['type'] ?? 0;
   final data = {
     // 新特性支持标识，默认值为null。格式：“0000000000”。

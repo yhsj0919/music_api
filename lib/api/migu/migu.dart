@@ -194,8 +194,8 @@ class MiGu {
   }
 
   ///搜索
-  static Future<Answer> search({required String? keyword, int? type, int? page, int? size}) {
-    return _search.call({"keyword": keyword, "type": type, "page": page, "size": size}, []);
+  static Future<Answer> search({required String? keyWord, int? type, int? page, int? size}) {
+    return _search.call({"keyWord": keyWord, "type": type, "page": page, "size": size}, []);
   }
 
   ///搜索建议

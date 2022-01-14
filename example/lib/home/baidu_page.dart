@@ -132,7 +132,7 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('搜索'),
                     onTap: () {
-                      Baidu?.search(word: "薛之谦").then(onData).catchError(onError);
+                      Baidu?.search(keyWord: "薛之谦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

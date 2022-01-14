@@ -109,6 +109,14 @@ class Netease {
     return _banner.call({}, []);
   }
 
+  static Future<Answer> search({String? keyWord, int? type, int? page, int? size}) {
+    return _search.call({"keyWord": keyWord, "type": type, "page": page, "size": size}, []);
+  }
+
+  static Future<Answer> songUrl({String? id, int? br}) {
+    return _songUrl.call({"id": id, "br": br}, []);
+  }
+
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));

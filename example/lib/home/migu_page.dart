@@ -235,7 +235,7 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                       title: const Text('搜索'),
                       onTap: () {
-                        MiGu?.search(keyword: "薛之谦").then(onData).catchError(onError);
+                        MiGu?.search(keyWord: "薛之谦").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('搜索建议'),
