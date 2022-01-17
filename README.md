@@ -4,7 +4,7 @@
 
 ## 该API尚未稳定，在开发过程中可能存在重大更改，使用时请谨慎
 
-<img src="screenshots/home.png" width="600px"/>
+<img src="screenshot/home.png" width="600px"/>
 
 ## 感谢
 
