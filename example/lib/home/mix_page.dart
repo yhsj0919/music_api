@@ -59,7 +59,7 @@ class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('匹配音乐播放地址'),
                     onTap: () {
-                      MusicApi?.matchMusic(name: "mojito", artist: "周杰伦").then(onData).catchError(onError);
+                      MusicApi?.matchMusic(name: "高高在下", artist: "张卫健",myfreemp3: true).then(onData).catchError(onError);
                     },
                   ),
                 ],

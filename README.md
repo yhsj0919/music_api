@@ -1,5 +1,11 @@
 # MusicApi
 
+## 该代码仅作技术交流,切勿用作商业用途
+
+## 该API尚未稳定，在开发过程中可能存在重大更改，使用时请谨慎
+
+<img src="screenshots/home.png" width="600px"/>
+
 ## 感谢
 
 [https://github.com/ziming1/NeteaseCloudMusicApi](https://github.com/ziming1/NeteaseCloudMusicApi)，
