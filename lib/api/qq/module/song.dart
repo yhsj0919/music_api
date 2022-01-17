@@ -1,5 +1,27 @@
 part of '../qq.dart';
 
+///新歌首发
+Future<Answer> _songNew(Map params, List<Cookie> cookie) {
+  final data = {
+    "data": json.encode({
+      "newSong": {
+        "module": "newsong.NewSongServer",
+        "method": "get_new_song_info",
+        "param": {"type": 5}
+      },
+      "comm": {
+        "ct": 20,
+        "cv": 1807,
+      }
+    })
+  };
+  return _get(
+    "https://u.y.qq.com/cgi-bin/musicu.fcg",
+    params: data,
+    cookie: cookie,
+  );
+}
+
 /*
 *歌曲信息
 */

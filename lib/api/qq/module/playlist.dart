@@ -1,5 +1,27 @@
 part of '../qq.dart';
 
+///热门歌单
+Future<Answer> _playlistHot(Map params, List<Cookie> cookie) {
+  final data = {
+    "data": json.encode({
+      "hotRecommend": {
+        "module": "playlist.HotRecommendServer",
+        "method": "get_new_hot_recommend",
+        "param": {"cmd": 0, "page": 0, "daily_page": 0, "size": 12}
+      },
+      "comm": {
+        "ct": 20,
+        "cv": 1807,
+      }
+    })
+  };
+  return _get(
+    "https://u.y.qq.com/cgi-bin/musicu.fcg",
+    params: data,
+    cookie: cookie,
+  );
+}
+
 /*
  * 全部歌单
  */

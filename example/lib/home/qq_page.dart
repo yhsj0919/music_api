@@ -110,6 +110,12 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                     },
                   ),
                   ListTile(
+                    title: const Text('热门歌单'),
+                    onTap: () {
+                      QQ?.playlistHot().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('根据tag获取歌单'),
                     onTap: () {
                       QQ?.playlistByTag(tag: 3317).then(onData).catchError(onError);
@@ -191,6 +197,12 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                     title: const Text('相似歌手'),
                     onTap: () {
                       QQ?.singerSimilar(singerMid: "0025NhlN2yWrP4").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('新歌首发'),
+                    onTap: () {
+                      QQ?.songNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

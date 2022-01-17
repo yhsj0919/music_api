@@ -71,6 +71,11 @@ class QQ {
     return _mvUrl.call({"vid": vid}, []);
   }
 
+  ///热门歌单单，
+  static Future<Answer> playlistHot() {
+    return _playlistHot.call({}, []);
+  }
+
   ///歌单列表，
   static Future<Answer> playlist({int? order, int? page, int? size}) {
     return _playlist.call({"order": order, "page": page, "size": size}, []);
@@ -146,6 +151,11 @@ class QQ {
     return _singerSimilar.call({"singerMid": singerMid}, []);
   }
 
+  ///新歌首发
+  static Future<Answer> songNew() {
+    return _songNew.call({}, []);
+  }
+
   ///歌曲信息
   static Future<Answer> songInfo({String? songMid, int? songId}) {
     return _songInfo.call({"songMid": songMid, "songId": songId}, []);
@@ -216,6 +226,7 @@ final _api = <String, Api>{
   "/mv/info": _mvInfo,
   "/mv/url": _mvUrl,
   "/playlist": _playlist,
+  "/playlist/hot": _playlistHot,
   "/playlist/bytag": _playlistByTag,
   "/playlist/info": _playlistInfo,
   "/playlist/tag": _playlistTag,
@@ -230,6 +241,7 @@ final _api = <String, Api>{
   "/singer/album": _singerAlbum,
   "/singer/mv": _singerMV,
   "/singer/similar": _singerSimilar,
+  "/song/new": _songNew,
   "/song/info": _songInfo,
   "/song/lrc2": _songLyric,
   "/song/lrc": _songLyricNew,
