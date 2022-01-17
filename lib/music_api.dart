@@ -13,10 +13,10 @@ class MusicApi {
 
   static Future<Answer> banner() async {
     Future.wait([
-      Baidu.banner(),
-      KuGou.banner(),
       KuWo.banner(),
       MiGu.banner(),
+      KuGou.banner(),
+      Baidu.banner(),
       Netease.banner(),
       QQ.banner(),
     ]).then((value) {
@@ -33,10 +33,10 @@ class MusicApi {
     var keyWord = "$name $artist";
 
     var value = await Future.wait([
-      Baidu.search(keyWord: keyWord, type: 1, size: 10),
-      KuGou.searchSong(keyword: keyWord, size: 10),
       KuWo.searchMusic(keyWord: keyWord, size: 10),
       MiGu.search(keyWord: keyWord, size: 10),
+      KuGou.searchSong(keyword: keyWord, size: 10),
+      Baidu.search(keyWord: keyWord, type: 1, size: 10),
       Netease.search(keyWord: keyWord, size: 10),
       QQ.search(keyWord: keyWord, size: 10),
     ]);
@@ -44,15 +44,24 @@ class MusicApi {
         .map((e) {
           var index = value.indexOf(e);
           if (index == 0) {
-            return (e.data["data"]["typeTrack"] as List?)
+            return (e.data["data"]["list"] as List?)
                 ?.map((e) => {
-                      "site": "baidu",
-                      "id": e["TSID"],
-                      "name": e["title"],
-                      "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
+                      "site": "kuwo",
+                      "id": e["rid"],
+                      "name": e["name"],
+                      "artist": e["artist"],
                     })
-                .firstWhere((element) => element["name"] == name && element["artist"].toString().contains("$artist"), orElse: () => {});
+                .firstWhere((element) => element["name"].toString().toLowerCase() == name.toString().toLowerCase() && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
           } else if (index == 1) {
+            return (e.data["songResultData"]["result"] as List?)
+                ?.map((e) => {
+                      "site": "migu",
+                      "id": e["contentId"],
+                      "name": e["name"],
+                      "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                    })
+                .firstWhere((element) => element["name"].toString().toLowerCase().contains("${name?.toLowerCase()}") && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
+          } else if (index == 2) {
             return (e.data["data"]["info"] as List?)
                 ?.map((e) => {
                       "site": "kugou",
@@ -61,25 +70,16 @@ class MusicApi {
                       "name": e["songname"],
                       "artist": e["singername"],
                     })
-                .firstWhere((element) => element["name"] == name && element["artist"].toString().contains("$artist"), orElse: () => {});
-          } else if (index == 2) {
-            return (e.data["data"]["list"] as List?)
-                ?.map((e) => {
-                      "site": "kuwo",
-                      "id": e["rid"],
-                      "name": e["name"],
-                      "artist": e["artist"],
-                    })
-                .firstWhere((element) => element["name"] == name && element["artist"].toString().contains("$artist"), orElse: () => {});
+                .firstWhere((element) => element["name"].toString().toLowerCase() == name.toString().toLowerCase() && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
           } else if (index == 3) {
-            return (e.data["songResultData"]["result"] as List?)
+            return (e.data["data"]["typeTrack"] as List?)
                 ?.map((e) => {
-                      "site": "migu",
-                      "id": e["contentId"],
-                      "name": e["name"],
-                      "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                      "site": "baidu",
+                      "id": e["TSID"],
+                      "name": e["title"],
+                      "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
                     })
-                .firstWhere((element) => element["name"].toString().contains("$name") && element["artist"].toString().contains("$artist"), orElse: () => {});
+                .firstWhere((element) => element["name"].toString().toLowerCase() == name.toString().toLowerCase() && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
           } else if (index == 4) {
             return (e.data["result"]["songs"] as List?)
                 ?.map((e) => {
@@ -88,7 +88,7 @@ class MusicApi {
                       "name": e["name"],
                       "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
                     })
-                .firstWhere((element) => element["name"] == name && element["artist"].toString().contains("$artist"), orElse: () => {});
+                .firstWhere((element) => element["name"].toString().toLowerCase() == name.toString().toLowerCase() && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
           } else if (index == 5) {
             return (e.data["req"]["data"]["body"]["item_song"] as List?)
                 ?.map((e) => {
@@ -98,7 +98,7 @@ class MusicApi {
                       "name": e["title"].toString().replaceAll("<em>", "").replaceAll("</em>", ""),
                       "artist": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
                     })
-                .firstWhere((element) => element["name"] == name && element["artist"].toString().contains("$artist"), orElse: () => {});
+                .firstWhere((element) => element["name"].toString().toLowerCase() == name.toString().toLowerCase() && element["artist"].toString().toLowerCase().contains("${artist?.toLowerCase()}"), orElse: () => {});
           } else {
             return {};
           }
@@ -149,9 +149,7 @@ class MusicApi {
           } else if (site == "netease") {
             e["url"] = (data["data"] as List?)?.first["url"];
           } else if (site == "qq") {
-            e["url"] = data['req_0']['data']["midurlinfo"][0]['purl'] == ""
-                ? null
-                : data['req']["data"]['freeflowsip'][0] + data['req_0']['data']["midurlinfo"][0]['purl'] + '&fromtag=77';
+            e["url"] = data['req_0']['data']["midurlinfo"][0]['purl'] == "" ? null : data['req']["data"]['freeflowsip'][0] + data['req_0']['data']["midurlinfo"][0]['purl'] + '&fromtag=77';
           }
           return e;
         })
