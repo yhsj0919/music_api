@@ -294,7 +294,7 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
       }
     } catch (e) {
       print(e);
-      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });
 }

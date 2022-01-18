@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/music_api.dart';
+import 'package:music_api/api/mix/mix_music.dart';
 import 'package:music_api/utils/answer.dart';
 
 class MixPage extends StatefulWidget {
@@ -53,13 +54,13 @@ class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
-                      MusicApi?.banner().then(onData).catchError(onError);
+                      MixMusic?.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('匹配音乐播放地址'),
                     onTap: () {
-                      MusicApi?.matchMusic(name: "高高在下", artist: "张卫健",myfreemp3: true).then(onData).catchError(onError);
+                      MixMusic?.matchMusic(name: "火星人来过", artist: "薛之谦").then(onData).catchError(onError);
                     },
                   ),
                 ],

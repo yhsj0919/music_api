@@ -200,7 +200,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
         return Future.value(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "酷狗对象转换异常"}));
     }
   });
 }

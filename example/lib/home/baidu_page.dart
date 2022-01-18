@@ -154,6 +154,12 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                     },
                   ),
                   ListTile(
+                    title: const Text('热门歌单'),
+                    onTap: () {
+                      Baidu?.playlistRec().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('歌单分类'),
                     onTap: () {
                       Baidu?.playListType().then(onData).catchError(onError);

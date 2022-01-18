@@ -68,6 +68,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     },
                   ),
                   ListTile(
+                    title: const Text('歌单推荐'),
+                    onTap: () {
+                      KuWo?.playListRec().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('歌单标签'),
                     onTap: () {
                       KuWo?.playListTag().then(onData).catchError(onError);

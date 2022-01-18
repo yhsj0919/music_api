@@ -135,6 +135,10 @@ class Baidu {
   }
 
   /// 歌单分类
+  static Future<Answer> playlistRec() {
+    return _playlistRec.call({}, []);
+  }
+  /// 歌单分类
   static Future<Answer> playListType() {
     return _playListType.call({}, []);
   }
@@ -373,7 +377,7 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
         return Future.value(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.value(const Answer(code: 500, data: {'code': 500, 'msg': "百度对象转换异常"}));
     }
   });
 }

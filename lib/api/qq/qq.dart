@@ -291,7 +291,7 @@ Future<Answer> _get(
         return Future.error(const Answer(code: 500, msg: "服务异常"));
       }
     } catch (e) {
-      return Future.error(const Answer(code: 500, msg: "对象转换异常"));
+      return Future.error(const Answer(code: 500, msg: "QQ对象转换异常"));
     }
   });
 }

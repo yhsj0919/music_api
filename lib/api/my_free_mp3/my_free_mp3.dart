@@ -51,7 +51,7 @@ Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> co
         return Future.error(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "MyFreeMp3对象转换异常"}));
     }
   });
 }
