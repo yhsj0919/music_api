@@ -89,6 +89,10 @@ Future<Answer> _topPlaylistHighquality(Map params, List<Cookie> cookie) {
 
 // 分类歌单
 Future<Answer> _topPlaylist(Map params, List<Cookie> cookie) {
+  var size = params["size"] ?? 10;
+  var page = params["page"] ?? 1;
+  var offset = (page - 1) * size;
+
   return request(
     'POST',
     'https://music.163.com/weapi/playlist/list',
@@ -97,8 +101,8 @@ Future<Answer> _topPlaylist(Map params, List<Cookie> cookie) {
       'cat': params['cat'] ?? '全部',
       'order': params['order'] ?? 'hot',
       // hot,new
-      'limit': params['limit'] ?? 50,
-      'offset': params['offset'] ?? 0,
+      'limit': size,
+      'offset': offset,
       'total': true
     },
     crypto: Crypto.weApi,

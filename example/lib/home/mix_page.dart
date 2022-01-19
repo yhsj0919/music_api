@@ -58,6 +58,12 @@ class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
                     },
                   ),
                   ListTile(
+                    title: const Text('歌单推荐'),
+                    onTap: () {
+                      MixMusic?.playlistRec().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('匹配音乐播放地址'),
                     onTap: () {
                       MixMusic?.matchMusic(name: "火星人来过", artist: "薛之谦").then(onData).catchError(onError);

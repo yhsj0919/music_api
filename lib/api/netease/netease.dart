@@ -117,6 +117,11 @@ class Netease {
     return _songUrl.call({"id": id, "br": br}, []);
   }
 
+  ///精品歌单
+  static Future<Answer> topPlaylist({String? cat, int? page, int? size}) {
+    return _topPlaylist.call({"cat":cat,"page":page,"size":size}, []);
+  }
+
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer().copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));

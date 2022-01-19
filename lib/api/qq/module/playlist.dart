@@ -6,12 +6,12 @@ Future<Answer> _playlistHot(Map params, List<Cookie> cookie) {
     "data": json.encode({
       "hotRecommend": {
         "module": "playlist.HotRecommendServer",
-        "method": "get_new_hot_recommend",
-        "param": {"cmd": 0, "page": 0, "daily_page": 0, "size": 12}
+        "method": "get_hot_recommend",
+        "param": {"async": 1, "cmd": 2}
       },
       "comm": {
-        "ct": 20,
-        "cv": 1807,
+        "ct": 24,
+        "cv": 4747474,
       }
     })
   };

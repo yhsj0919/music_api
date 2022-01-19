@@ -54,6 +54,11 @@ class _NeteasePageState extends State<NeteasePage> with AutomaticKeepAliveClient
                     onTap: () {
                       Netease.banner().then(onData).catchError(onError);
                     },
+                  ),ListTile(
+                    title: const Text('精品歌单'),
+                    onTap: () {
+                      Netease.topPlaylist().then(onData).catchError(onError);
+                    },
                   ),
                 ],
               ),

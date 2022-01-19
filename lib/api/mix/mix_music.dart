@@ -23,6 +23,10 @@ class MixMusic {
     return _banner(site: site);
   }
 
+  static Future<Answer> playlistRec({List<MusicSite> site = allSite}) {
+    return _playlistRec(site: site);
+  }
+
   static Future<Answer> matchMusic({String? name, String? artist, List<MusicSite> site = allSite}) {
     return _matchMusic(name: name, artist: artist, site: site);
   }
