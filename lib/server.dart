@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:music_api/entity/music_entity.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:flutter/foundation.dart';
@@ -75,7 +76,7 @@ class MusicServer {
     }
 
     answer = await api?.call(url ?? "", params: request.uri.queryParameters, cookie: request.cookies).catchError(_error) ??
-        const Answer().copy(code: 500, msg: '仅支持“/netease”、“/baidu”、“/kugou”、“/kuwo”、“/migu”、“/qq”、“/mfm”开头的接口');
+        const Answer(site: MusicSite.None).copy(code: 500, msg: '仅支持“/netease”、“/baidu”、“/kugou”、“/kuwo”、“/migu”、“/qq”、“/mfm”开头的接口');
     request.response.statusCode = 200;
     request.response.cookies.addAll(answer.cookie);
     request.response.write(json.encode(answer.data));
@@ -90,6 +91,6 @@ class MusicServer {
       print(e.toString());
       print(s.toString());
     }
-    return Future.error(const Answer().copy(code: 500, msg: e.toString()));
+    return Future.error(const Answer(site: MusicSite.None).copy(code: 500, msg: e.toString()));
   }
 }

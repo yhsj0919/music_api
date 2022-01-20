@@ -4,19 +4,23 @@ part of '../migu.dart';
 * 歌手标签
  */
 Future<Answer> _singerTabs(Map params, List<Cookie> cookie) {
-  var ans = const Answer(code: 200, data: {
-    "tip": "请求示例 huayu-nan ",
-    "tab1": [
-      {"title": "华语", "tab": "huayu"},
-      {"title": "欧美", "tab": "oumei"},
-      {"title": "日韩", "tab": "rihan"},
-    ],
-    "tab2": [
-      {"title": "男", "tab": "nan"},
-      {"title": "女", "tab": "nv"},
-      {"title": "组合", "tab": "group"},
-    ],
-  });
+  var ans = const Answer(
+    site: MusicSite.MiGu,
+    code: 200,
+    data: {
+      "tip": "请求示例 huayu-nan ",
+      "tab1": [
+        {"title": "华语", "tab": "huayu"},
+        {"title": "欧美", "tab": "oumei"},
+        {"title": "日韩", "tab": "rihan"},
+      ],
+      "tab2": [
+        {"title": "男", "tab": "nan"},
+        {"title": "女", "tab": "nv"},
+        {"title": "组合", "tab": "group"},
+      ],
+    },
+  );
 
   return Future.value(ans);
 

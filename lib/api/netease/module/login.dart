@@ -40,6 +40,7 @@ Future<Answer> _loginQrCreate(Map params, List<Cookie> cookie) {
   final url = 'https://music.163.com/login?codekey=${params["key"]}';
   return Future.value(
     Answer(
+      site: MusicSite.Netease,
       code: 200,
       data: {'qrurl': url},
     ),

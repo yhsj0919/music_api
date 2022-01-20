@@ -37,7 +37,7 @@ Future<Answer> _topList(Map params, List<Cookie> cookie) {
 
   if (params.containsKey('idx')) {
     return Future.value(
-      Answer().copy(
+      const Answer(site: MusicSite.Netease).copy(
         data: {
           'code': 500,
           'msg': '不支持此方式调用,只支持id调用',

@@ -1,4 +1,4 @@
-enum MusicSite { MyFreeMp3, Baidu, KuGou, KuWo, MiGu, Netease, QQ }
+enum MusicSite { None, Mix, MyFreeMp3, Baidu, KuGou, KuWo, MiGu, Netease, QQ }
 enum MusicFormat { LQ, PQ, HQ, SQ, ZQ24 }
 
 const allSite = [

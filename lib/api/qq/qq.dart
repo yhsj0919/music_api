@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
@@ -208,7 +209,7 @@ class QQ {
 
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
+      return Future.value(const Answer(site: MusicSite.QQ).copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -282,16 +283,16 @@ Future<Answer> _get(
     try {
       if (value.statusCode == 200) {
         var cookies = value.cookies;
-        var ans = const Answer();
+        var ans = const Answer(site: MusicSite.QQ);
         ans = ans.copy(cookie: cookies);
         String content = await value.transform(utf8.decoder).join();
         ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.error(const Answer(code: 500, msg: "服务异常"));
+        return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
       }
     } catch (e) {
-      return Future.error(const Answer(code: 500, msg: "QQ对象转换异常"));
+      return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "QQ对象转换异常"));
     }
   });
 }

@@ -5,122 +5,134 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
   var keyWord = "$name $artist";
 
   try {
-    var value = await Future.wait([
-      site.contains(MusicSite.KuWo) ? KuWo.searchMusic(keyWord: keyWord, size: 10) : Future.value(const Answer()),
-      site.contains(MusicSite.MiGu) ? MiGu.search(keyWord: keyWord, size: 10) : Future.value(const Answer()),
-      site.contains(MusicSite.MyFreeMp3) ? MyFreeMp3.search(keyWord: keyWord) : Future.value(const Answer()),
-      site.contains(MusicSite.KuGou) ? KuGou.searchSong(keyword: keyWord, size: 10) : Future.value(const Answer()),
-      site.contains(MusicSite.Baidu) ? Baidu.search(keyWord: keyWord, type: 1, size: 10) : Future.value(const Answer()),
-      site.contains(MusicSite.Netease) ? Netease.search(keyWord: keyWord, size: 10) : Future.value(const Answer()),
-      site.contains(MusicSite.QQ) ? QQ.search(keyWord: keyWord, size: 10) : Future.value(const Answer()),
-    ]);
+    var value = await Future.wait(site.map((e) {
+      switch (e) {
+        case MusicSite.KuWo:
+          return KuWo.searchMusic(keyWord: keyWord, size: 10);
+        case MusicSite.MiGu:
+          return MiGu.search(keyWord: keyWord, size: 10);
+        case MusicSite.MyFreeMp3:
+          return MyFreeMp3.search(keyWord: keyWord);
+        case MusicSite.KuGou:
+          return KuGou.searchSong(keyword: keyWord, size: 10);
+        case MusicSite.Baidu:
+          return Baidu.search(keyWord: keyWord, type: 1, size: 10);
+        case MusicSite.Netease:
+          return Netease.search(keyWord: keyWord, size: 10);
+        case MusicSite.QQ:
+          return QQ.search(keyWord: keyWord, size: 10);
+        default:
+          return Future.value(const Answer(site: MusicSite.None));
+      }
+    }));
 
     var datas = value
         .map((e) {
-          var index = value.indexOf(e);
-          if (index == 0) {
-            return (e.data["data"]?["list"] as List?)
-                    ?.map((e) => {
-                          "site": "kuwo",
-                          "id": e["rid"],
-                          "name": e["name"],
-                          "artist": e["artist"],
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 1) {
-            return (e.data["songResultData"]?["result"] as List?)
-                    ?.map((e) => {
-                          "site": "migu",
-                          "id": e["contentId"],
-                          "name": e["name"],
-                          "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase().contains("${name?.toLowerCase()}") &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 2) {
-            return (e.data["data"] as List?)
-                    ?.map((e) => {
-                          "site": "myfreemp3",
-                          "id": e["id"],
-                          "name": e["name"],
-                          "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
-                          "url": (e["url"] as List?)?.firstWhere((element) => element["format"] == "HQ")?["url"],
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 3) {
-            return (e.data["data"]?["info"] as List?)
-                    ?.map((e) => {
-                          "site": "kugou",
-                          "id": e["hash"],
-                          "albumAudioId": e["album_audio_id"],
-                          "name": e["songname"],
-                          "artist": e["singername"],
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 4) {
-            return (e.data["data"]?["typeTrack"] as List?)
-                    ?.map((e) => {
-                          "site": "baidu",
-                          "id": e["TSID"],
-                          "name": e["title"],
-                          "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 5) {
-            return (e.data["result"]?["songs"] as List?)
-                    ?.map((e) => {
-                          "site": "netease",
-                          "id": e["id"],
-                          "name": e["name"],
-                          "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else if (index == 6) {
-            return (e.data["req"]?["data"]?["body"]?["item_song"] as List?)
-                    ?.map((e) => {
-                          "site": "qq",
-                          "id": e["mid"],
-                          "mediaId": e["file"]["media_mid"],
-                          "name": e["name"].toString(),
-                          "artist": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
-                        })
-                    .firstWhere(
-                        (element) =>
-                            element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
-                            element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
-                        orElse: () => {}) ??
-                {};
-          } else {
-            return {};
+          switch (e.site) {
+            case MusicSite.KuWo:
+              return (e.data["data"]?["list"] as List?)
+                      ?.map((e) => {
+                            "site": "kuwo",
+                            "id": e["rid"],
+                            "name": e["name"],
+                            "artist": e["artist"],
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            case MusicSite.MiGu:
+              return (e.data["songResultData"]?["result"] as List?)
+                      ?.map((e) => {
+                            "site": "migu",
+                            "id": e["contentId"],
+                            "name": e["name"],
+                            "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase().contains("${name?.toLowerCase()}") &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+
+            case MusicSite.MyFreeMp3:
+              return (e.data["data"] as List?)
+                      ?.map((e) => {
+                            "site": "myfreemp3",
+                            "id": e["id"],
+                            "name": e["name"],
+                            "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
+                            "url": (e["url"] as List?)?.firstWhere((element) => element["format"] == "HQ")?["url"],
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            case MusicSite.KuGou:
+              return (e.data["data"]?["info"] as List?)
+                      ?.map((e) => {
+                            "site": "kugou",
+                            "id": e["hash"],
+                            "albumAudioId": e["album_audio_id"],
+                            "name": e["songname"],
+                            "artist": e["singername"],
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            case MusicSite.Baidu:
+              return (e.data["data"]?["typeTrack"] as List?)
+                      ?.map((e) => {
+                            "site": "baidu",
+                            "id": e["TSID"],
+                            "name": e["title"],
+                            "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            case MusicSite.Netease:
+              return (e.data["result"]?["songs"] as List?)
+                      ?.map((e) => {
+                            "site": "netease",
+                            "id": e["id"],
+                            "name": e["name"],
+                            "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            case MusicSite.QQ:
+              return (e.data["req"]?["data"]?["body"]?["item_song"] as List?)
+                      ?.map((e) => {
+                            "site": "qq",
+                            "id": e["mid"],
+                            "mediaId": e["file"]["media_mid"],
+                            "name": e["name"].toString(),
+                            "artist": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
+                          })
+                      .firstWhere(
+                          (element) =>
+                              element["name"].toString().toLowerCase() == name.toString().toLowerCase() &&
+                              element["artist"].toString().toLowerCase().contains(artist?.toLowerCase() ?? ""),
+                          orElse: () => {}) ??
+                  {};
+            default:
+              return {};
           }
         })
         .where((element) => element != {})
@@ -130,10 +142,10 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
 
     print(json.encode(urls));
 
-    return Answer(data: urls);
+    return Answer(site: MusicSite.Mix, data: urls);
   } catch (e) {
     print("歌曲列表异常：" + e.toString());
-    return const Answer(data: []);
+    return const Answer(site: MusicSite.Mix, data: []);
   }
 }
 
@@ -157,8 +169,10 @@ Future<List<dynamic>> _getUrl(List<dynamic>? infos) async {
       return Netease.songUrl(id: "${e["id"]}");
     } else if (site == "qq") {
       return QQ.songListen(songMid: e["id"], mediaMid: e["mediaId"]);
+    } else if (site == "myfreemp3") {
+      return Future.value(Answer(site: MusicSite.MyFreeMp3, data: e ?? {}));
     } else {
-      return Future.value(Answer(data: e ?? {}));
+      return Future.value(Answer(site: MusicSite.None, data: e ?? {}));
     }
   }));
 

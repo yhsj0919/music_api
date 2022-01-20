@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:music_api/entity/music_entity.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:crypto/crypto.dart';
@@ -74,7 +75,8 @@ class MiGu {
   }
 
   ///专辑详情
-  static Future<Answer> mvPlayUrl({required String? contentId, required String? mvCopyrightId, required String? format, required String? size, String? type, required String? url}) {
+  static Future<Answer> mvPlayUrl(
+      {required String? contentId, required String? mvCopyrightId, required String? format, required String? size, String? type, required String? url}) {
     return _mvPlayUrl.call({"contentId": contentId, "mvCopyrightId": mvCopyrightId, "format": format, "size": size, "type": type, "url": url}, []);
   }
 
@@ -205,7 +207,7 @@ class MiGu {
 
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer(site: MusicSite.MiGu).copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -266,7 +268,8 @@ Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   return headers;
 }
 
-Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, bool followRedirects = true}) async {
+Future<Answer> _get(String path,
+    {Map<String, dynamic> params = const {}, List<Cookie> cookie = const [], Map<String, String> header = const {}, bool followRedirects = true}) async {
   final headers = _buildHeader(path, cookie);
 
   if (header.isNotEmpty) {
@@ -277,24 +280,24 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
     try {
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
-        var ans = const Answer();
+        var ans = const Answer(site: MusicSite.MiGu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         String data = await value.transform(utf8.decoder).join();
         ans = ans.copy(code: value.statusCode, data: json.decode(data));
         return Future.value(ans);
       } else if (value.statusCode == 302) {
         var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
-        var ans = const Answer();
+        var ans = const Answer(site: MusicSite.MiGu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         String data = value.headers[HttpHeaders.locationHeader]?.first ?? "";
         ans = ans.copy(code: value.statusCode, data: {"url": data});
         return Future.value(ans);
       } else {
-        return Future.error(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.MiGu, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
       print(e);
-      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
+      return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });
 }

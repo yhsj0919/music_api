@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:music_api/entity/music_entity.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:music_api/utils/answer.dart';
@@ -149,7 +150,7 @@ class KuWo {
 
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer().copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer(site: MusicSite.KuWo).copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -195,7 +196,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     try {
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader];
-        var ans = const Answer();
+        var ans = const Answer(site: MusicSite.KuWo);
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
@@ -208,10 +209,10 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           return Future.value(ans);
         }
       } else {
-        return Future.error(Answer(code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.error(const Answer(code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
+      return Future.error(const Answer(site: MusicSite.KuWo, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/crypto.dart';
 
@@ -99,7 +100,7 @@ Future<Answer> eApiRequest(
       data = bytes;
     }
 
-    var ans = Answer(cookie: response.cookies, code: response.statusCode);
+    var ans = Answer(site: MusicSite.Netease, cookie: response.cookies, code: response.statusCode);
     try {
       Map content = json.decode(decrypt(data));
       ans = ans.copy(
@@ -115,7 +116,7 @@ Future<Answer> eApiRequest(
   }).catchError((e, s) {
     debugPrint("request error " + e.toString());
     debugPrint(s.toString());
-    return Answer(code: 502, msg:e.toString(), data: {'code': 502, 'msg': e.toString()});
+    return Answer(site: MusicSite.Netease, code: 502, msg: e.toString(), data: {'code': 502, 'msg': e.toString()});
   });
 }
 
@@ -140,7 +141,7 @@ Future<Answer> request(
     url = 'https://music.163.com/api/linux/forward';
   }
   return Http.request(url, method: method, headers: headers, params: data).then((response) async {
-    var ans = Answer(cookie: response.cookies);
+    var ans = Answer(site: MusicSite.Netease, cookie: response.cookies);
 
     String content = await response.transform(utf8.decoder).join();
     final body = json.decode(content);
@@ -150,6 +151,6 @@ Future<Answer> request(
   }).catchError((e, s) {
     debugPrint(e.toString());
     debugPrint(s.toString());
-    return Answer(code: 502, data: {'code': 502, 'msg': e.toString()});
+    return Answer(site: MusicSite.Netease, code: 502, data: {'code': 502, 'msg': e.toString()});
   });
 }
