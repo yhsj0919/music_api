@@ -3,9 +3,9 @@ part of '../netease.dart';
 // 默认搜索关键词
 Future<Answer> _searchDefaultKeyword(Map params, List<Cookie> cookie) {
   return eApiRequest(
-    'https://interface3.music.163.com/eapi/search/defaultkeyword/get',
-    '/api/search/defaultkeyword/get',
-    {},
+    url: 'https://interface3.music.163.com/eapi/search/defaultkeyword/get',
+    optionUrl: '/api/search/defaultkeyword/get',
+   data: {},
     cookies: cookie,
   );
 }

@@ -3,7 +3,7 @@ part of '../netease.dart';
 // 分享歌曲到动态
 Future<Answer> _shareResource(Map params, List<Cookie> cookie) {
   final data = {
-    'type': params['type'] ?? 'song',
+    'type': params['type'] ?? 'song', // song,playlist,mv,djprogram,djradio,noresource
     'msg': params['msg'] ?? '',
     'id': params['id'] ?? '',
   };
@@ -15,3 +15,5 @@ Future<Answer> _shareResource(Map params, List<Cookie> cookie) {
     cookies: cookie,
   );
 }
+
+

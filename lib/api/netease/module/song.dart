@@ -49,15 +49,16 @@ Future<Answer> _songUrl(Map params, List<Cookie> cookie) {
   }
 
   return eApiRequest(
-    'https://interface3.music.163.com/eapi/song/enhance/player/url',
-    '/api/song/enhance/player/url',
-    {
+    url: 'https://interface3.music.163.com/eapi/song/enhance/player/url',
+    optionUrl: '/api/song/enhance/player/url',
+    data: {
       'ids': '[${params["id"]}]',
       'br': int.parse(params['br'] ?? '999000'),
     },
     cookies: cookie,
   );
 }
+
 // 已购单曲
 Future<Answer> _songPurchased(Map params, List<Cookie> cookie) {
   final data = {
@@ -85,6 +86,20 @@ Future<Answer> _songUpload(Map params, List<Cookie> cookie) {
       'op': 'update',
     },
     crypto: Crypto.weApi,
+    cookies: cookie,
+  );
+}
+
+// 获取客户端歌曲下载链接
+Future<Answer> _songDownloadUrl(Map params, List<Cookie> cookie) {
+  final data = {
+    'id': params['id'],
+    'br': params['br'] ?? "999000",
+  };
+  return eApiRequest(
+    url: 'https://interface.music.163.com/eapi/song/enhance/download/url',
+    optionUrl: '/api/song/enhance/download/url',
+    data: data,
     cookies: cookie,
   );
 }

@@ -50,10 +50,10 @@ Map<String, String> _buildHeader(String url, String? ua, String method, List<Coo
   return headers;
 }
 
-Future<Answer> eApiRequest(
-  String url,
-  String optionUrl,
-  Map<String, dynamic> data, {
+Future<Answer> eApiRequest({
+  required String url,
+  required String optionUrl,
+  required Map<String, dynamic> data,
   List<Cookie> cookies = const [],
   String? ua,
   String method = 'POST',

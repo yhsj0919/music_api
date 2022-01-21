@@ -63,9 +63,37 @@ Future<Answer> _artistList(Map params, List<Cookie> cookie) {
 }
 
 // 歌手相关MV
-Future<Answer> _artistMv(Map params, List<Cookie> cookie) => request(
-    'POST', 'https://music.163.com/weapi/artist/mvs', {'artistId': params['id'], 'limit': params['limit'], 'offset': params['offset'], 'total': true},
-    crypto: Crypto.weApi, cookies: cookie);
+Future<Answer> _artistMv(Map params, List<Cookie> cookie) {
+  return request(
+      'POST',
+      'https://music.163.com/weapi/artist/mvs',
+      {
+        'artistId': params['id'],
+        'limit': params['limit'],
+        'offset': params['offset'],
+        'total': true,
+      },
+      crypto: Crypto.weApi,
+      cookies: cookie);
+}
+
+// 歌手相关视频
+Future<Answer> _artistVideo(Map params, List<Cookie> cookie) {
+  return request(
+      'POST',
+      'https://music.163.com/weapi/mlog/artist/video',
+      {
+        'artistId': params['id'],
+        'page': {
+          "size": params["size"] ?? 10,
+          "cursor": params["cursor"] ?? 0,
+        },
+        'tab': 0,
+        'order': params["order"] ?? 0,
+      },
+      crypto: Crypto.weApi,
+      cookies: cookie);
+}
 
 // 歌手新MV
 Future<Answer> _artistNewMv(Map params, List<Cookie> cookie) {

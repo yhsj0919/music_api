@@ -2,7 +2,7 @@ part of '../netease.dart';
 
 // 点赞与取消点赞资源
 Future<Answer> _resourceLike(Map params, List<Cookie> cookie) {
-  cookie.add(Cookie('os', 'pc'));
+  cookie.add(Cookie('os', 'android'));
   params['t'] = (params['t'] == 1 ? 'like' : 'unlike');
   params['type'] = const {
     1: 'R_MV_5_', //  MV

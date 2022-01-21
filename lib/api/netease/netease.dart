@@ -11,6 +11,10 @@ import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 import 'dart:math' as math;
 
+part 'module/record.dart';
+
+part 'module/sign.dart';
+
 part 'module/album.dart';
 
 part 'module/artist.dart';
@@ -120,12 +124,19 @@ class Netease {
 
   ///精品歌单
   static Future<Answer> topPlaylist({String? cat, int? page, int? size}) {
-    return _topPlaylist.call({"cat":cat,"page":page,"size":size}, []);
+    return _topPlaylist.call({"cat": cat, "page": page, "size": size}, []);
+  }
+
+  ///通过传过来的歌单id拿到所有歌曲数据
+  static Future<Answer> playlistTrackAll({required String? id}) {
+    return _playlistTrackAll.call({
+      "id": id,
+    }, []);
   }
 
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value( const Answer(site: MusicSite.Netease).copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
+      return Future.value(const Answer(site: MusicSite.Netease).copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -151,6 +162,7 @@ final _api = <String, Api>{
   "/artist/detail": _artistDetail,
   "/artist/list": _artistList,
   "/artist/mv": _artistMv,
+  "/artist/video": _artistVideo,
   "/artist/new/mv": _artistNewMv,
   "/artist/new/song": _artistNewSong,
   "/artist/songs": _artistSongs,
@@ -292,6 +304,7 @@ final _api = <String, Api>{
   "/playlist/desc/update": _playlistDescUpdate,
   "/playlist/detail/dynamic": _playlistDetailDynamic,
   "/playlist/detail": _playlistDetail,
+  "/playlist/track/all": _playlistTrackAll,
   "/playlist/highquality/tags": _playlistHighqualityTags,
   "/playlist/hot": _playlistHot,
   "/playlist/mylike": _playlistMyLike,
@@ -346,6 +359,7 @@ final _api = <String, Api>{
   "/song/detail": _songDetail,
   "/song/order/update": _songOrderUpdate,
   "/song/url": _songUrl,
+  "/song/download/url": _songDownloadUrl,
   "/song/purchased": _songPurchased,
   //热门
   "/top/album": _topAlbum,
@@ -413,4 +427,15 @@ final _api = <String, Api>{
   "/yunbei": _yunbei,
   "/yunbei/rcmd/song": _yunbeiRcmdSong,
   "/yunbei/rcmd/song/hhistory": _yunbeiRcmdSongHistory,
+
+  // 乐签信息接口
+  "/sign/happy/info": _signHappyInfo,
+
+  ///最近播放
+  "/record/recent/album": _recordRecentAlbum,
+  "/record/recent/dj": _recordRecentDj,
+  "/record/recent/song": _recordRecentSong,
+  "/record/recent/playlist": _recordRecentPlaylist,
+  "/record/recent/voice": _recordRecentVoice,
+  "/record/recent/cideo": _recordRecentVideo,
 };

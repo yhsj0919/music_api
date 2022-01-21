@@ -9,9 +9,9 @@ Future<Answer> _batch(Map params, List<Cookie> cookie) {
     }
   });
   return eApiRequest(
-    'http://music.163.com/eapi/batch',
-    '/api/batch',
-    data,
+    url: 'http://music.163.com/eapi/batch',
+    optionUrl: '/api/batch',
+    data: data,
     cookies: cookie,
   );
 }

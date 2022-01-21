@@ -108,9 +108,9 @@ Future<Answer> _logout(Map params, List<Cookie> cookie) {
 Future<Answer> _cellphoneExistenceCheck(Map params, List<Cookie> cookie) {
   final data = {'cellphone': params['phone'], 'countrycode': params['countrycode']};
   return eApiRequest(
-    'http://music.163.com/eapi/cellphone/existence/check',
-    '/api/cellphone/existence/check',
-    data,
+    url:'http://music.163.com/eapi/cellphone/existence/check',
+    optionUrl:'/api/cellphone/existence/check',
+    data: data,
     cookies: cookie,
   );
 }
@@ -119,9 +119,9 @@ Future<Answer> _cellphoneExistenceCheck(Map params, List<Cookie> cookie) {
 Future<Answer> _activateInitProfile(Map params, List<Cookie> cookie) {
   final data = {'nickname': params['nickname']};
   return eApiRequest(
-    'http://music.163.com/eapi/activate/initProfile',
-    '/api/activate/initProfile',
-    data,
+    url: 'http://music.163.com/eapi/activate/initProfile',
+    optionUrl:'/api/activate/initProfile',
+    data:data,
     cookies: cookie,
   );
 }

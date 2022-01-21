@@ -54,10 +54,17 @@ class _NeteasePageState extends State<NeteasePage> with AutomaticKeepAliveClient
                     onTap: () {
                       Netease.banner().then(onData).catchError(onError);
                     },
-                  ),ListTile(
+                  ),
+                  ListTile(
                     title: const Text('精品歌单'),
                     onTap: () {
                       Netease.topPlaylist().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('通过传过来的歌单id拿到所有歌曲数据'),
+                    onTap: () {
+                      Netease.playlistTrackAll(id: '7044354223').then(onData).catchError(onError);
                     },
                   ),
                 ],

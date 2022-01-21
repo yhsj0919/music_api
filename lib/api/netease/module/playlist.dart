@@ -17,11 +17,11 @@ Future<Answer> _playlistCreate(Map params, List<Cookie> cookie) {
 
   return request(
     'POST',
-    'https://music.163.com/weapi/playlist/create',
+    'https://music.163.com/api/playlist/create',
     {
       'name': params['name'],
       'privacy': params['privacy'], //0 为普通歌单，10 为隐私歌单
-      'type': params['type'] ?? 'NORMAL', // NORMAL|VIDEO
+      'type': params['type'] ?? 'NORMAL', // NORMAL|VIDEO|SHARED
     },
     crypto: Crypto.weApi,
     cookies: cookie,
@@ -43,9 +43,9 @@ Future<Answer> _playlistDelete(Map params, List<Cookie> cookie) {
 // 更新歌单描述
 Future<Answer> _playlistDescUpdate(Map params, List<Cookie> cookie) {
   return eApiRequest(
-    'https://interface3.music.163.com/eapi/playlist/desc/update',
-    '/api/playlist/desc/update',
-    {
+    url: 'https://interface3.music.163.com/eapi/playlist/desc/update',
+    optionUrl: '/api/playlist/desc/update',
+    data: {
       'id': params['id'],
       'desc': params['desc'],
     },
@@ -69,6 +69,7 @@ Future<Answer> _playlistDetailDynamic(Map params, List<Cookie> cookie) {
 }
 
 // 歌单详情
+//说明 : 由于网易云接口限制，歌单详情只会提供10首歌，通过调用_playlistTrackAll接口，传入对应的歌单`id`，即可获得对应的所有歌曲，
 Future<Answer> _playlistDetail(Map params, List<Cookie> cookie) {
   return request(
     'POST',
@@ -81,6 +82,49 @@ Future<Answer> _playlistDetail(Map params, List<Cookie> cookie) {
     crypto: Crypto.linuxApi,
     cookies: cookie,
   );
+}
+
+// 通过传过来的歌单id拿到所有歌曲数据
+// 支持传递参数limit来限制获取歌曲的数据数量 例如: /playlist/track/all?id=7044354223&limit=10
+Future<Answer> _playlistTrackAll(Map params, List<Cookie> cookie) {
+  var page = params["page"] ?? 0;
+  var size = params["size"] ?? 100000;
+  var offset = page * size;
+
+  return request(
+    'POST',
+    'https://music.163.com/api/v6/playlist/detail',
+    {
+      'id': params['id'],
+      'n': 100000,
+      's': params['s'] ?? 8,
+    },
+    crypto: Crypto.linuxApi,
+    cookies: cookie,
+  ).then((value) {
+    var data = value.data;
+
+    var trackIds = (data["playlist"]?["trackIds"] as List?)?.map((e) => '{"id": ${e["id"]}}').toList();
+
+    var ids = [];
+    trackIds?.forEach((element) {
+      var index = trackIds.indexOf(element);
+
+      if (index >= offset && index < offset + size) {
+        ids.add(element);
+      }
+    });
+
+    return request(
+      'POST',
+      'https://music.163.com/api/v3/song/detail',
+      {
+        'c': '[${ids.join(",")}]',
+      },
+      crypto: Crypto.linuxApi,
+      cookies: cookie,
+    );
+  });
 }
 
 // 精品歌单 tags
@@ -118,6 +162,7 @@ Future<Answer> _playlistMyLike(Map params, List<Cookie> cookie) {
     cookies: cookie,
   );
 }
+
 // 更新歌单名
 Future<Answer> _playlistNameUpdate(Map params, List<Cookie> cookie) {
   final data = {
@@ -126,9 +171,9 @@ Future<Answer> _playlistNameUpdate(Map params, List<Cookie> cookie) {
   };
 
   return eApiRequest(
-    'https://interface3.music.163.com/eapi/playlist/update/name',
-    '/api/playlist/update/name',
-    data,
+    url: 'https://interface3.music.163.com/eapi/playlist/update/name',
+    optionUrl: '/api/playlist/update/name',
+    data: data,
     cookies: cookie,
   );
 }
@@ -176,9 +221,9 @@ Future<Answer> _playlistTagsUpdate(Map params, List<Cookie> cookie) {
   };
 
   return eApiRequest(
-    'https://interface3.music.163.com/eapi/playlist/tags/update',
-    '/api/playlist/tags/update',
-    data,
+    url: 'https://interface3.music.163.com/eapi/playlist/tags/update',
+    optionUrl: '/api/playlist/tags/update',
+    data: data,
     cookies: cookie,
   );
 }
@@ -201,6 +246,7 @@ Future<Answer> _playlistTrackAdd(Map params, List<Cookie> cookie) {
     cookies: cookie,
   );
 }
+
 //从歌单删除歌曲
 Future<Answer> _playlistTrackDelete(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'pc'));
