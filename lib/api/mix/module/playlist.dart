@@ -92,7 +92,7 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                   ?.map((e) => {
                         "site": MusicSite.QQ.name,
                         "id": e["content_id"],
-                        "pic": e["coverImgUrl"],
+                        "pic": e["cover"],
                         "title": e["title"],
                         "listenCount": e["listen_num"],
                       })
