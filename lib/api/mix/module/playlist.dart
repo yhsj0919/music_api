@@ -28,7 +28,7 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
             case MusicSite.KuWo:
               var datas = (e.data["data"]?["list"] as List?)
                   ?.map((e) => {
-                        "site": "kuwo",
+                        "site": MusicSite.KuWo.name,
                         "id": e["id"],
                         "pic": e["img"],
                         "title": e["name"],
@@ -36,22 +36,22 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "kuwo", "data": datas ?? []};
+              return {"site": MusicSite.KuWo.name, "data": datas ?? []};
             case MusicSite.MiGu:
               var datas = (e.data["msg"] as List?)
                   ?.map((e) => {
-                        "site": "migu",
+                        "site": MusicSite.MiGu.name,
                         "id": e["playlistId"],
                         "pic": e["image"],
                         "title": e["playlistName"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "migu", "data": datas ?? []};
+              return {"site": MusicSite.MiGu.name, "data": datas ?? []};
             case MusicSite.KuGou:
               var datas = (e.data["plist"]?["list"]?["info"] as List?)
                   ?.map((e) => {
-                        "site": "kugou",
+                        "site": MusicSite.KuGou.name,
                         "id": e["specialid"],
                         "pic": e["imgurl"],
                         "title": e["specialname"],
@@ -61,11 +61,11 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                   .where((element) => element["id"] != null)
                   .toList()
                   .sublist(0, 10);
-              return {"site": "kugou", "data": datas ?? []};
+              return {"site": MusicSite.KuGou.name, "data": datas ?? []};
             case MusicSite.Baidu:
               var datas = (e.data["data"]?["result"] as List?)
                   ?.map((e) => {
-                        "site": "baidu",
+                        "site": MusicSite.Baidu.name,
                         "id": e["id"],
                         "pic": e["pic"],
                         "title": e["title"],
@@ -73,11 +73,11 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "baidu", "data": datas ?? []};
+              return {"site": MusicSite.Baidu.name, "data": datas ?? []};
             case MusicSite.Netease:
               var datas = (e.data["playlists"] as List?)
                   ?.map((e) => {
-                        "site": "netease",
+                        "site": MusicSite.Netease.name,
                         "id": e["id"],
                         "pic": e["coverImgUrl"],
                         "title": e["name"],
@@ -86,11 +86,11 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "netease", "data": datas ?? []};
+              return {"site": MusicSite.Netease.name, "data": datas ?? []};
             case MusicSite.QQ:
               var datas = (e.data["hotRecommend"]?["data"]?["v_hot"] as List?)
                   ?.map((e) => {
-                        "site": "qq",
+                        "site": MusicSite.QQ.name,
                         "id": e["content_id"],
                         "pic": e["coverImgUrl"],
                         "title": e["title"],
@@ -98,7 +98,7 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "qq", "data": datas ?? []};
+              return {"site": MusicSite.QQ.name, "data": datas ?? []};
             default:
               return {};
           }

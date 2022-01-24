@@ -28,39 +28,39 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.KuWo:
               var datas = (e.data["data"] as List?)
                   ?.map((e) => {
-                        "site": "kuwo",
+                        "site": MusicSite.KuWo.name,
                         "id": RegExp(r"[\d]{5,}").stringMatch(e["url"]),
                         "pic": e["pic"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "kuwo", "data": datas ?? []};
+              return {"site": MusicSite.KuWo.name, "data": datas ?? []};
             case MusicSite.MiGu:
               var datas = (e.data["results"] as List?)
                   ?.map((e) => {
-                        "site": "migu",
+                        "site": MusicSite.MiGu.name,
                         "id": e["id"],
                         "pic": e["picUrl"],
                         "title": e["title"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "migu", "data": datas ?? []};
+              return {"site": MusicSite.MiGu.name, "data": datas ?? []};
             case MusicSite.KuGou:
               var datas = (e.data["banner"] as List?)
                   ?.map((e) => {
-                        "site": "kugou",
+                        "site": MusicSite.KuGou.name,
                         "id": e["id"],
                         "pic": e["imgurl"],
                         "title": e["title"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "kugou", "data": datas ?? []};
+              return {"site": MusicSite.KuGou.name, "data": datas ?? []};
             case MusicSite.Baidu:
               var datas = (e.data["data"]?["result"] as List?)
                   ?.map((e) => {
-                        "site": "baidu",
+                        "site": MusicSite.Baidu.name,
                         "id": e["jumpLinkOutput"],
                         "pic": e["pic"],
                         "title": e["title"],
@@ -68,11 +68,11 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "baidu", "data": datas ?? []};
+              return {"site": MusicSite.Baidu.name, "data": datas ?? []};
             case MusicSite.Netease:
               var datas = (e.data["banners"] as List?)
                   ?.map((e) => {
-                        "site": "netease",
+                        "site": MusicSite.Netease.name,
                         "id": e["targetId"],
                         "pic": e["imageUrl"],
                         "title": e["typeTitle"],
@@ -80,11 +80,11 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "netease", "data": datas ?? []};
+              return {"site": MusicSite.Netease.name, "data": datas ?? []};
             case MusicSite.QQ:
               var datas = ((e.data["banner"]?["data"]?["shelf"]?["v_niche"] as List?)?.first["v_card"] as List?)
                   ?.map((e) => {
-                        "site": "qq",
+                        "site": MusicSite.QQ.name,
                         "id": e["id"],
                         "pic": e["cover"],
                         "title": e["title"],
@@ -92,7 +92,7 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
                       })
                   .where((element) => element["id"] != null)
                   .toList();
-              return {"site": "qq", "data": datas ?? []};
+              return {"site": MusicSite.QQ.name, "data": datas ?? []};
             default:
               return {};
           }

@@ -32,7 +32,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.KuWo:
               return (e.data["data"]?["list"] as List?)
                       ?.map((e) => {
-                            "site": "kuwo",
+                            "site": MusicSite.KuWo.name,
                             "id": e["rid"],
                             "name": e["name"],
                             "artist": e["artist"],
@@ -46,7 +46,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.MiGu:
               return (e.data["songResultData"]?["result"] as List?)
                       ?.map((e) => {
-                            "site": "migu",
+                            "site": MusicSite.MiGu.name,
                             "id": e["contentId"],
                             "name": e["name"],
                             "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
@@ -61,7 +61,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.MyFreeMp3:
               return (e.data["data"] as List?)
                       ?.map((e) => {
-                            "site": "myfreemp3",
+                            "site": MusicSite.MyFreeMp3.name,
                             "id": e["id"],
                             "name": e["name"],
                             "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
@@ -76,7 +76,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.KuGou:
               return (e.data["data"]?["info"] as List?)
                       ?.map((e) => {
-                            "site": "kugou",
+                            "site": MusicSite.KuGou.name,
                             "id": e["hash"],
                             "albumAudioId": e["album_audio_id"],
                             "name": e["songname"],
@@ -91,7 +91,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.Baidu:
               return (e.data["data"]?["typeTrack"] as List?)
                       ?.map((e) => {
-                            "site": "baidu",
+                            "site": MusicSite.Baidu.name,
                             "id": e["TSID"],
                             "name": e["title"],
                             "artist": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
@@ -105,7 +105,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.Netease:
               return (e.data["result"]?["songs"] as List?)
                       ?.map((e) => {
-                            "site": "netease",
+                            "site": MusicSite.Netease.name,
                             "id": e["id"],
                             "name": e["name"],
                             "artist": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
@@ -119,7 +119,7 @@ Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site =
             case MusicSite.QQ:
               return (e.data["req"]?["data"]?["body"]?["item_song"] as List?)
                       ?.map((e) => {
-                            "site": "qq",
+                            "site": MusicSite.QQ.name,
                             "id": e["mid"],
                             "mediaId": e["file"]["media_mid"],
                             "name": e["name"].toString(),
@@ -157,19 +157,19 @@ Future<List<dynamic>> _getUrl(List<dynamic>? infos) async {
 
   var resp = await Future.wait(infos.map((e) {
     var site = e?["site"];
-    if (site == "baidu") {
+    if (site == MusicSite.Baidu.name) {
       return Baidu.songInfo(tsId: e["id"]);
-    } else if (site == "kugou") {
+    } else if (site == MusicSite.KuGou.name) {
       return KuGou.musicInfo(hash: e["id"], albumAudioId: "${e["albumAudioId"]}");
-    } else if (site == "kuwo") {
+    } else if (site == MusicSite.KuWo.name) {
       return KuWo.playUrl(rid: "${e["id"]}");
-    } else if (site == "migu") {
+    } else if (site == MusicSite.MiGu.name) {
       return MiGu.playUrl2(contentId: "${e["id"]}");
-    } else if (site == "netease") {
+    } else if (site == MusicSite.Netease.name) {
       return Netease.songUrl(id: "${e["id"]}");
-    } else if (site == "qq") {
+    } else if (site == MusicSite.QQ.name) {
       return QQ.songListen(songMid: e["id"], mediaMid: e["mediaId"]);
-    } else if (site == "myfreemp3") {
+    } else if (site == MusicSite.MyFreeMp3.name) {
       return Future.value(Answer(site: MusicSite.MyFreeMp3, data: e ?? {}));
     } else {
       return Future.value(Answer(site: MusicSite.None, data: e ?? {}));
@@ -181,17 +181,17 @@ Future<List<dynamic>> _getUrl(List<dynamic>? infos) async {
         var index = infos.indexOf(e);
         var site = e["site"];
         var data = resp[index].data;
-        if (site == "baidu") {
+        if (site == MusicSite.Baidu.name) {
           e["url"] = data["data"]["path"];
-        } else if (site == "kugou") {
+        } else if (site == MusicSite.KuGou.name) {
           e["url"] = data["data"]["play_url"];
-        } else if (site == "kuwo") {
+        } else if (site == MusicSite.KuWo.name) {
           e["url"] = data["url"];
-        } else if (site == "migu") {
+        } else if (site == MusicSite.MiGu.name) {
           e["url"] = data["url"];
-        } else if (site == "netease") {
+        } else if (site == MusicSite.Netease.name) {
           e["url"] = (data["data"] as List?)?.first["url"];
-        } else if (site == "qq") {
+        } else if (site == MusicSite.QQ.name) {
           e["url"] =
               data['req_0']['data']["midurlinfo"][0]['purl'] == "" ? null : data['req']["data"]['freeflowsip'][0] + data['req_0']['data']["midurlinfo"][0]['purl'] + '&fromtag=77';
         }

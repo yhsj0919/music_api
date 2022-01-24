@@ -8,6 +8,7 @@ import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/api/netease/netease.dart';
 import 'package:music_api/api/qq/qq.dart';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/music_api.dart';
 import 'package:music_api/utils/answer.dart';
 
 part 'module/banner.dart';
