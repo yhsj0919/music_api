@@ -1,5 +1,17 @@
 part of '../kuwo.dart';
 
+Future<Answer> _albumNew(Map params, List<Cookie> cookie) {
+  return _get(
+    "http://mobi.kuwo.cn/mobiweb.s",
+    params: {
+      "prod": "kwplayer_ar_10.0.7.0",
+      "type": "zuixinzhuanji",
+    },
+    cookie: cookie,
+  );
+}
+
+
 ///专辑列表
 Future<Answer> _albumList(Map params, List<Cookie> cookie) {
   return _get(

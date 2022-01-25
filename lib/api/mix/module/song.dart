@@ -1,5 +1,121 @@
 part of '../mix_music.dart';
 
+///新歌
+Future<Answer> _songNew({List<MusicSite> site = allSite}) async {
+  try {
+    var value = await Future.wait(site.map((e) {
+      switch (e) {
+        case MusicSite.KuWo:
+          return KuWo.songNew();
+        case MusicSite.MiGu:
+          return MiGu.songNewWeb();
+        case MusicSite.KuGou:
+          return KuGou.musicList();
+        case MusicSite.Baidu:
+          return Baidu.songList(size: 10);
+        case MusicSite.Netease:
+          return Netease.songNew();
+        case MusicSite.QQ:
+          return QQ.songNew();
+        default:
+          return Future.value(const Answer(site: MusicSite.None, code: 200));
+      }
+    }).toList());
+
+    var datas = value
+        .map((e) {
+          switch (e.site) {
+            case MusicSite.KuWo:
+              var datas = (((e.data["child"] as List?)?.firstWhere((element) => element["type"].toString() == "newmusic_list")?["child"] as List?)?.first?["child"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.KuWo.name,
+                        "id": e["data"]?["rid"],
+                        "pic": e["data"]?["img"],
+                        "title": e["data"]?["name"],
+                        "subTitle": e["data"]?["artist"],
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList()
+                  .sublist(0, 10);
+              return {"site": MusicSite.KuWo.name, "data": datas ?? []};
+            case MusicSite.MiGu:
+              var datas = ((e.data["data"] as List?)?.last?["items"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.MiGu.name,
+                        "id": e["albumId"],
+                        "pic": "http:${e["image"]}",
+                        "title": e["albumName"],
+                        "subTitle": (e["singers"] as List?)?.map((e) => e["singerName"]).join(","),
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList()
+                  .sublist(0, 10);
+              return {"site": MusicSite.MiGu.name, "data": datas ?? []};
+            case MusicSite.KuGou:
+              var datas = (e.data["data"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.KuGou.name,
+                        "id": e["hash"],
+                        "albumAudioId": e["album_audio_id"],
+                        "pic": e["album_sizable_cover"].toString().replaceAll("{size}", "400"),
+                        "title": e["filename"].toString().split("-")[1],
+                        "subTitle": e["filename"].toString().split("-")[0],
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList()
+                  .sublist(0, 10);
+              return {"site": MusicSite.KuGou.name, "data": datas ?? []};
+            case MusicSite.Baidu:
+              var datas = (e.data["data"]?["result"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.Baidu.name,
+                        "id": e["assetId"],
+                        "pic": e["pic"],
+                        "title": e["title"],
+                        "subTitle": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList();
+              return {"site": MusicSite.Baidu.name, "data": datas ?? []};
+            case MusicSite.Netease:
+              var datas = (e.data["data"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.Netease.name,
+                        "id": e["id"],
+                        "pic": e["album"]?["picUrl"],
+                        "title": e["name"],
+                        "subTitle": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList()
+                  .sublist(0, 10);
+              return {"site": MusicSite.Netease.name, "data": datas ?? []};
+            case MusicSite.QQ:
+              var datas = (e.data["newSong"]?["data"]?["songlist"] as List?)
+                  ?.map((e) => {
+                        "site": MusicSite.QQ.name,
+                        "id": e["mid"],
+                        "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["mid"]}.jpg",
+                        "title": e["name"],
+                        "subTitle": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
+                      })
+                  .where((element) => element["id"] != null)
+                  .toList()
+                  .sublist(0, 10);
+              return {"site": MusicSite.QQ.name, "data": datas ?? []};
+            default:
+              return {};
+          }
+        })
+        .where((element) => element.isNotEmpty)
+        .toList();
+    return Answer(site: MusicSite.Mix, data: datas);
+  } catch (e) {
+    print("歌曲列表异常：" + e.toString());
+    return const Answer(site: MusicSite.Mix, data: []);
+  }
+}
+
 ///匹配音乐播放地址
 Future<Answer> _matchMusic({String? name, String? artist, List<MusicSite> site = allSite}) async {
   var keyWord = "$name $artist";

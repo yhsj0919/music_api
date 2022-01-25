@@ -8,14 +8,15 @@ import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/api/netease/netease.dart';
 import 'package:music_api/api/qq/qq.dart';
 import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/music_api.dart';
 import 'package:music_api/utils/answer.dart';
+
+part 'module/album.dart';
 
 part 'module/banner.dart';
 
-part 'module/song.dart';
-
 part 'module/playlist.dart';
+
+part 'module/song.dart';
 
 class MixMusic {
   MixMusic._();
@@ -26,6 +27,14 @@ class MixMusic {
 
   static Future<Answer> playlistRec({List<MusicSite> site = allSite}) {
     return _playlistRec(site: site);
+  }
+
+  static Future<Answer> albumNew({List<MusicSite> site = allSite}) {
+    return _albumNew(site: site);
+  }
+
+  static Future<Answer> songNew({List<MusicSite> site = allSite}) {
+    return _songNew(site: site);
   }
 
   static Future<Answer> matchMusic({String? name, String? artist, List<MusicSite> site = allSite}) {

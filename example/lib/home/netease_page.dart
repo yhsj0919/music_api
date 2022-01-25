@@ -62,6 +62,18 @@ class _NeteasePageState extends State<NeteasePage> with AutomaticKeepAliveClient
                     },
                   ),
                   ListTile(
+                    title: const Text('最新专辑'),
+                    onTap: () {
+                      Netease.albumNewest().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('新歌速递'),
+                    onTap: () {
+                      Netease.songNew().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('通过传过来的歌单id拿到所有歌曲数据'),
                     onTap: () {
                       Netease.playlistTrackAll(id: '7044354223').then(onData).catchError(onError);

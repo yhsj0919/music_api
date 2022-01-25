@@ -1,22 +1,22 @@
 part of '../mix_music.dart';
 
-///Banner
-Future<Answer> _banner({List<MusicSite> site = allSite}) async {
+///新碟上架
+Future<Answer> _albumNew({List<MusicSite> site = allSite}) async {
   try {
-    var value = await Future.wait(allSite.map((e) {
+    var value = await Future.wait(site.map((e) {
       switch (e) {
         case MusicSite.KuWo:
-          return KuWo.banner();
+          return KuWo.albumNew();
         case MusicSite.MiGu:
-          return MiGu.banner();
+          return MiGu.albumNewWeb();
         case MusicSite.KuGou:
-          return KuGou.banner();
+          return KuGou.albumList();
         case MusicSite.Baidu:
-          return Baidu.banner();
+          return Baidu.albumNew();
         case MusicSite.Netease:
-          return Netease.banner();
+          return Netease.albumNewest();
         case MusicSite.QQ:
-          return QQ.banner();
+          return QQ.albumNew(size: 10);
         default:
           return Future.value(const Answer(site: MusicSite.None, code: 200));
       }
@@ -26,69 +26,75 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
         .map((e) {
           switch (e.site) {
             case MusicSite.KuWo:
-              var datas = (e.data["data"] as List?)
+              var datas = (((e.data["child"] as List?)?.firstWhere((element) => element["type"].toString() == "newmusic_list")?["child"] as List?)?.first?["child"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.KuWo.name,
-                        "id": RegExp(r"[\d]{5,}").stringMatch(e["url"]),
-                        "pic": e["pic"],
+                        "id": e["data"]?["id"],
+                        "pic": e["data"]?["img"],
+                        "title": e["data"]?["name"],
+                        "subTitle": e["data"]?["artist"],
                       })
                   .where((element) => element["id"] != null)
-                  .toList();
+                  .toList()
+                  .sublist(0, 10);
               return {"site": MusicSite.KuWo.name, "data": datas ?? []};
             case MusicSite.MiGu:
               var datas = (e.data["data"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.MiGu.name,
-                        "id": e["id"],
+                        "id": e["albumId"],
                         "pic": "http:${e["image"]}",
-                        "title": e["title"],
+                        "title": e["albumName"],
+                "subTitle": (e["singers"] as List?)?.map((e) => e["singerName"]).join(","),
                       })
                   .where((element) => element["id"] != null)
                   .toList();
               return {"site": MusicSite.MiGu.name, "data": datas ?? []};
             case MusicSite.KuGou:
-              var datas = (e.data["banner"] as List?)
+              var datas = (e.data["data"]?["info"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.KuGou.name,
-                        "id": e["id"],
-                        "pic": e["imgurl"],
-                        "title": e["title"],
+                        "id": e["albumid"],
+                        "pic": e["imgurl"].toString().replaceAll("{size}", "400"),
+                        "title": e["albumname"],
+                        "subTitle": e["singername"],
                       })
                   .where((element) => element["id"] != null)
-                  .toList();
+                  .toList()
+                  .sublist(0, 10);
               return {"site": MusicSite.KuGou.name, "data": datas ?? []};
             case MusicSite.Baidu:
               var datas = (e.data["data"]?["result"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.Baidu.name,
-                        "id": e["jumpLinkOutput"],
+                        "id": e["albumAssetCode"],
                         "pic": e["pic"],
                         "title": e["title"],
-                        "type": e["jumpType"],
+                        "subTitle": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
                       })
                   .where((element) => element["id"] != null)
                   .toList();
               return {"site": MusicSite.Baidu.name, "data": datas ?? []};
             case MusicSite.Netease:
-              var datas = (e.data["banners"] as List?)
+              var datas = (e.data["albums"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.Netease.name,
-                        "id": e["targetId"],
-                        "pic": e["imageUrl"],
-                        "title": e["typeTitle"],
-                        "type": e["targetType"],
+                        "id": e["id"],
+                        "pic": e["picUrl"],
+                        "title": e["name"],
+                        "subTitle": e["artist"]?["name"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
               return {"site": MusicSite.Netease.name, "data": datas ?? []};
             case MusicSite.QQ:
-              var datas = ((e.data["banner"]?["data"]?["shelf"]?["v_niche"] as List?)?.first["v_card"] as List?)
+              var datas = (e.data["new_album"]?["data"]?["albums"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.QQ.name,
-                        "id": e["id"],
-                        "pic": e["cover"],
-                        "title": e["title"],
-                        "type": e["jumptype"],
+                        "id": e["mid"],
+                        "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["mid"]}.jpg",
+                        "title": e["name"],
+                        "subTitle": (e["singers"] as List?)?.map((e) => e["name"]).join(","),
                       })
                   .where((element) => element["id"] != null)
                   .toList();

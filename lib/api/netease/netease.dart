@@ -127,6 +127,16 @@ class Netease {
     return _topPlaylist.call({"cat": cat, "page": page, "size": size}, []);
   }
 
+  ///最新专辑
+  static Future<Answer> albumNewest() {
+    return _albumNewest.call({}, []);
+  }
+
+  ///最新专辑
+  static Future<Answer> songNew() {
+    return _topSong.call({}, []);
+  }
+
   ///通过传过来的歌单id拿到所有歌曲数据
   static Future<Answer> playlistTrackAll({required String? id}) {
     return _playlistTrackAll.call({
@@ -150,7 +160,7 @@ final _api = <String, Api>{
   "/album/detail": _albumDetail,
   "/album/style": _albumStyle,
   "/album/list": _albumList,
-  "/album/new": _albumNewest,
+  "/album/new": _albumNew,
   "/album/newest": _albumNewest,
   "/album/songsaleboard": _albumSongSaleBoard,
   "/album/sub": _albumSub,

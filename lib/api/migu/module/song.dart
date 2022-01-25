@@ -4,14 +4,10 @@ part of '../migu.dart';
 * 新歌
  */
 Future<Answer> _songNewWeb(Map params, List<Cookie> cookie) {
-  final data = {
-    "pageSize": params["size"] ?? 10,
-    "nid": 23853978,
-    "pageNo": params["page"] ?? 0,
-  };
+
   return _get(
-    "https://m.music.migu.cn/migu/remoting/cms_list_tag",
-    params: data,
+    "https://m.music.migu.cn/migumusic/h5/home/newsong",
+    params: {},
     cookie: cookie,
   );
 }

@@ -35,8 +35,8 @@ class MiGu {
   }
 
   ///新碟上架
-  static Future<Answer> albumNewWeb({int? page, int? size}) {
-    return _albumNewWeb.call({"page": page, "size": size}, []);
+  static Future<Answer> albumNewWeb() {
+    return _albumNewWeb.call({}, []);
   }
 
   ///新碟类型
@@ -126,8 +126,8 @@ class MiGu {
   }
 
   ///新歌(web)
-  static Future<Answer> songNewWeb({int? page, int? size}) {
-    return _songNewWeb.call({"page": page, "size": size}, []);
+  static Future<Answer> songNewWeb() {
+    return _songNewWeb.call({}, []);
   }
 
   ///新歌类型

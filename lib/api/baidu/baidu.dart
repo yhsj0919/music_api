@@ -50,9 +50,14 @@ class Baidu {
     return _index.call({}, []);
   }
 
-  ///首页
+  ///banner
   static Future<Answer> banner() {
     return _banner.call({}, []);
+  }
+
+  ///专辑推荐
+  static Future<Answer> albumNew() {
+    return _albumNew.call({}, []);
   }
 
   ///专辑推荐
@@ -139,6 +144,7 @@ class Baidu {
   static Future<Answer> playlistRec() {
     return _playlistRec.call({}, []);
   }
+
   /// 歌单分类
   static Future<Answer> playListType() {
     return _playListType.call({}, []);
@@ -253,6 +259,7 @@ final _api = <String, Api>{
   "/openScreen": _openScreen,
   "/index": _index,
   "/banner": _banner,
+  "/album/new": _albumNew,
   "/album/list": _albumList,
   "/album/info": _albumInfo,
   "/song/list": _songList,
@@ -336,10 +343,10 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
         ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.error(Answer(site: MusicSite.Baidu,code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.error(const Answer(site: MusicSite.Baidu,code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
+      return Future.error(const Answer(site: MusicSite.Baidu, code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
     }
   });
 }
@@ -375,10 +382,10 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
         ans = ans.copy(code: value.statusCode, data: json.decode(content));
         return Future.value(ans);
       } else {
-        return Future.value(Answer(site: MusicSite.Baidu,code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.value(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      return Future.value(const Answer(site: MusicSite.Baidu,code: 500, data: {'code': 500, 'msg': "百度对象转换异常"}));
+      return Future.value(const Answer(site: MusicSite.Baidu, code: 500, data: {'code': 500, 'msg': "百度对象转换异常"}));
     }
   });
 }

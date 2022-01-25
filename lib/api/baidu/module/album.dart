@@ -1,5 +1,19 @@
 part of '../baidu.dart';
 
+//albumNew
+Future<Answer> _albumNew(Map query, List<Cookie> cookie) {
+  return _get(
+    "https://api-qianqian.taihe.com/v1/index",
+    params: {},
+    cookie: cookie,
+  ).then((value) {
+    var data = value.data;
+    var album = (data["data"] as List?)?.lastWhere((element) => element["type"] == "album");
+    data["data"] = album;
+    return Future.value(value.copy(data: data));
+  });
+}
+
 /*
  * 专辑列表，最新专辑
  * @param page 从1开始

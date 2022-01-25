@@ -5,7 +5,7 @@ part of '../migu.dart';
  */
 Future<Answer> _playListNewWeb(Map params, List<Cookie> cookie) {
   return _get(
-    "https://m.music.migu.cn/migu/remoting/client_play_list_tag",
+    "https://m.music.migu.cn/migumusic/h5/home/songlist",
     params: {},
     cookie: cookie,
   );

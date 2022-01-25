@@ -38,12 +38,13 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                   .toList();
               return {"site": MusicSite.KuWo.name, "data": datas ?? []};
             case MusicSite.MiGu:
-              var datas = (e.data["msg"] as List?)
+              var datas = ((e.data["data"] as List?)?.first?["items"] as List?)
                   ?.map((e) => {
                         "site": MusicSite.MiGu.name,
-                        "id": e["playlistId"],
-                        "pic": e["image"],
-                        "title": e["playlistName"],
+                        "id": e["id"],
+                        "pic": "https:${e["image"]}",
+                        "title": e["title"],
+                        "listenCount": e["playTimes"],
                       })
                   .where((element) => element["id"] != null)
                   .toList();
@@ -53,7 +54,7 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
                   ?.map((e) => {
                         "site": MusicSite.KuGou.name,
                         "id": e["specialid"],
-                        "pic": e["imgurl"],
+                        "pic": e["imgurl"].toString().replaceAll("{size}", "400"),
                         "title": e["specialname"],
                         "subTitle": e["intro"],
                         "listenCount": e["playcount"],
@@ -103,7 +104,7 @@ Future<Answer> _playlistRec({List<MusicSite> site = allSite}) async {
               return {};
           }
         })
-        .where((element) => element.isNotEmpty )
+        .where((element) => element.isNotEmpty)
         .toList();
     return Answer(site: MusicSite.Mix, data: datas);
   } catch (e) {

@@ -22,7 +22,7 @@ part 'module/play_list.dart';
 
 part 'module/search.dart';
 
-part 'module/url.dart';
+part 'module/song.dart';
 
 class KuWo {
   KuWo._();
@@ -30,6 +30,11 @@ class KuWo {
   ///Banner
   static Future<Answer> banner() {
     return _banner.call({}, []);
+  }
+
+  ///最新专辑
+  static Future<Answer> albumNew() {
+    return _albumNew.call({}, []);
   }
 
   ///专辑列表
@@ -108,6 +113,11 @@ class KuWo {
     return _playUrl.call({"rid": rid, "format": format}, []);
   }
 
+  ///新歌
+  static Future<Answer> songNew() {
+    return _songNew.call({}, []);
+  }
+
   ///歌曲信息
   static Future<Answer> musicInfo({String? mid}) {
     return _musicInfo.call({"mid": mid}, []);
@@ -172,8 +182,9 @@ final _api = <String, Api>{
   "/artist/album": _artistAlbum,
   "/artist/mv": _artistMv,
   "/mv/list": _mvList,
-  "/music/url": _playUrl,
-  "/music/info": _musicInfo,
+  "/song/new": _songNew,
+  "/song/url": _playUrl,
+  "/song/info": _musicInfo,
   "/music/lrc": _musicLrc,
   "/search/hot": _hotSearch,
   "/search/music": _searchMusic,

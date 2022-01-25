@@ -4,15 +4,9 @@ part of '../migu.dart';
 * 新专辑、新碟
  */
 Future<Answer> _albumNewWeb(Map params, List<Cookie> cookie) {
-  final data = {
-    "pageSize": params["size"] ?? 10,
-    "nid": 23854016,
-    "pageNo": params["page"] ?? 0,
-    "type": 2003,
-  };
   return _get(
-    "http://m.music.migu.cn/migu/remoting/cms_list_tag",
-    params: data,
+    "https://m.music.migu.cn/migumusic/h5/home/newalbum",
+    params: {},
     cookie: cookie,
   );
 }

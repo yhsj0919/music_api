@@ -56,6 +56,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     },
                   ),
                   ListTile(
+                    title: const Text('最新专辑'),
+                    onTap: () {
+                      KuWo?.albumNew().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('专辑列表'),
                     onTap: () {
                       KuWo?.albumList().then(onData).catchError(onError);
@@ -143,6 +149,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     title: const Text('歌曲，MV播放地址'),
                     onTap: () {
                       KuWo?.playUrl(rid: "202943307", format: "mp3").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('新歌'),
+                    onTap: () {
+                      KuWo?.songNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

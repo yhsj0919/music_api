@@ -1,5 +1,16 @@
 part of '../kuwo.dart';
 
+Future<Answer> _songNew(Map params, List<Cookie> cookie) {
+  return _get(
+    "http://mobi.kuwo.cn/mobiweb.s",
+    params: {
+      "prod": "kwplayer_ar_10.0.7.0",
+      "type": "zuixinyinyue",
+    },
+    cookie: cookie,
+  );
+}
+
 ///播放地址
 Future<Answer> _playUrl(Map params, List<Cookie> cookie) {
   //http://antiserver.kuwo.cn/anti.s?format=mp3&rid=228908&response=url&type=convert_url3&br=320kmp3
