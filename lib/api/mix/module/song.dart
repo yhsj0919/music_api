@@ -95,7 +95,7 @@ Future<Answer> _songNew({List<MusicSite> site = allSite}) async {
                   ?.map((e) => {
                         "site": MusicSite.QQ.name,
                         "id": e["mid"],
-                        "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["mid"]}.jpg",
+                        "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["album"]?["pmid"]}.jpg",
                         "title": e["name"],
                         "subTitle": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
                       })
