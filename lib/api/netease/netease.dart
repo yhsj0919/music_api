@@ -127,6 +127,11 @@ class Netease {
     return _topPlaylist.call({"cat": cat, "page": page, "size": size}, []);
   }
 
+  ///推荐歌单
+  static Future<Answer> personalized({int? size}) {
+    return _personalized.call({"limit": size}, []);
+  }
+
   ///最新专辑
   static Future<Answer> albumNewest() {
     return _albumNewest.call({}, []);

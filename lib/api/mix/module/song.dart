@@ -26,83 +26,107 @@ Future<Answer> _songNew({List<MusicSite> site = allSite}) async {
         .map((e) {
           switch (e.site) {
             case MusicSite.KuWo:
-              var datas = (((e.data["child"] as List?)?.firstWhere((element) => element["type"].toString() == "newmusic_list")?["child"] as List?)?.first?["child"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.KuWo.name,
-                        "id": e["data"]?["rid"],
-                        "pic": e["data"]?["img"],
-                        "title": e["data"]?["name"],
-                        "subTitle": e["data"]?["artist"],
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList()
-                  .sublist(0, 10);
-              return {"site": MusicSite.KuWo.name, "data": datas ?? []};
+              try {
+                var datas = (((e.data["child"] as List?)?.firstWhere((element) => element["type"].toString() == "newmusic_list")?["child"] as List?)?.first?["child"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.KuWo.name,
+                          "id": e["data"]?["rid"],
+                          "pic": e["data"]?["img"],
+                          "title": e["data"]?["name"],
+                          "subTitle": e["data"]?["artist"],
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList()
+                    .sublist(0, 10);
+                return {"site": MusicSite.KuWo.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.KuWo.name, "data": []};
+              }
             case MusicSite.MiGu:
-              var datas = ((e.data["data"] as List?)?.last?["items"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.MiGu.name,
-                        "id": e["albumId"],
-                        "pic": "http:${e["image"]}",
-                        "title": e["albumName"],
-                        "subTitle": (e["singers"] as List?)?.map((e) => e["singerName"]).join(","),
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList()
-                  .sublist(0, 10);
-              return {"site": MusicSite.MiGu.name, "data": datas ?? []};
+              try {
+                var datas = ((e.data["data"] as List?)?.last?["items"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.MiGu.name,
+                          "id": e["albumId"],
+                          "pic": "http:${e["image"]}",
+                          "title": e["albumName"],
+                          "subTitle": (e["singers"] as List?)?.map((e) => e["singerName"]).join(","),
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList()
+                    .sublist(0, 10);
+                return {"site": MusicSite.MiGu.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.MiGu.name, "data": []};
+              }
             case MusicSite.KuGou:
-              var datas = (e.data["data"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.KuGou.name,
-                        "id": e["hash"],
-                        "albumAudioId": e["album_audio_id"],
-                        "pic": e["album_sizable_cover"].toString().replaceAll("{size}", "400"),
-                        "title": e["filename"].toString().split("-")[1],
-                        "subTitle": e["filename"].toString().split("-")[0],
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList()
-                  .sublist(0, 10);
-              return {"site": MusicSite.KuGou.name, "data": datas ?? []};
+              try {
+                var datas = (e.data["data"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.KuGou.name,
+                          "id": e["hash"],
+                          "albumAudioId": e["album_audio_id"],
+                          "pic": e["album_sizable_cover"].toString().replaceAll("{size}", "400"),
+                          "title": e["filename"].toString().split("-")[1],
+                          "subTitle": e["filename"].toString().split("-")[0],
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList()
+                    .sublist(0, 10);
+                return {"site": MusicSite.KuGou.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.KuGou.name, "data": []};
+              }
             case MusicSite.Baidu:
-              var datas = (e.data["data"]?["result"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.Baidu.name,
-                        "id": e["assetId"],
-                        "pic": e["pic"],
-                        "title": e["title"],
-                        "subTitle": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList();
-              return {"site": MusicSite.Baidu.name, "data": datas ?? []};
+              try {
+                var datas = (e.data["data"]?["result"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.Baidu.name,
+                          "id": e["assetId"],
+                          "pic": "${e["pic"]}@w_200,h_200",
+                          "title": e["title"],
+                          "subTitle": (e["artist"] as List?)?.map((e) => e["name"]).join(","),
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList();
+                return {"site": MusicSite.Baidu.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.Baidu.name, "data": []};
+              }
             case MusicSite.Netease:
-              var datas = (e.data["data"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.Netease.name,
-                        "id": e["id"],
-                        "pic": e["album"]?["picUrl"],
-                        "title": e["name"],
-                        "subTitle": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList()
-                  .sublist(0, 10);
-              return {"site": MusicSite.Netease.name, "data": datas ?? []};
+              try {
+                var datas = (e.data["data"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.Netease.name,
+                          "id": e["id"],
+                          "pic": "${e["album"]?["picUrl"]}?imageView=1&thumbnail=300x0",
+                          "title": e["name"],
+                          "subTitle": (e["artists"] as List?)?.map((e) => e["name"]).join(","),
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList()
+                    .sublist(0, 10);
+                return {"site": MusicSite.Netease.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.Netease.name, "data": []};
+              }
             case MusicSite.QQ:
-              var datas = (e.data["newSong"]?["data"]?["songlist"] as List?)
-                  ?.map((e) => {
-                        "site": MusicSite.QQ.name,
-                        "id": e["mid"],
-                        "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["album"]?["pmid"]}.jpg",
-                        "title": e["name"],
-                        "subTitle": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
-                      })
-                  .where((element) => element["id"] != null)
-                  .toList()
-                  .sublist(0, 10);
-              return {"site": MusicSite.QQ.name, "data": datas ?? []};
+              try {
+                var datas = (e.data["newSong"]?["data"]?["songlist"] as List?)
+                    ?.map((e) => {
+                          "site": MusicSite.QQ.name,
+                          "id": e["mid"],
+                          "pic": "https://y.qq.com/music/photo_new/T002R300x300M000${e["album"]?["pmid"]}.jpg",
+                          "title": e["name"],
+                          "subTitle": (e["singer"] as List?)?.map((e) => e["name"]).join(","),
+                        })
+                    .where((element) => element["id"] != null)
+                    .toList()
+                    .sublist(0, 10);
+                return {"site": MusicSite.QQ.name, "data": datas ?? []};
+              } catch (e) {
+                return {"site": MusicSite.QQ.name, "data": []};
+              }
             default:
               return {};
           }
