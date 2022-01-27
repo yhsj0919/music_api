@@ -15,7 +15,9 @@ class Http {
       headers = tmp;
     }
     url += "${params?.isNotEmpty == true ? "?" : ""}${toParamsString(LinkedHashMap.from(params ?? {}))}";
-    print(url);
+    if (kDebugMode) {
+      print(url);
+    }
     return HttpClient().getUrl(Uri.parse(url)).then((request) {
       request.followRedirects = followRedirects;
       headers?.forEach(request.headers.add);

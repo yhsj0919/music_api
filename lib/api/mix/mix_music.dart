@@ -37,6 +37,11 @@ class MixMusic {
     return _songNew(site: site);
   }
 
+  static Future<Answer> getUrl({required List<dynamic> songs, bool withEmpty = true}) async {
+    var datas = await _getUrl(songs: songs, withEmpty: withEmpty);
+    return Answer(site: MusicSite.Mix, data: datas);
+  }
+
   static Future<Answer> matchMusic({String? name, String? artist, List<MusicSite> site = allSite}) {
     return _matchMusic(name: name, artist: artist, site: site);
   }
