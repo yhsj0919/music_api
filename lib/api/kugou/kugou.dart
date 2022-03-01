@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:music_api/http/http.dart';
+import 'package:music_api/utils/utils.dart';
 
 part 'module/album.dart';
 
@@ -49,6 +52,11 @@ class KuGou {
   ///歌单详情
   static Future<Answer> playListInfo({String? id, int? page}) {
     return _playListInfo.call({"id": id, "page": page}, []);
+  }
+
+  ///歌单详情,包含所有歌曲
+  static Future<Answer> playListInfoAll({String? id, int? page}) {
+    return _playListInfoAll.call({"id": id, "page": page}, []);
   }
 
   ///排行榜列表

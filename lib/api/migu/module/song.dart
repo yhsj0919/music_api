@@ -4,7 +4,6 @@ part of '../migu.dart';
 * 新歌
  */
 Future<Answer> _songNewWeb(Map params, List<Cookie> cookie) {
-
   return _get(
     "https://m.music.migu.cn/migumusic/h5/home/newsong",
     params: {},
@@ -111,4 +110,27 @@ Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
     cookie: cookie,
     followRedirects: false,
   );
+}
+
+/*
+* 歌词
+ */
+Future<Answer> _songLrc(Map params, List<Cookie> cookie) {
+  //https://app.c.nf.migu.cn/MIGUM2.0/strategy/listen-url/v2.2?netType=01&resourceType=E&songId=155554&toneFlag=ZQ
+  final data = {
+    // "albumId": params['albumId'],
+    "netType": '01',
+    "resourceType": 2,
+    "songId": params['songId'],
+    "toneFlag": params['toneFlag'] ?? 'PQ',
+  };
+  return _get(
+    "https://app.c.nf.migu.cn/MIGUM2.0/strategy/listen-url/v2.2",
+    params: data,
+    cookie: cookie,
+  ).then((value) async {
+    var lrcUrl = value.data["data"]["songItem"]?["lrcUrl"];
+    var lrc = await Http.get(lrcUrl).then((value) => value.transform(utf8.decoder).join());
+    return value.copy(data: lrc);
+  });
 }

@@ -101,7 +101,7 @@ Future<Answer> _playlistTrackAll(Map params, List<Cookie> cookie) {
     },
     crypto: Crypto.linuxApi,
     cookies: cookie,
-  ).then((value) {
+  ).then((value) async {
     var data = value.data;
 
     var trackIds = (data["playlist"]?["trackIds"] as List?)?.map((e) => '{"id": ${e["id"]}}').toList();
@@ -115,7 +115,7 @@ Future<Answer> _playlistTrackAll(Map params, List<Cookie> cookie) {
       }
     });
 
-    return request(
+    var songs = await request(
       'POST',
       'https://music.163.com/api/v3/song/detail',
       {
@@ -124,6 +124,14 @@ Future<Answer> _playlistTrackAll(Map params, List<Cookie> cookie) {
       crypto: Crypto.linuxApi,
       cookies: cookie,
     );
+
+    var playlist = data["playlist"];
+    playlist.remove("trackIds");
+    playlist.remove("track");
+
+    playlist["songs"] = songs.data["songs"];
+
+    return Answer(site: MusicSite.Netease, data: playlist);
   });
 }
 

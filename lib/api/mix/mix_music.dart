@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:music_api/api/baidu/baidu.dart';
 import 'package:music_api/api/kugou/kugou.dart';
 import 'package:music_api/api/kuwo/kuwo.dart';
@@ -9,6 +10,8 @@ import 'package:music_api/api/netease/netease.dart';
 import 'package:music_api/api/qq/qq.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/utils/answer.dart';
+import 'package:music_api/http/http.dart';
+import 'package:music_api/utils/utils.dart';
 
 part 'module/album.dart';
 
@@ -29,8 +32,16 @@ class MixMusic {
     return _playlistRec(site: site);
   }
 
+  static Future<Answer> playlistInfo({required String id, required String site}) {
+    return _playlistInfo(id: id, siteName: site);
+  }
+
   static Future<Answer> albumNew({List<MusicSite> site = allSite}) {
     return _albumNew(site: site);
+  }
+
+  static Future<Answer> albumInfo({required String id, required String site}) {
+    return _albumInfo(id: id, siteName: site);
   }
 
   static Future<Answer> songNew({List<MusicSite> site = allSite}) {
@@ -39,6 +50,11 @@ class MixMusic {
 
   static Future<Answer> getUrl({required List<dynamic> songs, bool withEmpty = true}) async {
     var datas = await _getUrl(songs: songs, withEmpty: withEmpty);
+    return Answer(site: MusicSite.Mix, data: datas);
+  }
+
+  static Future<Answer> getLrc({required Map songs}) async {
+    var datas = await _getLrc(songs: songs);
     return Answer(site: MusicSite.Mix, data: datas);
   }
 

@@ -74,7 +74,15 @@ Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
     "https://app.c.nf.migu.cn/MIGUM3.0/resource/playlist/v2.0",
     params: data,
     cookie: cookie,
-  );
+  ).then((value) async {
+    var data = value.data;
+    params["size"] = 500;
+    var songs = await _playListSong(params, cookie);
+
+    data["data"]["musicList"] = songs.data["data"]["songList"];
+
+    return value.copy(data: data);
+  });
 }
 
 /*

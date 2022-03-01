@@ -28,11 +28,11 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.KuWo:
               try {
                 var datas = (e.data["data"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.KuWo.name,
-                          "id": RegExp(r"[\d]{5,}").stringMatch(e["url"]),
-                          "pic": e["pic"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.KuWo,
+                          id: RegExp(r"[\d]{5,}").stringMatch(e["url"]) ?? "",
+                          pic: e["pic"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.KuWo.name, "data": datas ?? []};
@@ -42,12 +42,12 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.MiGu:
               try {
                 var datas = (e.data["data"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.MiGu.name,
-                          "id": e["id"],
-                          "pic": "http:${e["image"]}",
-                          "title": e["title"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.MiGu,
+                          id: e["id"],
+                          pic: "http:${e["image"]}",
+                          title: e["title"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.MiGu.name, "data": datas ?? []};
@@ -57,12 +57,12 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.KuGou:
               try {
                 var datas = (e.data["banner"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.KuGou.name,
-                          "id": e["id"],
-                          "pic": e["imgurl"],
-                          "title": e["title"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.KuGou,
+                          id: e["id"],
+                          pic: e["imgurl"],
+                          title: e["title"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.KuGou.name, "data": datas ?? []};
@@ -72,13 +72,13 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.Baidu:
               try {
                 var datas = (e.data["data"]?["result"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.Baidu.name,
-                          "id": e["jumpLinkOutput"],
-                          "pic": e["pic"],
-                          "title": e["title"],
-                          "type": e["jumpType"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.Baidu,
+                          id: e["jumpLinkOutput"],
+                          pic: e["pic"],
+                          title: e["title"],
+                          type: e["jumpType"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.Baidu.name, "data": datas ?? []};
@@ -88,13 +88,13 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.Netease:
               try {
                 var datas = (e.data["banners"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.Netease.name,
-                          "id": e["targetId"],
-                          "pic": e["imageUrl"],
-                          "title": e["typeTitle"],
-                          "type": e["targetType"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.Netease,
+                          id: e["targetId"],
+                          pic: e["imageUrl"],
+                          title: e["typeTitle"],
+                          type: e["targetType"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.Netease.name, "data": datas ?? []};
@@ -104,13 +104,13 @@ Future<Answer> _banner({List<MusicSite> site = allSite}) async {
             case MusicSite.QQ:
               try {
                 var datas = ((e.data["banner"]?["data"]?["shelf"]?["v_niche"] as List?)?.first["v_card"] as List?)
-                    ?.map((e) => {
-                          "site": MusicSite.QQ.name,
-                          "id": e["id"],
-                          "pic": e["cover"],
-                          "title": e["title"],
-                          "type": e["jumptype"],
-                        })
+                    ?.map((e) => Banner(
+                          site: MusicSite.QQ,
+                          id: e["id"],
+                          pic: e["cover"],
+                          title: e["title"],
+                          type: e["jumptype"],
+                        ))
                     .where((element) => element["id"] != null)
                     .toList();
                 return {"site": MusicSite.QQ.name, "data": datas ?? []};

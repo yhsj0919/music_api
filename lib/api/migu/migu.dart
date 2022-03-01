@@ -145,6 +145,11 @@ class MiGu {
     return _playUrl.call({"songId": songId, "toneFlag": toneFlag}, []);
   }
 
+  ///歌词
+  static Future<Answer> songLrc({required String? songId}) {
+    return _songLrc.call({"songId": songId}, []);
+  }
+
   ///播放地址2
   static Future<Answer> playUrl2({required String? contentId, String? toneFlag, String? resourceType}) {
     return _playUrl2.call({"contentId": contentId, "toneFlag": toneFlag, "resourceType": resourceType}, []);

@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:music_api/utils/answer.dart';
@@ -68,6 +70,11 @@ class KuWo {
     return _playListInfo.call({"pid": id, "page": page, "size": size}, []);
   }
 
+  ///歌单详情
+  static Future<Answer> playListInfoAll({String? id}) {
+    return _playListInfoAll.call({"id": id}, []);
+  }
+
   ///榜单列表
   static Future<Answer> rankList() {
     return _rankList.call({}, []);
@@ -111,6 +118,11 @@ class KuWo {
   ///播放地址
   static Future<Answer> playUrl({String? rid, String? format}) {
     return _playUrl.call({"rid": rid, "format": format}, []);
+  }
+
+  ///歌词
+  static Future<Answer> songLrc({String? rid}) {
+    return _songLrc.call({"rid": rid}, []);
   }
 
   ///新歌

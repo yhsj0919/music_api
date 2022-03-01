@@ -49,10 +49,51 @@ Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
   return _get(
     "http://kuwo.cn/api/www/playlist/playListInfo",
     params: {
-      "pid": params["pid"],
+      "pid": params["id"],
       "pn": params["page"] ?? 1,
-      "rn": params["size"] ?? 30,
+      "rn": params["size"] ?? 100,
     },
     cookie: cookie,
   );
+}
+
+Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
+  // params["size"] = 100;
+  return _playListInfo(params, cookie).then((value) async {
+    var data = value.data;
+    try {
+      var info = data["data"];
+      var list = data["data"]["musicList"] as List?;
+      var total = data["data"]["total"];
+      var pagesize = 100;
+
+      var size = getPageSize(total, pagesize, currentTotal: list?.length ?? 0);
+
+      var otherSongs = (await Future.wait(
+        List.generate(
+          size - 1,
+          (data) {
+            return _playListInfo({"id": params["id"], "page": data + 2}, cookie);
+          },
+        ),
+      ))
+          .map(
+        (e) {
+          var data = e.data;
+          var list = data["data"]["musicList"] as List?;
+          return list;
+        },
+      ).toList();
+      for (var element in otherSongs) {
+        list?.addAll((element as List));
+      }
+      info["musicList"] = list;
+
+      return value.copy(data: info);
+    } catch (e) {
+      print(e);
+    }
+
+    return value;
+  });
 }

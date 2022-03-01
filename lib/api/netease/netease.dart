@@ -122,10 +122,23 @@ class Netease {
     return _songUrl.call({"id": id, "br": br}, []);
   }
 
+  ///歌词
+  static Future<Answer> lyric({String? id}) {
+    return _lyric.call({"id": id}, []).then((value) {
+      var lrc = value.data["lrc"]["lyric"];
+      return value.copy(data: lrc);
+    });
+  }
+
   ///精品歌单
   static Future<Answer> topPlaylist({String? cat, int? page, int? size}) {
     return _topPlaylist.call({"cat": cat, "page": page, "size": size}, []);
   }
+
+  ///歌单详情
+  // static Future<Answer> playlistInfo({String? id, int? page, int? size}) {
+  //   return _playlistTrackAll.call({"id": id}, []);
+  // }
 
   ///推荐歌单
   static Future<Answer> personalized({int? size}) {
@@ -137,6 +150,11 @@ class Netease {
     return _albumNewest.call({}, []);
   }
 
+  ///专辑详情
+  static Future<Answer> albumInfo({required String id}) {
+    return _album({"id": id}, []);
+  }
+
   ///最新专辑
   static Future<Answer> songNew() {
     return _topSong.call({}, []);
@@ -144,9 +162,7 @@ class Netease {
 
   ///通过传过来的歌单id拿到所有歌曲数据
   static Future<Answer> playlistTrackAll({required String? id}) {
-    return _playlistTrackAll.call({
-      "id": id,
-    }, []);
+    return _playlistTrackAll.call({"id": id}, []);
   }
 
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {

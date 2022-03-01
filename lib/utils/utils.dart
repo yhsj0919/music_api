@@ -7,6 +7,21 @@ bool toBoolean(val) {
   return val == 'true' || val == '1';
 }
 
+int getPageSize(int total, int size, {int? currentTotal}) {
+  //这里防止有一些total不准确的情况导致大量请求，比如实际总数60，total是500，currentTotal是当前页数量
+  if (currentTotal != null && size - currentTotal > 10) {
+    return 1;
+  } else {
+    var remainder = total % size;
+    int num = total ~/ size;
+    if (remainder != 0) {
+      return num + 1;
+    } else {
+      return num;
+    }
+  }
+}
+
 String toParamsString(LinkedHashMap? params) {
   return params?.entries.map((e) => "${e.key}=${e.value}").join("&") ?? "";
 }
@@ -41,4 +56,24 @@ Map<String, String> paramsToMap(String params) {
   });
 
   return map;
+}
+
+//分割数组
+List<List> splitList(List list, int len) {
+  var length = list.length; //列表数组数据总条数
+  List<List> result = []; //结果集合
+  int index = 1;
+  //循环 构造固定长度列表数组
+  while (true) {
+    if (index * len < length) {
+      List temp = list.skip((index - 1) * len).take(len).toList();
+      result.add(temp);
+      index++;
+      continue;
+    }
+    List temp = list.skip((index - 1) * len).toList();
+    result.add(temp);
+    break;
+  }
+  return result;
 }

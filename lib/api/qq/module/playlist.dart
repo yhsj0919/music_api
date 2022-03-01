@@ -110,10 +110,6 @@ Future<Answer> _playlistByTag(Map params, List<Cookie> cookie) {
  *歌单详情
  */
 Future<Answer> _playlistInfo(Map params, List<Cookie> cookie) {
-  final page = params['page'] ?? 1;
-  final size = params['size'] ?? 60;
-  final sin = (page - 1) * size;
-
   final data = {
     "data": json.encode({
       "playlist": {
@@ -146,10 +142,6 @@ Future<Answer> _playlistInfo(Map params, List<Cookie> cookie) {
  *歌单所有分类
  */
 Future<Answer> _playlistTag(Map params, List<Cookie> cookie) {
-  final page = params['page'] ?? 1;
-  final size = params['size'] ?? 60;
-  final sin = (page - 1) * size;
-
   final data = {
     "data": json.encode({
       "allTag": {
