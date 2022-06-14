@@ -190,7 +190,7 @@ final _api = <String, Api>{
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   Map<String, String> header = {
     "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
-    "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac",
+    "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac; kg_dfid=3MnigM3NqShu2WIagx0iXwUh; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e",
   };
 
   return Http.get(path, params: params, headers: header).then((value) async {

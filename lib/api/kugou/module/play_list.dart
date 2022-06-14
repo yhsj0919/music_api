@@ -17,8 +17,8 @@ Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
   return _get(
     "https://m.kugou.com/plist/list/${params["id"]}/",
     params: {
-      // "page": params["page"] ?? 1,
-      // "pagesize": params["size"] ?? 500,
+      "page": params["page"] ?? 1,
+      "pagesize": params["size"] ?? 500,
       "json": "true",
     },
     cookie: cookie,

@@ -31,7 +31,7 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
     params: {
       "r": "play/getdata",
       "hash": params["hash"],
-      "album_audio_id": params["albumAudioId"],
+      "album_audio_id": params["albumAudioId"]??"",
     },
     cookie: cookie,
   );

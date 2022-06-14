@@ -142,7 +142,7 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌曲详情'),
                     onTap: () {
-                      KuGou?.musicInfo(hash: "37FB544283B501DDC7D9CEE59FCC2B32", albumAudioId: "32042828").then(onData).catchError(onError);
+                      KuGou?.musicInfo(hash: "5E6182F51960E4D671BBC48DAF74F6D9").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
