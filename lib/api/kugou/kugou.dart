@@ -189,12 +189,13 @@ final _api = <String, Api>{
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   Map<String, String> header = {
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/96.0.4664.93",
+    "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
     "Cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac",
   };
 
   return Http.get(path, params: params, headers: header).then((value) async {
     try {
+      print(value.statusCode);
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuGou);
@@ -202,13 +203,16 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
         String data = await value.transform(utf8.decoder).join();
+        print(data);
         ans = ans.copy(code: value.statusCode, data: json.decode(data));
 
         return Future.value(ans);
       } else {
+        print(value.headers);
         return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
+      print(e);
       return Future.value(const Answer(site: MusicSite.KuGou, code: 500, data: {'code': 500, 'msg': "酷狗对象转换异常"}));
     }
   });

@@ -177,7 +177,7 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      Baidu?.playListInfo(id: '285994').then(onData).catchError(onError);
+                      Baidu?.playListInfo(id: '295299').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
