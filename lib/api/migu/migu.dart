@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:universal_io/io.dart';
 
@@ -301,7 +302,9 @@ Future<Answer> _get(String path,
         return Future.error(Answer(site: MusicSite.MiGu, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });

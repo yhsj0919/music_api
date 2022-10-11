@@ -1,7 +1,5 @@
 import 'dart:collection';
 
-import 'package:universal_io/io.dart';
-
 bool toBoolean(val) {
   if (val == '') return val;
   return val == 'true' || val == '1';

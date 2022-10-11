@@ -8,7 +8,7 @@ class Http {
   static Future<HttpClientResponse> get(String url, {Map<String, dynamic>? params, Map<String, String>? headers, bool followRedirects = true, int timeout = 5}) async {
     if (kIsWeb) {
       var tmp = <String, String>{};
-      url = "http://localhost:3001/" + url;
+      url = "http://localhost:3001/$url";
       headers?.forEach((key, value) {
         tmp["x-proxy-$key"] = value;
       });

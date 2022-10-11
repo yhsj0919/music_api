@@ -57,175 +57,175 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('开屏广告(可能为空)'),
                     onTap: () {
-                      Baidu?.openScreen().then(onData).catchError(onError);
+                      Baidu.openScreen().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('首页'),
                     onTap: () {
-                      Baidu?.index().then(onData).catchError(onError);
+                      Baidu.index().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('banner'),
                     onTap: () {
-                      Baidu?.banner().then(onData).catchError(onError);
+                      Baidu.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑列表(最新专辑)'),
                     onTap: () {
-                      Baidu?.albumList().then(onData).catchError(onError);
+                      Baidu.albumList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑详情'),
                     onTap: () {
-                      Baidu?.albumInfo(albumAssetCode: "P10003979544").then(onData).catchError(onError);
+                      Baidu.albumInfo(albumAssetCode: "P10003979544").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲列表(新歌推荐)'),
                     onTap: () {
-                      Baidu?.songList().then(onData).catchError(onError);
+                      Baidu.songList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲详情'),
                     onTap: () {
-                      Baidu?.songInfo(tsId: "T10062508184").then(onData).catchError(onError);
+                      Baidu.songInfo(tsId: "T10062508184").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲下载'),
                     onTap: () {
-                      Baidu?.songDownload(tsId: "T10062508184").then(onData).catchError(onError);
+                      Baidu.songDownload(tsId: "T10062508184").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手列表'),
                     onTap: () {
-                      Baidu?.artistList().then(onData).catchError(onError);
+                      Baidu.artistList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手信息'),
                     onTap: () {
-                      Baidu?.artistInfo(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistInfo(artistCode: "A10047720").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手歌曲'),
                     onTap: () {
-                      Baidu?.artistSong(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistSong(artistCode: "A10047720").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手专辑'),
                     onTap: () {
-                      Baidu?.artistAlbum(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistAlbum(artistCode: "A10047720").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手视频'),
                     onTap: () {
-                      Baidu?.artistVideo(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistVideo(artistCode: "A10047720").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索'),
                     onTap: () {
-                      Baidu?.search(keyWord: "薛之谦").then(onData).catchError(onError);
+                      Baidu.search(keyWord: "薛之谦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索热词'),
                     onTap: () {
-                      Baidu?.searchSug(word: "薛之谦").then(onData).catchError(onError);
+                      Baidu.searchSug(word: "薛之谦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单类型'),
                     onTap: () {
-                      Baidu?.rankType().then(onData).catchError(onError);
+                      Baidu.rankType().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单歌曲列表'),
                     onTap: () {
-                      Baidu?.rankList(bdid: "257851").then(onData).catchError(onError);
+                      Baidu.rankList(bdid: "257851").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('热门歌单'),
                     onTap: () {
-                      Baidu?.playlistRec().then(onData).catchError(onError);
+                      Baidu.playlistRec().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单分类'),
                     onTap: () {
-                      Baidu?.playListType().then(onData).catchError(onError);
+                      Baidu.playListType().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单列表'),
                     onTap: () {
-                      Baidu?.playList(subCateId: "2368").then(onData).catchError(onError);
+                      Baidu.playList(subCateId: "2368").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      Baidu?.playListInfo(id: '295299').then(onData).catchError(onError);
+                      Baidu.playListInfo(id: '295299').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('视频列表'),
                     onTap: () {
-                      Baidu?.videoList().then(onData).catchError(onError);
+                      Baidu.videoList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('视频详情'),
                     onTap: () {
-                      Baidu?.videoInfo(assetCode: 'V10000002698').then(onData).catchError(onError);
+                      Baidu.videoInfo(assetCode: 'V10000002698').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('视频推荐'),
                     onTap: () {
-                      Baidu?.videoRecommend().then(onData).catchError(onError);
+                      Baidu.videoRecommend().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('视频下载'),
                     onTap: () {
-                      Baidu?.videoDownload(assetCode: 'V10000002698').then(onData).catchError(onError);
+                      Baidu.videoDownload(assetCode: 'V10000002698').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('短信验证码'),
                     onTap: () {
-                      Baidu?.sendSms(phone: '15612345678').then(onData).catchError(onError);
+                      Baidu.sendSms(phone: '15612345678').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('登录'),
                     onTap: () {
-                      Baidu?.login(phone: '15612345678', code: "7223").then(onData).catchError(onError);
+                      Baidu.login(phone: '15612345678', code: "7223").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('账户信息'),
                     onTap: () {
-                      Baidu?.accountInfo(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
+                      Baidu.accountInfo(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('签到'),
                     onTap: () {
-                      Baidu?.signIn(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
+                      Baidu.signIn(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
                     },
                   ),
                 ],

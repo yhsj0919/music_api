@@ -52,139 +52,139 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
-                      KuGou?.banner().then(onData).catchError(onError);
+                      KuGou.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新歌推荐'),
                     onTap: () {
-                      KuGou?.musicList().then(onData).catchError(onError);
+                      KuGou.musicList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('排行榜列表'),
                     onTap: () {
-                      KuGou?.rankList().then(onData).catchError(onError);
+                      KuGou.rankList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('排行榜详情'),
                     onTap: () {
-                      KuGou?.rankInfo(rankId: "8888").then(onData).catchError(onError);
+                      KuGou.rankInfo(rankId: "8888").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('排行榜歌曲'),
                     onTap: () {
-                      KuGou?.rankSong(rankId: "8888").then(onData).catchError(onError);
+                      KuGou.rankSong(rankId: "8888").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑列表，新碟上架'),
                     onTap: () {
-                      KuGou?.albumList().then(onData).catchError(onError);
+                      KuGou.albumList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('推荐歌单'),
                     onTap: () {
-                      KuGou?.playList().then(onData).catchError(onError);
+                      KuGou.playList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      KuGou?.playListInfo(id: "2467396", page: 1).then(onData).catchError(onError);
+                      KuGou.playListInfo(id: "2467396", page: 1).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手列表'),
                     onTap: () {
-                      KuGou?.singerList(classId: "88").then(onData).catchError(onError);
+                      KuGou.singerList(classId: "88").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手信息'),
                     onTap: () {
-                      KuGou?.singerInfo(id: "3520").then(onData).catchError(onError);
+                      KuGou.singerInfo(id: "3520").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手单曲'),
                     onTap: () {
-                      KuGou?.singerSong(id: "3520").then(onData).catchError(onError);
+                      KuGou.singerSong(id: "3520").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手专辑'),
                     onTap: () {
-                      KuGou?.singerAlbum(id: "3520").then(onData).catchError(onError);
+                      KuGou.singerAlbum(id: "3520").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手Mv'),
                     onTap: () {
-                      KuGou?.singerMv(id: "3520").then(onData).catchError(onError);
+                      KuGou.singerMv(id: "3520").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑信息'),
                     onTap: () {
-                      KuGou?.albumInfo(albumId: "38080072").then(onData).catchError(onError);
+                      KuGou.albumInfo(albumId: "38080072").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑歌曲'),
                     onTap: () {
-                      KuGou?.albumSong(albumId: "38080072").then(onData).catchError(onError);
+                      KuGou.albumSong(albumId: "38080072").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲详情'),
                     onTap: () {
-                      KuGou?.musicInfo(hash: "5E6182F51960E4D671BBC48DAF74F6D9").then(onData).catchError(onError);
+                      KuGou.musicInfo(hash: "5E6182F51960E4D671BBC48DAF74F6D9").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV列表'),
                     onTap: () {
-                      KuGou?.mvList().then(onData).catchError(onError);
+                      KuGou.mvList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV详情'),
                     onTap: () {
-                      KuGou?.mvInfo(hash: "BC31D031AE3C698D7B767308CD26FC08").then(onData).catchError(onError);
+                      KuGou.mvInfo(hash: "BC31D031AE3C698D7B767308CD26FC08").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索提示'),
                     onTap: () {
-                      KuGou?.searchTip(keyword: "周杰伦").then(onData).catchError(onError);
+                      KuGou.searchTip(keyword: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索单曲'),
                     onTap: () {
-                      KuGou?.searchSong(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                      KuGou.searchSong(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索专辑'),
                     onTap: () {
-                      KuGou?.searchAlbum(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                      KuGou.searchAlbum(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索mv'),
                     onTap: () {
-                      KuGou?.searchMv(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                      KuGou.searchMv(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索歌单'),
                     onTap: () {
-                      KuGou?.searchPlayList(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
+                      KuGou.searchPlayList(keyword: "周杰伦", size: 10).then(onData).catchError(onError);
                     },
                   ),
                 ],

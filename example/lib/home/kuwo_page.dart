@@ -52,157 +52,157 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
-                      KuWo?.banner().then(onData).catchError(onError);
+                      KuWo.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('最新专辑'),
                     onTap: () {
-                      KuWo?.albumNew().then(onData).catchError(onError);
+                      KuWo.albumNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑列表'),
                     onTap: () {
-                      KuWo?.albumList().then(onData).catchError(onError);
+                      KuWo.albumList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑详情'),
                     onTap: () {
-                      KuWo?.albumInfo(albumId: "14365066").then(onData).catchError(onError);
+                      KuWo.albumInfo(albumId: "14365066").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单推荐'),
                     onTap: () {
-                      KuWo?.playListRec().then(onData).catchError(onError);
+                      KuWo.playListRec().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单标签'),
                     onTap: () {
-                      KuWo?.playListTag().then(onData).catchError(onError);
+                      KuWo.playListTag().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单列表'),
                     onTap: () {
-                      KuWo?.playList(tagId: "1848").then(onData).catchError(onError);
+                      KuWo.playList(tagId: "1848").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      KuWo?.playListInfo(id: "3363944171").then(onData).catchError(onError);
+                      KuWo.playListInfo(id: "3363944171").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单列表'),
                     onTap: () {
-                      KuWo?.rankList().then(onData).catchError(onError);
+                      KuWo.rankList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('榜单详情'),
                     onTap: () {
-                      KuWo?.rankInfo(id: "93").then(onData).catchError(onError);
+                      KuWo.rankInfo(id: "93").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手列表'),
                     onTap: () {
-                      KuWo?.artistList().then(onData).catchError(onError);
+                      KuWo.artistList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手详情'),
                     onTap: () {
-                      KuWo?.artistInfo(artistId: "336").then(onData).catchError(onError);
+                      KuWo.artistInfo(artistId: "336").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手单曲'),
                     onTap: () {
-                      KuWo?.artistMusic(artistId: "336").then(onData).catchError(onError);
+                      KuWo.artistMusic(artistId: "336").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手专辑'),
                     onTap: () {
-                      KuWo?.artistAlbum(artistId: "336").then(onData).catchError(onError);
+                      KuWo.artistAlbum(artistId: "336").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手MV'),
                     onTap: () {
-                      KuWo?.artistMv(artistId: "336").then(onData).catchError(onError);
+                      KuWo.artistMv(artistId: "336").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV推荐，最新MV'),
                     onTap: () {
-                      KuWo?.mvList().then(onData).catchError(onError);
+                      KuWo.mvList().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲，MV播放地址'),
                     onTap: () {
-                      KuWo?.playUrl(rid: "202943307", format: "mp3").then(onData).catchError(onError);
+                      KuWo.playUrl(rid: "202943307", format: "mp3").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新歌'),
                     onTap: () {
-                      KuWo?.songNew().then(onData).catchError(onError);
+                      KuWo.songNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲信息'),
                     onTap: () {
-                      KuWo?.musicInfo(mid: "228908").then(onData).catchError(onError);
+                      KuWo.musicInfo(mid: "228908").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌词'),
                     onTap: () {
-                      KuWo?.musicLrc(musicId: "142655450").then(onData).catchError(onError);
+                      KuWo.musicLrc(musicId: "142655450").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索热词'),
                     onTap: () {
-                      KuWo?.searchHot().then(onData).catchError(onError);
+                      KuWo.searchHot().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索单曲'),
                     onTap: () {
-                      KuWo?.searchMusic(keyWord: "周杰伦").then(onData).catchError(onError);
+                      KuWo.searchMusic(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索专辑'),
                     onTap: () {
-                      KuWo?.searchAlbum(keyWord: "周杰伦").then(onData).catchError(onError);
+                      KuWo.searchAlbum(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索MV'),
                     onTap: () {
-                      KuWo?.searchMv(keyWord: "周杰伦").then(onData).catchError(onError);
+                      KuWo.searchMv(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索歌单'),
                     onTap: () {
-                      KuWo?.searchPlayList(keyWord: "周杰伦").then(onData).catchError(onError);
+                      KuWo.searchPlayList(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索歌手'),
                     onTap: () {
-                      KuWo?.searchArtist(keyWord: "周杰伦").then(onData).catchError(onError);
+                      KuWo.searchArtist(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
                 ],

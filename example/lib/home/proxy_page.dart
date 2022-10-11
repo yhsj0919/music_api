@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_api/music_api.dart';
 import 'package:music_api/proxy.dart';
 
 class ProxyPage extends StatefulWidget {

@@ -82,7 +82,9 @@ class Proxy {
         resp = await Http.post(path, params: params, headers: header);
       }
 
-      print(resp);
+      if (kDebugMode) {
+        print(resp);
+      }
 
       String content = await resp.transform(utf8.decoder).join();
       request.response.statusCode = 200;

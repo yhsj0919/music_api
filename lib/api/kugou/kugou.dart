@@ -1,29 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http.dart';
+import 'package:music_api/utils/answer.dart';
+import 'package:music_api/utils/types.dart';
 import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:music_api/utils/answer.dart';
-import 'package:music_api/utils/types.dart';
-import 'package:music_api/http/http.dart';
-import 'package:music_api/utils/utils.dart';
-
 part 'module/album.dart';
-
-part 'module/rank.dart';
-
 part 'module/banner.dart';
-
 part 'module/music.dart';
-
 part 'module/mv.dart';
-
 part 'module/play_list.dart';
-
+part 'module/rank.dart';
 part 'module/search.dart';
-
 part 'module/singer.dart';
 
 class KuGou {

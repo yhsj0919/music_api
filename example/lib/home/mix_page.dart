@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
-import 'package:music_api/music_api.dart';
 import 'package:music_api/api/mix/mix_music.dart';
 import 'package:music_api/utils/answer.dart';
 
@@ -54,31 +52,31 @@ class _MixPageState extends State<MixPage> with AutomaticKeepAliveClientMixin {
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
-                      MixMusic?.banner().then(onData).catchError(onError);
+                      MixMusic.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单推荐'),
                     onTap: () {
-                      MixMusic?.playlistRec().then(onData).catchError(onError);
+                      MixMusic.playlistRec().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新碟上架'),
                     onTap: () {
-                      MixMusic?.albumNew().then(onData).catchError(onError);
+                      MixMusic.albumNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新歌推荐'),
                     onTap: () {
-                      MixMusic?.songNew().then(onData).catchError(onError);
+                      MixMusic.songNew().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('匹配音乐播放地址'),
                     onTap: () {
-                      MixMusic?.matchMusic(name: "火星人来过", artist: "薛之谦").then(onData).catchError(onError);
+                      MixMusic.matchMusic(name: "火星人来过", artist: "薛之谦").then(onData).catchError(onError);
                     },
                   ),
                 ],

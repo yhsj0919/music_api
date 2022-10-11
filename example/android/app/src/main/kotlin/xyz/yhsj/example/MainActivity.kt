@@ -1,4 +1,4 @@
-package xyz.yhsj.music_api_example
+package xyz.yhsj.example
 
 import io.flutter.embedding.android.FlutterActivity
 

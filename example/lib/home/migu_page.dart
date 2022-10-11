@@ -52,61 +52,61 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
-                      MiGu?.banner().then(onData).catchError(onError);
+                      MiGu.banner().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新碟上架Web'),
                     onTap: () {
-                      MiGu?.albumNewWeb().then(onData).catchError(onError);
+                      MiGu.albumNewWeb().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新碟类型'),
                     onTap: () {
-                      MiGu?.albumNewType().then(onData).catchError(onError);
+                      MiGu.albumNewType().then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('新碟上架'),
                     onTap: () {
-                      MiGu?.albumNew(columnId: "15279065").then(onData).catchError(onError);
+                      MiGu.albumNew(columnId: "15279065").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑歌曲'),
                     onTap: () {
-                      MiGu?.albumSong(albumId: '1136495459', type: "2003").then(onData).catchError(onError);
+                      MiGu.albumSong(albumId: '1136495459', type: "2003").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑歌曲2'),
                     onTap: () {
-                      MiGu?.albumSong2(albumId: '1136495459').then(onData).catchError(onError);
+                      MiGu.albumSong2(albumId: '1136495459').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑信息'),
                     onTap: () {
-                      MiGu?.albumInfo(albumId: '1136495459', type: "2003").then(onData).catchError(onError);
+                      MiGu.albumInfo(albumId: '1136495459', type: "2003").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('专辑信息2'),
                     onTap: () {
-                      MiGu?.albumInfo2(albumId: '1136495459').then(onData).catchError(onError);
+                      MiGu.albumInfo2(albumId: '1136495459').then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV信息'),
                     onTap: () {
-                      MiGu?.mvInfo(mvId: "600906000000337596").then(onData).catchError(onError);
+                      MiGu.mvInfo(mvId: "600906000000337596").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('MV播放地址,上面接口返回的'),
                     onTap: () {
-                      MiGu?.mvPlayUrl(
+                      MiGu.mvPlayUrl(
                         contentId: "600906000000337596",
                         mvCopyrightId: "600846Y0958",
                         format: "050012",
@@ -119,128 +119,128 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('MV推荐'),
                     onTap: () {
-                      MiGu?.mvRec(mvId: "600906000000337596").then(onData).catchError(onError);
+                      MiGu.mvRec(mvId: "600906000000337596").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                       title: const Text('歌单推荐(web)'),
                       onTap: () {
-                        MiGu?.playListNewWeb().then(onData).catchError(onError);
+                        MiGu.playListNewWeb().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单热门标签'),
                       onTap: () {
-                        MiGu?.playListHotTag().then(onData).catchError(onError);
+                        MiGu.playListHotTag().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单热门推荐(歌单最顶上的几个)'),
                       onTap: () {
-                        MiGu?.playListRec().then(onData).catchError(onError);
+                        MiGu.playListRec().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单标签'),
                       onTap: () {
-                        MiGu?.playListTagList().then(onData).catchError(onError);
+                        MiGu.playListTagList().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单(根据标签ID获取)'),
                       onTap: () {
-                        MiGu?.playList(tagId: "1003449727").then(onData).catchError(onError);
+                        MiGu.playList(tagId: "1003449727").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单信息'),
                       onTap: () {
-                        MiGu?.playListInfo(id: '169018447').then(onData).catchError(onError);
+                        MiGu.playListInfo(id: '169018447').then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单歌曲'),
                       onTap: () {
-                        MiGu?.playListSong(id: '169018447').then(onData).catchError(onError);
+                        MiGu.playListSong(id: '169018447').then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌单播放量'),
                       onTap: () {
-                        MiGu?.playListPlayNum(contentIds: ['169018447'], contentTypes: ['2021']).then(onData).catchError(onError);
+                        MiGu.playListPlayNum(contentIds: ['169018447'], contentTypes: ['2021']).then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('新歌(web)'),
                       onTap: () {
-                        MiGu?.songNewWeb().then(onData).catchError(onError);
+                        MiGu.songNewWeb().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('新歌类型'),
                       onTap: () {
-                        MiGu?.songNewType().then(onData).catchError(onError);
+                        MiGu.songNewType().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('新歌列表'),
                       onTap: () {
-                        MiGu?.songNew(columnId: "15279290").then(onData).catchError(onError);
+                        MiGu.songNew(columnId: "15279290").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('播放地址'),
                       onTap: () {
-                        MiGu?.playUrl(songId: "1002508489", toneFlag: "PQ").then(onData).catchError(onError);
+                        MiGu.playUrl(songId: "1002508489", toneFlag: "PQ").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('播放地址2(根据contentId获取播放地址，支持更多格式，更少限制)'),
                       onTap: () {
-                        MiGu?.playUrl2(contentId: "600907000009041441", toneFlag: "PQ").then(onData).catchError(onError);
+                        MiGu.playUrl2(contentId: "600919000008266464", toneFlag: "HQ").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('榜单'),
                       onTap: () {
-                        MiGu?.rankList().then(onData).catchError(onError);
+                        MiGu.rankList().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('榜单详情'),
                       onTap: () {
-                        MiGu?.rankInfo(rankId: "27553319").then(onData).catchError(onError);
+                        MiGu.rankInfo(rankId: "27553319").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手Tabs，这个返回值写死了，没走接口'),
                       onTap: () {
-                        MiGu?.singerTabs().then(onData).catchError(onError);
+                        MiGu.singerTabs().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手列表'),
                       onTap: () {
-                        MiGu?.singer(tab: "huayu-nan").then(onData).catchError(onError);
+                        MiGu.singer(tab: "huayu-nan").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手信息'),
                       onTap: () {
-                        MiGu?.singerInfo(id: "112").then(onData).catchError(onError);
+                        MiGu.singerInfo(id: "112").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手单曲'),
                       onTap: () {
-                        MiGu?.singerSongs(id: "112").then(onData).catchError(onError);
+                        MiGu.singerSongs(id: "112").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手专辑'),
                       onTap: () {
-                        MiGu?.singerAlbum(id: "112").then(onData).catchError(onError);
+                        MiGu.singerAlbum(id: "112").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('歌手Mv'),
                       onTap: () {
-                        MiGu?.singerMv(id: "112").then(onData).catchError(onError);
+                        MiGu.singerMv(id: "112").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('搜索热词'),
                       onTap: () {
-                        MiGu?.searchHotWord().then(onData).catchError(onError);
+                        MiGu.searchHotWord().then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('搜索'),
                       onTap: () {
-                        MiGu?.search(keyWord: "薛之谦").then(onData).catchError(onError);
+                        MiGu.search(keyWord: "薛之谦").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('搜索建议'),
                       onTap: () {
-                        MiGu?.searchSuggest(keyword: "薛之谦").then(onData).catchError(onError);
+                        MiGu.searchSuggest(keyword: "薛之谦").then(onData).catchError(onError);
                       }),
                 ],
               ),

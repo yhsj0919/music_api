@@ -114,7 +114,7 @@ Future<Answer> eApiRequest({
     ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);
     return ans;
   }).catchError((e, s) {
-    debugPrint("request error " + e.toString());
+    debugPrint("request error $e");
     debugPrint(s.toString());
     return Answer(site: MusicSite.Netease, code: 502, msg: e.toString(), data: {'code': 502, 'msg': e.toString()});
   });

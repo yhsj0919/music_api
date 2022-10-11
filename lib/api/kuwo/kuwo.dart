@@ -1,29 +1,21 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/utils/utils.dart';
-import 'package:universal_io/io.dart';
 
+import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
-import 'package:music_api/http/http.dart';
+import 'package:music_api/utils/utils.dart';
+import 'package:universal_io/io.dart';
+import 'package:uuid/uuid.dart';
 
 part 'module/album.dart';
-
 part 'module/artist.dart';
-
-part 'module/rank.dart';
-
 part 'module/banner.dart';
-
 part 'module/music.dart';
-
 part 'module/mv.dart';
-
 part 'module/play_list.dart';
-
+part 'module/rank.dart';
 part 'module/search.dart';
-
 part 'module/song.dart';
 
 class KuWo {
@@ -67,7 +59,7 @@ class KuWo {
 
   ///歌单详情
   static Future<Answer> playListInfo({String? id, int? page, int? size}) {
-    return _playListInfo.call({"pid": id, "page": page, "size": size}, []);
+    return _playListInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
   ///歌单详情
@@ -214,6 +206,10 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     "Cookie": "kw_token=SQ6EJ3Q5G6B",
     "Referer": "http://www.kuwo.cn/",
   };
+
+  if (params != null && params.containsKey("reqId") != true) {
+    params["reqId"] = const Uuid().v1();
+  }
 
   return Http.get(path, params: params, headers: header).then((value) async {
     try {

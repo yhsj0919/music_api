@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:music_api/api/netease/netease.dart';
 import 'package:music_api/utils/answer.dart';
@@ -94,7 +95,9 @@ class _NeteasePageState extends State<NeteasePage> with AutomaticKeepAliveClient
   void onData(Answer value) {
     setState(() {
       result = json.encode(value.data);
-      print(result);
+      if (kDebugMode) {
+        print(result);
+      }
     });
   }
 
