@@ -134,7 +134,7 @@ Future<Answer> _userDj(Map params, List<Cookie> cookie) {
 // 用户动态
 Future<Answer> _userEvent(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'ios'));
-  cookie.add(Cookie('appver', '8.1.20'));
+  cookie.add(Cookie('appver', '8.7.01'));
 
   return request(
     'POST',
@@ -278,7 +278,7 @@ Future<Answer> _userUpdate(Map params, List<Cookie> cookie) {
 // 用户评论历史
 Future<Answer> _userCommentHistory(Map params, List<Cookie> cookie) {
   cookie.add(Cookie("os", "ios"));
-  cookie.add(Cookie("appver", "8.1.20"));
+  cookie.add(Cookie("appver", "8.7.01"));
   return request(
     'POST',
     'https://music.163.com/api/comment/user/comment/history',

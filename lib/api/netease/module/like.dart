@@ -2,13 +2,18 @@ part of '../netease.dart';
 
 // 红心与取消红心歌曲
 Future<Answer> _like(Map params, List<Cookie> cookie) {
+  cookie.add(Cookie('os', 'pc'));
+  cookie.add(Cookie('appver', '2.9.7'));
+
   final data = {
+    "alg": 'itembased',
     'trackId': params['id'],
     'like': params['like'] == 'false' ? false : true,
+    "time":3,
   };
   return request(
     'POST',
-    'https://music.163.com/weapi/radio/like?alg=${params["alg"] ?? "itembased"}&trackId=${params["id"]}&time=${params["time"] ?? 25}',
+    'https://music.163.com/weapi/radio/like',
     data,
     crypto: Crypto.weApi,
     cookies: cookie,

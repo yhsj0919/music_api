@@ -101,7 +101,7 @@ Future<Answer> _commentHot(Map params, List<Cookie> cookie) {
 //评论抱一抱列表
 Future<Answer> _commentHugList(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'ios'));
-  cookie.add(Cookie('appver', '8.1.20'));
+  cookie.add(Cookie('appver', '8.7.01'));
 
   params['type'] = const {
     0: 'R_SO_4_', //  歌曲
@@ -134,7 +134,7 @@ Future<Answer> _commentHugList(Map params, List<Cookie> cookie) {
 
 Future<Answer> _commentHugListener(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'ios'));
-  cookie.add(Cookie('appver', '8.0.00'));
+  cookie.add(Cookie('appver', '8.7.01'));
 
   params['type'] = const {
     0: 'R_SO_4_', //  歌曲

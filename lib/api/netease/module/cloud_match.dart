@@ -3,7 +3,7 @@ part of '../netease.dart';
 //云盘歌曲信息匹配纠正
 Future<Answer> _cloudMatch (Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'pc'));
-  cookie.add(Cookie('appver', '8.1.20'));
+  cookie.add(Cookie('appver', '8.7.01'));
 
   final data = {
     'userId': params['uid'],

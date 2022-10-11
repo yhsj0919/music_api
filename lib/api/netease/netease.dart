@@ -107,6 +107,18 @@ part 'module/vip.dart';
 
 part 'module/yunbei.dart';
 
+part 'module/signin_progress.dart';
+
+part 'module/nickname_check.dart';
+
+part 'module/artist_follow_count.dart';
+
+part 'module/music_tasks_new.dart';
+
+part 'module/playlist_update_playcount.dart';
+
+part 'module/vip_timemachine.dart';
+
 class Netease {
   Netease._();
 
@@ -462,6 +474,9 @@ final _api = <String, Api>{
   // 乐签信息接口
   "/sign/happy/info": _signHappyInfo,
 
+  //签到进度
+  "/signin/progress": _signInProgress,
+
   ///最近播放
   "/record/recent/album": _recordRecentAlbum,
   "/record/recent/dj": _recordRecentDj,
@@ -469,4 +484,14 @@ final _api = <String, Api>{
   "/record/recent/playlist": _recordRecentPlaylist,
   "/record/recent/voice": _recordRecentVoice,
   "/record/recent/cideo": _recordRecentVideo,
+
+  //重复昵称检测
+  "/nickname/check": _nicknameCheck,
+  // 歌手粉丝数量
+  "/artist/follow/count": _artistFollowCount,
+  // 获取音乐人任务
+  "/music/tasks/new": _musicTasksNew,
+  //// 歌单打卡
+  "/playlist/update/playcount": _playlistUpdatePlaycount,
+  "/vip/timemachine": _vipTimemachine,
 };

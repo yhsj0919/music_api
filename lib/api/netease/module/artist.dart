@@ -98,7 +98,7 @@ Future<Answer> _artistVideo(Map params, List<Cookie> cookie) {
 // 歌手新MV
 Future<Answer> _artistNewMv(Map params, List<Cookie> cookie) {
   cookie.add(Cookie("os", 'ios'));
-  cookie.add(Cookie("appver", '8.1.20'));
+  cookie.add(Cookie("appver", '8.7.01'));
 
   return request(
       'POST',
@@ -114,7 +114,7 @@ Future<Answer> _artistNewMv(Map params, List<Cookie> cookie) {
 // 歌手新歌
 Future<Answer> _artistNewSong(Map params, List<Cookie> cookie) {
   cookie.add(Cookie("os", 'ios'));
-  cookie.add(Cookie("appver", '8.1.20'));
+  cookie.add(Cookie("appver", '8.7.01'));
 
   return request(
       'POST',

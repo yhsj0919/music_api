@@ -5,7 +5,7 @@ part of '../netease.dart';
 // query.refresh 是否刷新数据
 Future<Answer> _homepageBlockPage(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'ios'));
-  cookie.add(Cookie('appver', '8.1.20'));
+  cookie.add(Cookie('appver', '8.7.01'));
   return request(
     'POST',
     'https://music.163.com/api/homepage/block/page',
@@ -21,9 +21,9 @@ Future<Answer> _homepageBlockPage(Map params, List<Cookie> cookie) {
 // !需要登录或者匿名登录，非登录返回 []
 Future<Answer> _homepageDragonBall(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'ios'));
-  cookie.add(Cookie('appver', '8.1.20'));
+  cookie.add(Cookie('appver', '8.7.01'));
 
-  if (cookie.where((element) => element.name == "MUSIC_U").length == 0) {
+  if (cookie.where((element) => element.name == "MUSIC_U").isEmpty) {
     cookie.add(Cookie('MUSIC_A',
         '8aae43f148f990410b9a2af38324af24e87ab9227c9265627ddd10145db744295fcd8701dc45b1ab8985e142f491516295dd965bae848761274a577a62b0fdc54a50284d1e434dcc04ca6d1a52333c9a'));
   }

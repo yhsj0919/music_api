@@ -22,7 +22,7 @@ Future<Answer> _sendPlaylist(Map params, List<Cookie> cookie) {
 // 私信歌曲
 Future<Answer> _sendSong(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', "ios"));
-  cookie.add(Cookie('appver', "8.1.20"));
+  cookie.add(Cookie('appver', "8.7.01"));
 
   final data = {
     'id': params['id'],

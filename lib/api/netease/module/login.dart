@@ -3,6 +3,7 @@ part of '../netease.dart';
 //手机登录
 Future<Answer> _loginCellphone(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'pc'));
+  cookie.add(Cookie('appver', '2.9.7'));
   final data = {
     'phone': params['phone'],
     'countrycode': params['countrycode'] ?? 86,
@@ -13,7 +14,7 @@ Future<Answer> _loginCellphone(Map params, List<Cookie> cookie) {
 
   return request(
     'POST',
-    'https://music.163.com/weapi/login/cellphone',
+    'https://music.163.com/api/login/cellphone',
     data,
     crypto: Crypto.weApi,
     cookies: cookie,
@@ -87,11 +88,12 @@ Future<Answer> _loginStatus(Map params, List<Cookie> cookie) {
 // 邮箱登录
 Future<Answer> _login(Map params, List<Cookie> cookie) {
   cookie.add(Cookie('os', 'pc'));
+  cookie.add(Cookie('appver', '2.9.7'));
   final data = {'username': params['email'], 'password': Encrypted(Uint8List.fromList(md5.convert(utf8.encode(params['password'])).bytes)).base16, 'rememberLogin': 'true'};
 
   return request(
     'POST',
-    'https://music.163.com/weapi/login',
+    'https://music.163.com/api/login',
     data,
     crypto: Crypto.weApi,
     cookies: cookie,
@@ -108,8 +110,8 @@ Future<Answer> _logout(Map params, List<Cookie> cookie) {
 Future<Answer> _cellphoneExistenceCheck(Map params, List<Cookie> cookie) {
   final data = {'cellphone': params['phone'], 'countrycode': params['countrycode']};
   return eApiRequest(
-    url:'http://music.163.com/eapi/cellphone/existence/check',
-    optionUrl:'/api/cellphone/existence/check',
+    url: 'http://music.163.com/eapi/cellphone/existence/check',
+    optionUrl: '/api/cellphone/existence/check',
     data: data,
     cookies: cookie,
   );
@@ -120,8 +122,8 @@ Future<Answer> _activateInitProfile(Map params, List<Cookie> cookie) {
   final data = {'nickname': params['nickname']};
   return eApiRequest(
     url: 'http://music.163.com/eapi/activate/initProfile',
-    optionUrl:'/api/activate/initProfile',
-    data:data,
+    optionUrl: '/api/activate/initProfile',
+    data: data,
     cookies: cookie,
   );
 }
