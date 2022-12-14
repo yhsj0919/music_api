@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/answer.dart';
@@ -23,6 +23,8 @@ part 'module/search.dart';
 part 'module/singer.dart';
 
 part 'module/song.dart';
+
+part 'module/qr.dart';
 
 class QQ {
   QQ._();
@@ -207,6 +209,16 @@ class QQ {
     return _mvRank.call({"area": area, "period": period}, []);
   }
 
+  ///登录二维码
+  static Future<Answer> loginQr() {
+    return _loginQr.call({}, []);
+  }
+
+  ///登录二维码检测
+  static Future<Answer> loginQrCheck({required String? qrsig, List<Cookie> cookie = const []}) {
+    return _loginQrCheck.call({"qrsig": qrsig}, cookie);
+  }
+
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer(site: MusicSite.QQ).copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
@@ -258,7 +270,7 @@ final _api = <String, Api>{
 Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   final headers = {
     "user-agent": "Mozilla/5.0 (Linux; U; Android 11.0.0; zh-cn; MI 11 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
-    "Cookie": cookies.join("; "),
+    "cookie": cookies.join("; "),
   };
 
   if (path.contains('y.qq.com')) {
@@ -292,6 +304,81 @@ Future<Answer> _get(
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
       }
     } catch (e) {
+      return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "QQ对象转换异常"));
+    }
+  });
+}
+
+Future<Answer> _getImage(
+  String path, {
+  Map<String, dynamic> params = const {},
+  List<Cookie> cookie = const [],
+  Map<String, String> header = const {},
+}) async {
+  final options = _buildHeader(path, cookie);
+
+  if (header.isNotEmpty) {
+    options.addAll(header);
+  }
+
+  return Http.get(path, params: params, headers: options).then((value) async {
+    try {
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+        var ans = const Answer(site: MusicSite.QQ);
+        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+
+        var content = base64.encode(await value.first);
+        print("data:image/png;base64,$content");
+
+        print(cookies);
+
+        var data = {"domain": "data:image/png;base64,", "qr": content, "qrsig": ans.cookie.where((element) => element.name == "qrsig").first.value};
+
+        ans = ans.copy(code: value.statusCode, data: data);
+        return Future.value(ans);
+      } else {
+        return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
+      }
+    } catch (e) {
+      print(e);
+      return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "QQ对象转换异常"));
+    }
+  });
+}
+
+Future<Answer> _getString(
+  String path, {
+  Map<String, dynamic> params = const {},
+  List<Cookie> cookie = const [],
+  Map<String, String> header = const {},
+}) async {
+  final options = _buildHeader(path, cookie);
+
+  if (header.isNotEmpty) {
+    options.addAll(header);
+  }
+
+  return Http.get(path, params: params, headers: options).then((value) async {
+    try {
+      if (value.statusCode == 200) {
+        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+        var ans = const Answer(site: MusicSite.QQ);
+        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+
+        String content = await value.transform(utf8.decoder).join();
+
+        print(content);
+
+        var data = {"data": content};
+
+        ans = ans.copy(code: value.statusCode, data: data);
+        return Future.value(ans);
+      } else {
+        return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
+      }
+    } catch (e) {
+      print(e);
       return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "QQ对象转换异常"));
     }
   });

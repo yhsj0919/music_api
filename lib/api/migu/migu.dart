@@ -261,7 +261,7 @@ Map<String, String> _buildHeader(String path, List<Cookie> cookies) {
   final headers = {
     "user-agent": "Mozilla/5.0 (Linux; U; Android 11.0.0; zh-cn; MI 11 Build/OPR1.170623.032) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
     "channel": "0146921",
-    "Cookie": cookies.join("; "),
+    "cookie": cookies.join("; "),
   };
 
   if (path.contains('m.music.migu.cn')) {

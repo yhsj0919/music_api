@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/qq/qq.dart';
@@ -13,6 +14,9 @@ class QQPage extends StatefulWidget {
 
 class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
   String result = "";
+  String qrsig = "";
+  String qr = "";
+  List<Cookie> cookie = [];
 
   @override
   void initState() {
@@ -25,23 +29,31 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 150.0,
-            margin: const EdgeInsets.only(bottom: 16),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12, width: 1),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: SingleChildScrollView(
-                child: Text(result, style: const TextStyle(fontSize: 16)),
-              ),
+        children: [ Container(
+          width: double.infinity,
+          height: 150.0,
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12, width: 1),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              child: Text(result, style: const TextStyle(fontSize: 16)),
             ),
           ),
+        ),
+          qr.isNotEmpty?
+          Image.memory(
+            base64Decode(qr),
+            //防止重绘
+            gaplessPlayback: true,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ):Container(),
           Expanded(
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -49,6 +61,18 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
+                  ListTile(
+                    title: const Text('登陆二维码'),
+                    onTap: () {
+                      QQ.loginQr().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('二维码校验'),
+                    onTap: () {
+                      QQ.loginQrCheck(qrsig: qrsig, cookie: cookie).then(onData).catchError(onError);
+                    },
+                  ),
                   ListTile(
                     title: const Text('首页'),
                     onTap: () {
@@ -280,7 +304,21 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
   void onData(Answer value) {
     setState(() {
       result = json.encode(value.data);
+
+      if (value.data["qrsig"] != null) {
+        qrsig = value.data["qrsig"].toString();
+      }
+
+      if (value.data["qr"] != null) {
+        qr = value.data["qr"].toString();
+      }
+      if (value.cookie.isNotEmpty) {
+        cookie = value.cookie;
+      }
+
       print(result);
+      print(cookie);
+      // print(value.data["qrsig"]);
     });
   }
 
