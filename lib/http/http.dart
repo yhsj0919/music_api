@@ -25,7 +25,9 @@ class Http {
     var request = await http.getUrl(uri);
     request.followRedirects = false;
     headers?.forEach(request.headers.add);
-    (headers?[HttpHeaders.cookieHeader]?.split(";"))?.where((element) => element.contains("=")).map((e) => Cookie.fromSetCookieValue(e)).forEach(request.cookies.add);
+    if (!url.contains("kuwo")) {
+      (headers?[HttpHeaders.cookieHeader]?.split(";"))?.where((element) => element.contains("=")).map((e) => Cookie.fromSetCookieValue(e)).forEach(request.cookies.add);
+    }
     var response = await request.close();
     if (followRedirects) {
       while (response.isRedirect) {
@@ -36,7 +38,9 @@ class Http {
           request = await http.getUrl(uri);
           // Set the body or headers as desired.
           headers?.forEach(request.headers.add);
-          (headers?[HttpHeaders.cookieHeader]?.split(";"))?.where((element) => element.contains("=")).map((e) => Cookie.fromSetCookieValue(e)).forEach(request.cookies.add);
+          if (!url.contains("kuwo")) {
+            (headers?[HttpHeaders.cookieHeader]?.split(";"))?.where((element) => element.contains("=")).map((e) => Cookie.fromSetCookieValue(e)).forEach(request.cookies.add);
+          }
           request.followRedirects = false;
           response = await request.close();
         }
