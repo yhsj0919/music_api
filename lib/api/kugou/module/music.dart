@@ -11,27 +11,23 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
 
-    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie)))).map((e) => e.data["data"]).toList();
+    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
 
-    var music = songs.map((e) {
-      var index = songs.indexOf(e);
-      e["album_audio_id"] = list[index]["album_audio_id"];
-      return e;
-    }).toList();
 
-    return resp.copy(data: music);
+
+    return resp.copy(data: songs);
   });
 }
 
 ///歌曲信息
 Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
-//https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
+//https://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=A5456E5A05080F21BB801FC423B348D0
+  cookie.add(Cookie('musicwo17', 'kugou'));
   return _get(
-    "https://wwwapi.kugou.com/yy/index.php",
+    "https://m.kugou.com/app/i/getSongInfo.php",
     params: {
-      "r": "play/getdata",
+      "cmd": "playInfo",
       "hash": params["hash"],
-      "album_audio_id": params["albumAudioId"] ?? "",
     },
     cookie: cookie,
   );
