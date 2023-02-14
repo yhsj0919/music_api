@@ -61,13 +61,18 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
       ///分割一下list，防止瞬间请求过多导致的失败
       var datas = splitList(list ?? [], 15);
       for (var element in datas) {
-        var datas = (await Future.wait((element).map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
+        var datas = (await Future.wait((element).map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie)))).map((e) => e.data["data"]).toList();
         songs.addAll(datas);
         await Future.delayed(const Duration(milliseconds: 20));
       }
 
+      var music = songs.map((e) {
+        var index = songs.indexOf(e);
+        e?["album_audio_id"] = list?[index]?["album_audio_id"];
+        return e;
+      }).toList();
 
-      info["songs"] = songs;
+      info["songs"] = music;
 
       return value.copy(data: info);
     } catch (e) {

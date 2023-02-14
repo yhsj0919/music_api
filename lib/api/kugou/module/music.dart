@@ -11,26 +11,20 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
 
+    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie)))).map((e) => e.data["data"]).toList();
 
-    var songs = [];
+    var music = songs.map((e) {
+      var index = songs.indexOf(e);
+      e["album_audio_id"] = list[index]["album_audio_id"];
+      return e;
+    }).toList();
 
-    ///分割一下list，防止瞬间请求过多导致的失败
-    var datas = splitList(list ?? [], 15);
-    for (var element in datas) {
-      var datas = (await Future.wait((element).map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
-      songs.addAll(datas);
-      await Future.delayed(const Duration(milliseconds: 20));
-    }
-
-
-    // var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
-
-    return resp.copy(data: datas);
+    return resp.copy(data: music);
   });
 }
 
 ///歌曲信息
-Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
+Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
 //https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
   return _get(
     "https://wwwapi.kugou.com/yy/index.php",
@@ -43,14 +37,14 @@ Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
   );
 }
 
-Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
-//https://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=81624C86F6E240634C49C1785F783412
+Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
+//https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
   return _get(
-    "https://m.kugou.com/app/i/getSongInfo.php",
+    "https://wwwapi.kugou.com/yy/index.php",
     params: {
-      "cmd": "playInfo",
+      "r": "play/getdata",
       "hash": params["hash"],
-      // "album_audio_id": params["albumAudioId"]??"",
+      "album_audio_id": params["albumAudioId"] ?? "",
     },
     cookie: cookie,
   );
