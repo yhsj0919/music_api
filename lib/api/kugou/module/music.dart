@@ -24,14 +24,27 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
 }
 
 ///歌曲信息
-Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
+Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
 //https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
   return _get(
     "https://wwwapi.kugou.com/yy/index.php",
     params: {
       "r": "play/getdata",
       "hash": params["hash"],
-      "album_audio_id": params["albumAudioId"]??"",
+      "album_audio_id": params["albumAudioId"] ?? "",
+    },
+    cookie: cookie,
+  );
+}
+
+Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
+//https://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=81624C86F6E240634C49C1785F783412
+  return _get(
+    "https://m.kugou.com/app/i/getSongInfo.php",
+    params: {
+      "cmd": "playInfo",
+      "hash": params["hash"],
+      // "album_audio_id": params["albumAudioId"]??"",
     },
     cookie: cookie,
   );

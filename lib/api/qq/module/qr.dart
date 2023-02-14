@@ -6,7 +6,8 @@ part of '../qq.dart';
 //   print(ss);
 //
 // }
-
+///qq网页登录界面
+///https://ui.ptlogin2.qq.com/cgi-bin/login?pt_no_auth=1&pt_wxtest=1&pt_no_onekey=1&daid=384&style=9&hln_css=https://y.gtimg.cn/music/common/upload/t_cm3_photo_publish/1117688.png?max_age=2592000&appid=83886593&s_url=https://y.qq.com/m/login/redirect.html?login_type=1&surl=http://y.qq.com/portal/profile.html
 /*
 * 二维码
  */
