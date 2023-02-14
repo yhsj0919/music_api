@@ -67,7 +67,6 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
       }
 
 
-
       info["songs"] = songs;
 
       return value.copy(data: info);

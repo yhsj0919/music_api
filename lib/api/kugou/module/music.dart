@@ -11,9 +11,21 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
 
-    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
 
-    return resp.copy(data: songs);
+    var songs = [];
+
+    ///分割一下list，防止瞬间请求过多导致的失败
+    var datas = splitList(list ?? [], 15);
+    for (var element in datas) {
+      var datas = (await Future.wait((element).map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
+      songs.addAll(datas);
+      await Future.delayed(const Duration(milliseconds: 20));
+    }
+
+
+    // var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
+
+    return resp.copy(data: datas);
   });
 }
 
