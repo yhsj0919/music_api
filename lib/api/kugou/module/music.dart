@@ -11,7 +11,7 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
 
-    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie)))).map((e) => e.data["data"]).toList();
+    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
 
     return resp.copy(data: songs);
   });
