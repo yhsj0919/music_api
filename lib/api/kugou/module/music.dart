@@ -13,13 +13,7 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
 
     var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie)))).map((e) => e.data["data"]).toList();
 
-    var music = songs.map((e) {
-      var index = songs.indexOf(e);
-      e["album_audio_id"] = list[index]["album_audio_id"];
-      return e;
-    }).toList();
-
-    return resp.copy(data: music);
+    return resp.copy(data: songs);
   });
 }
 
