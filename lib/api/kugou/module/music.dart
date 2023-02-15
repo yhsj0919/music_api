@@ -1,7 +1,8 @@
 part of '../kugou.dart';
 
 ///新歌推荐
-Future<Answer> _musicList(Map params, List<Cookie> cookie) {
+Future<Answer> _musicNew(Map params, List<Cookie> cookie) {
+  cookie.add(Cookie('musicwo17', 'kugou'));
   return _get(
     "https://m.kugou.com",
     params: {
@@ -10,11 +11,46 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
     cookie: cookie,
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
+    var len = list.length > 10 ? 10 : list.length;
+    var songs = [];
+    var datas = list.sublist(0, len);
+    for (var element in datas) {
+      var album = (await _albumInfo({"albumId": element["album_id"]}, cookie)).data;
+      element["album_name"] = album["data"]["albumname"];
+      songs.add(element);
+    }
 
-    var songs = (await Future.wait(list.map((e) => _musicInfo({"hash": e["hash"]}, cookie)))).map((e) => e.data).toList();
+    return resp.copy(data: songs);
+  });
+}
 
+Future<Answer> _musicList(Map params, List<Cookie> cookie) {
+  cookie.add(Cookie('musicwo17', 'kugou'));
+  return _get(
+    "https://m.kugou.com/newsong/index",
+    params: {
+      "json": "true",
+    },
+    cookie: cookie,
+  ).then((resp) async {
+    print(DateTime.now().millisecondsSinceEpoch);
+    var list = (resp.data["newSongList"] as List?) ?? [];
 
+    var datas = splitList(list, 25);
 
+    var albums = [];
+    for (var element in datas) {
+      var datas = (await Future.wait((element).map((e) => _albumInfo({"albumId": e["album_id"]}, cookie)))).map((e) => e.data["data"]).toList();
+      albums.addAll(datas);
+      // await Future.delayed(const Duration(milliseconds: 10));
+    }
+
+    var songs = list.map((e) {
+      var album = albums.where((element) => element["albumid"].toString() == e["album_id"].toString()).first;
+      e["album_name"] = album?["albumname"] ?? "";
+      return e;
+    }).toList();
+    print(DateTime.now().millisecondsSinceEpoch);
     return resp.copy(data: songs);
   });
 }
@@ -33,7 +69,7 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
   );
 }
 
-Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
+Future<Answer> _musicInfoWithLyric(Map params, List<Cookie> cookie) {
 //https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
   return _get(
     "https://wwwapi.kugou.com/yy/index.php",
@@ -92,15 +128,3 @@ Future<Answer> _musicInfo3(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
-
-//
-// ///歌词
-// Future<Answer> _musicLrc(Map params, List<Cookie> cookie) {
-//   return _get(
-//     "http://m.kuwo.cn/newh5/singles/songinfoandlrc",
-//     params: {
-//       "musicId": params["musicId"],
-//     },
-//     cookie: cookie,
-//   );
-// }

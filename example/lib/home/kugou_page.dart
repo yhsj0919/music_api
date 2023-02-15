@@ -58,6 +58,12 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('新歌推荐'),
                     onTap: () {
+                      KuGou.musicNew().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('所有新歌'),
+                    onTap: () {
                       KuGou.musicList().then(onData).catchError(onError);
                     },
                   ),
@@ -95,6 +101,12 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                     title: const Text('歌单详情'),
                     onTap: () {
                       KuGou.playListInfo(id: "2467396", page: 1).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌单详情,所有歌曲'),
+                    onTap: () {
+                      KuGou.playListInfoAll(id: "2467396", page: 1).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

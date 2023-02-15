@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/answer.dart';
@@ -27,6 +28,10 @@ class KuGou {
   }
 
   ///新歌推荐
+  static Future<Answer> musicNew() {
+    return _musicNew.call({}, []);
+  }
+ ///新歌推荐
   static Future<Answer> musicList() {
     return _musicList.call({}, []);
   }
@@ -35,6 +40,12 @@ class KuGou {
   static Future<Answer> musicInfo({String? hash, String? albumAudioId}) {
     return _musicInfo.call({"hash": hash, "albumAudioId": albumAudioId}, []);
   }
+
+  ///歌曲详情带歌词，不一定带地址
+  static Future<Answer> musicInfoWithLyric({String? hash, String? albumAudioId}) {
+    return _musicInfoWithLyric.call({"hash": hash, "albumAudioId": albumAudioId}, []);
+  }
+
 
   ///推荐歌单
   static Future<Answer> playList({int? page}) {
@@ -187,7 +198,9 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
 
   return Http.get(path, params: params, headers: header).then((value) async {
     try {
-      print(value.statusCode);
+      if (kDebugMode) {
+        print(value.statusCode);
+      }
       if (value.statusCode == 200) {
         var cookies = value.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuGou);
@@ -195,16 +208,22 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
         String data = await value.transform(utf8.decoder).join();
-        print(data);
+        if (kDebugMode) {
+          print(data);
+        }
         ans = ans.copy(code: value.statusCode, data: json.decode(data));
 
         return Future.value(ans);
       } else {
-        print(value.headers);
+        if (kDebugMode) {
+          print(value.headers);
+        }
         return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value.statusCode, 'msg': value}));
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return Future.value(const Answer(site: MusicSite.KuGou, code: 500, data: {'code': 500, 'msg': "酷狗对象转换异常"}));
     }
   });
