@@ -167,7 +167,7 @@ final _api = <String, Api>{
   "/banner": _banner,
   "/music/list": _musicList,
   "/music/info": _musicInfo,
-  "/playlist": _musicInfo,
+  "/playlist": _playList,
   "/playlist/info": _playListInfo,
   "/rank/list": _rankList,
   "/rank/info": _rankInfo,
@@ -192,8 +192,8 @@ final _api = <String, Api>{
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   Map<String, String> header = {
-    "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
-    "cookie": "kg_mid=75a1afdf9b6c2b7f1fb911da060b78ac; kg_dfid=3MnigM3NqShu2WIagx0iXwUh; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e",
+    "user-agent": "Mozilla/5.0 (Linux; Android 10; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36 Edg/110.0.0.0",
+    "cookie": "kg_mid=13b99c4ecc49b8e85dde00e21160b008; kg_dfid=1JdAUM1MExVq2HbWdD1cveSL; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e; musicwo17=kugou",
   };
 
   return Http.get(path, params: params, headers: header).then((value) async {

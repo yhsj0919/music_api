@@ -70,9 +70,9 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
 }
 
 Future<Answer> _musicInfoWithLyric(Map params, List<Cookie> cookie) {
-//https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
+//https://www.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
   return _get(
-    "https://wwwapi.kugou.com/yy/index.php",
+    "https://www.kugou.com/yy/index.php",
     params: {
       "r": "play/getdata",
       "hash": params["hash"],

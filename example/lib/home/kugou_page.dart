@@ -158,6 +158,12 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                     },
                   ),
                   ListTile(
+                    title: const Text('歌曲详情带歌词'),
+                    onTap: () {
+                      KuGou.musicInfoWithLyric(hash: "5E6182F51960E4D671BBC48DAF74F6D9").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('MV列表'),
                     onTap: () {
                       KuGou.mvList().then(onData).catchError(onError);
