@@ -40,8 +40,8 @@ Future<Answer> _albumSong(Map params, List<Cookie> cookie) {
 
 
 
-      var datas = (await Future.wait((data["data"]["info"] as List).map((e) => _musicInfoWithLyric({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie))))
-          .map((e) => e.data["data"])
+      var datas = (await Future.wait((data["data"]["info"] as List).map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie))))
+          .map((e) => e.data)
           .toList();
 
       data["data"]["info"] = datas;
