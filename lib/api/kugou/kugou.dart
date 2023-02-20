@@ -45,6 +45,10 @@ class KuGou {
   static Future<Answer> musicInfoWithLyric({String? hash, String? albumAudioId}) {
     return _musicInfoWithLyric.call({"hash": hash, "albumAudioId": albumAudioId}, []);
   }
+  ///歌曲详情带歌词，不一定带地址
+  static Future<Answer> musicInfo2({String? hash, String? albumAudioId}) {
+    return _musicInfo2.call({"hash": hash, "albumAudioId": albumAudioId}, []);
+  }
 
 
   ///推荐歌单
