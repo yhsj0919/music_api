@@ -5,9 +5,9 @@ Future<Answer> _playlistHot(Map params, List<Cookie> cookie) {
   final data = {
     "data": json.encode({
       "hotRecommend": {
-        "module": "playlist.HotRecommendServer",
-        "method": "get_hot_recommend",
-        "param": {"async": 1, "cmd": 2}
+        "module": "music.playlist.PlaylistSquare",
+        "method": "GetRecommendFeed",
+        "param": {"From": 0, "Size": 25}
       },
       "comm": {
         "ct": 24,
@@ -15,6 +15,7 @@ Future<Answer> _playlistHot(Map params, List<Cookie> cookie) {
       }
     })
   };
+
   return _get(
     "https://u.y.qq.com/cgi-bin/musicu.fcg",
     params: data,
