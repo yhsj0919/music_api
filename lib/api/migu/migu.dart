@@ -305,7 +305,7 @@ Future<Answer> _get(String path,
       if (kDebugMode) {
         print(e);
       }
-      return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
+      return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "咪咕对象转换异常"}));
     }
   });
 }
