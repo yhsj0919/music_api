@@ -27,20 +27,16 @@ Future<Answer> _albumSong(Map params, List<Cookie> cookie) {
   return _get(
     "http://mobilecdnbj.kugou.com/api/v3/album/song",
     params: {
-      "albumid": params["albumId"],
+      "albumid": params["albumId"].toString(),
       "page": 1,
       "pagesize": -1,
     },
     cookie: cookie,
   ).then((value) async {
     try {
-      var data = value.data;
+      var data = json.decode(value.data);
 
-      var songs=[];
-
-
-
-      var datas = (await Future.wait((data["data"]["info"] as List).map((e) => _musicInfo({"hash": e["hash"], "albumAudioId": e["album_audio_id"]}, cookie))))
+      var datas = (await Future.wait((data["data"]["info"] as List).map((e) => _musicInfo({"hash": e["hash"].toString(), "albumAudioId": e["album_audio_id"].toString()}, cookie))))
           .map((e) => e.data)
           .toList();
 

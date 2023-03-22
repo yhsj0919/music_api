@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:crypto/crypto.dart';
 
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
-import 'package:music_api/http/http.dart';
 import 'package:uuid/uuid.dart';
 
 part 'module/album.dart';
@@ -282,24 +282,23 @@ Future<Answer> _get(String path,
     headers.addAll(header);
   }
 
-  return Http.get(path, params: params, headers: headers, followRedirects: followRedirects).then((value) async {
+  return HttpDio().get(path, params: params, headers: headers).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.MiGu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        String data = await value.transform(utf8.decoder).join();
-        ans = ans.copy(code: value.statusCode, data: json.decode(data));
+        ans = ans.copy(code: value?.statusCode, data: value?.data);
         return Future.value(ans);
-      } else if (value.statusCode == 302) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      } else if (value?.statusCode == 302) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.MiGu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        String data = value.headers[HttpHeaders.locationHeader]?.first ?? "";
-        ans = ans.copy(code: value.statusCode, data: {"url": data});
+        String data = value?.headers[HttpHeaders.locationHeader]?.first ?? "";
+        ans = ans.copy(code: value?.statusCode, data: {"url": data});
         return Future.value(ans);
       } else {
-        return Future.error(Answer(site: MusicSite.MiGu, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.MiGu, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       if (kDebugMode) {

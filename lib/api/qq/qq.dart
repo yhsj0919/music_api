@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/http/http.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:universal_io/io.dart';
@@ -291,14 +291,13 @@ Future<Answer> _get(
     options.addAll(header);
   }
 
-  return Http.get(path, params: params, headers: options).then((value) async {
+  return HttpDio().get(path, params: params, headers: options).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.cookies;
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.QQ);
-        ans = ans.copy(cookie: cookies);
-        String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(code: value.statusCode, data: json.decode(content));
+        ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+        ans = ans.copy(code: value?.statusCode, data:value?.data);
         return Future.value(ans);
       } else {
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
@@ -321,21 +320,21 @@ Future<Answer> _getImage(
     options.addAll(header);
   }
 
-  return Http.get(path, params: params, headers: options).then((value) async {
+  return HttpDio().get(path, params: params, headers: options).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.QQ);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
 
-        var content = base64.encode(await value.first);
+        var content = base64.encode(value?.data);
         print("data:image/png;base64,$content");
 
         print(cookies);
 
         var data = {"domain": "data:image/png;base64,", "qr": content, "qrsig": ans.cookie.where((element) => element.name == "qrsig").first.value};
 
-        ans = ans.copy(code: value.statusCode, data: data);
+        ans = ans.copy(code: value?.statusCode, data: data);
         return Future.value(ans);
       } else {
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
@@ -359,20 +358,20 @@ Future<Answer> _getString(
     options.addAll(header);
   }
 
-  return Http.get(path, params: params, headers: options).then((value) async {
+  return HttpDio().get(path, params: params, headers: options).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.QQ);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
 
-        String content = await value.transform(utf8.decoder).join();
+        String? content = value?.data?.toString();
 
         print(content);
 
         var data = {"data": content};
 
-        ans = ans.copy(code: value.statusCode, data: data);
+        ans = ans.copy(code: value?.statusCode, data: data);
         return Future.value(ans);
       } else {
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));

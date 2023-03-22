@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/http/http.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 import 'package:uuid/uuid.dart';
+
+import 'kuwoDES.dart';
 
 part 'module/album.dart';
 part 'module/artist.dart';
@@ -112,6 +114,24 @@ class KuWo {
     return _playUrl.call({"rid": rid, "format": format}, []);
   }
 
+  static Future<Answer> playUrl2({
+    String? mid,
+  }) {
+    return _playUrl2.call({"mid": mid}, []);
+  }
+
+  static Future<Answer> playUrl3({String? mid}) {
+    return _playUrl3.call({"mid": mid}, []);
+  }
+
+  static Future<Answer> playUrl4({String? mid}) {
+    return _playUrl4.call({"mid": mid}, []);
+  }
+
+  static Future<Answer> playUrl5({String? mid}) {
+    return _playUrl5.call({"mid": mid}, []);
+  }
+
   ///歌词
   static Future<Answer> songLrc({String? rid}) {
     return _songLrc.call({"rid": rid}, []);
@@ -201,36 +221,42 @@ final _api = <String, Api>{
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   Map<String, String> header = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
+    // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
-    "cookie": "kw_token=SQ6EJ3Q5G6B",
+    "Token": "7865309485D199575C04186AFF58C46D",
+    "cookie": "kw_token=SQ6EJ3Q5G6B;BAIDU_RANDOM=7n7YRwknjT7EPp7EZSiSiTZSS5byTT7Q",
     "Referer": "http://www.kuwo.cn/",
   };
+
+  if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
+    header.remove("User-Agent");
+    header.remove("cookie");
+  }
 
   if (params != null && params.containsKey("reqId") != true) {
     params["reqId"] = const Uuid().v1();
   }
-
-  return Http.get(path, params: params, headers: header).then((value) async {
+  return HttpDio().get(path, params: params, headers: header).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuWo);
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        String data = await value.transform(utf8.decoder).join();
+        dynamic data = value?.data;
         try {
-          ans = ans.copy(code: value.statusCode, data: json.decode(data));
+          ans = ans.copy(code: value?.statusCode, data: json.decode(data));
           return Future.value(ans);
         } catch (e) {
-          ans = ans.copy(code: value.statusCode, data: {"data":data});
+          ans = ans.copy(code: value?.statusCode, data: {"data": data});
           return Future.value(ans);
         }
       } else {
-        return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
+      print(e);
       return Future.error(const Answer(site: MusicSite.KuWo, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });

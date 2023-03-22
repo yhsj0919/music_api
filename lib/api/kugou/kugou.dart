@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/http/http.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:music_api/utils/utils.dart';
@@ -200,29 +200,19 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     "cookie": "kg_mid=13b99c4ecc49b8e85dde00e21160b008; kg_dfid=1JdAUM1MExVq2HbWdD1cveSL; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e; musicwo17=kugou",
   };
 
-  return Http.get(path, params: params, headers: header).then((value) async {
+  return HttpDio().get(path, params: params, headers: header).then((value) async {
     try {
-      if (kDebugMode) {
-        print(value.statusCode);
-      }
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader];
+
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuGou);
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        String data = await value.transform(utf8.decoder).join();
-        if (kDebugMode) {
-          print(data);
-        }
-        ans = ans.copy(code: value.statusCode, data: json.decode(data));
-
+        ans = ans.copy(code: value?.statusCode, data:value?.data);
         return Future.value(ans);
       } else {
-        if (kDebugMode) {
-          print(value.headers);
-        }
-        return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       if (kDebugMode) {

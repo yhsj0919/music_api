@@ -63,7 +63,7 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
     "https://m.kugou.com/app/i/getSongInfo.php",
     params: {
       "cmd": "playInfo",
-      "hash": params["hash"],
+      "hash": params["hash"].toString(),
     },
     cookie: cookie,
   );

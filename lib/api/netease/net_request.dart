@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/entity/music_entity.dart';
-import 'package:music_api/http/http.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/crypto.dart';
 
 import '../../utils/answer.dart';
@@ -89,26 +89,28 @@ Future<Answer> eApiRequest({
   data = eapi(optionUrl, data);
   url = url.replaceAll(RegExp(r"\w*api"), 'eapi');
 
-  return Http.request(url, method: method, headers: headers, params: data).then((response) async {
-    final bytes = (await response.expand((e) => e).toList()).cast<int>();
-
-    List<int> data;
+  return HttpDio().request(url, method: method, headers: headers, params: data).then((response) async {
+    // final bytes = (await response.expand((e) => e).toList()).cast<int>();
+    //
+    // List<int> data;
+    // try {
+    //   data = zlib.decode(bytes);
+    // } catch (e) {
+    //   //解压失败,不处理
+    //   data = bytes;
+    // }
+    var cookies = response?.headers[HttpHeaders.setCookieHeader] ?? [];
+    var ans = const Answer(site: MusicSite.Netease);
+    ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+    ans = ans.copy(code: response?.statusCode);
     try {
-      data = zlib.decode(bytes);
-    } catch (e) {
-      //解压失败,不处理
-      data = bytes;
-    }
-
-    var ans = Answer(site: MusicSite.Netease, cookie: response.cookies, code: response.statusCode);
-    try {
-      Map content = json.decode(decrypt(data));
+      Map content = json.decode(decrypt(response?.data?.toString().codeUnits ?? []));
       ans = ans.copy(
         data: content,
         code: content['code'],
       );
     } catch (e) {
-      ans = ans.copy(data: json.decode(utf8.decode(data)));
+      ans = ans.copy(data: json.decode(utf8.decode(response?.data)));
     }
 
     ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);
@@ -140,11 +142,19 @@ Future<Answer> request(
     headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36';
     url = 'https://music.163.com/api/linux/forward';
   }
-  return Http.request(url, method: method, headers: headers, params: data).then((response) async {
-    var ans = Answer(site: MusicSite.Netease, cookie: response.cookies);
+  return HttpDio().request(url, method: method, headers: headers, params: data).then((response) async {
+    var cookies = response?.headers[HttpHeaders.setCookieHeader] ?? [];
+    var ans = const Answer(site: MusicSite.Netease);
+    ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+    ans = ans.copy(code: response?.statusCode);
 
-    String content = await response.transform(utf8.decoder).join();
-    final body = json.decode(content);
+    // String content = await response.transform(utf8.decoder).join();
+    dynamic body;
+    if (response?.data is String) {
+      body = json.decode(response?.data);
+    } else {
+      body = response?.data;
+    }
     ans = ans.copy(code: int.parse(body['code'].toString()), data: body);
     ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);
     return ans;

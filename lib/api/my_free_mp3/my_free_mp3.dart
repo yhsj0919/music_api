@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
-import 'package:music_api/http/http.dart';
 
 part 'module/search.dart';
 
@@ -35,20 +35,20 @@ Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> co
     "origin": "https://myfreemp3juices.cc",
     "referer": "https://myfreemp3juices.cc/",
   };
-  return Http.post(path, params: params, headers: header).then((value) async {
+  return HttpDio().post(path, params: params, headers: header).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.MyFreeMp3);
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        String content = await value.transform(utf8.decoder).join();
-        var data = content.replaceFirst("({", "{").replaceAll("});", "}").replaceAll('["apple",', "[");
-        ans = ans.copy(code: value.statusCode, data: json.decode(data));
+        String? content = value?.data.toString();
+        var data = content?.replaceFirst("({", "{").replaceAll("});", "}").replaceAll('["apple",', "[");
+        ans = ans.copy(code: value?.statusCode, data: json.decode(data??"{}"));
         return Future.value(ans);
       } else {
-        return Future.error(Answer(site: MusicSite.MyFreeMp3, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.MyFreeMp3, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.error(const Answer(site: MusicSite.MyFreeMp3, code: 500, data: {'code': 500, 'msg': "MyFreeMp3对象转换异常"}));

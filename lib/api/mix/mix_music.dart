@@ -9,8 +9,8 @@ import 'package:music_api/api/my_free_mp3/my_free_mp3.dart';
 import 'package:music_api/api/netease/netease.dart';
 import 'package:music_api/api/qq/qq.dart';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
-import 'package:music_api/http/http.dart';
 import 'package:music_api/utils/utils.dart';
 
 part 'module/album.dart';

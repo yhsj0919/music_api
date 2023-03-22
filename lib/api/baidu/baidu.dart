@@ -1,13 +1,13 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'package:music_api/entity/music_entity.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:crypto/crypto.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:music_api/utils/utils.dart';
-import 'package:music_api/http/http.dart';
 
 part 'module/account.dart';
 
@@ -333,17 +333,17 @@ Future<Answer> _get(String path, {Map<String, dynamic> params = const {}, List<C
 
   signStr["sign"] = sign;
 
-  return Http.get(path, params: Map.from(signStr), headers: header).then((value) async {
+  return HttpDio().get(path, params: Map.from(signStr), headers: header).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.Baidu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(code: value.statusCode, data: json.decode(content));
+
+        ans = ans.copy(code: value?.statusCode, data: value?.data);
         return Future.value(ans);
       } else {
-        return Future.error(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.error(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.error(const Answer(site: MusicSite.Baidu, code: 500, data: {'code': 500, 'msg': "对象转换异常"}));
@@ -372,17 +372,17 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
 
   signStr["sign"] = sign;
 
-  return Http.post(path, params: Map.from(signStr), headers: header).then((value) async {
+  return HttpDio().postForm(path, params: Map.from(signStr), headers: header).then((value) async {
     try {
-      if (value.statusCode == 200) {
-        var cookies = value.headers[HttpHeaders.setCookieHeader] ?? [];
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.Baidu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        String content = await value.transform(utf8.decoder).join();
-        ans = ans.copy(code: value.statusCode, data: json.decode(content));
+
+        ans = ans.copy(code: value?.statusCode, data:value?.data);
         return Future.value(ans);
       } else {
-        return Future.value(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value.statusCode, 'msg': value}));
+        return Future.value(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       return Future.value(const Answer(site: MusicSite.Baidu, code: 500, data: {'code': 500, 'msg': "百度对象转换异常"}));

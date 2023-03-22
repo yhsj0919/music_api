@@ -409,7 +409,7 @@ Future<String?> _getLrc({required Map songs}) async {
   if (site == MusicSite.Baidu.name) {
     return Baidu.songInfo(tsId: songs["id"]).then((value) {
       var path = value.data["data"]["lyric"];
-      return Http.get(path).then((value) => value.transform(utf8.decoder).join());
+      return HttpDio().get(path).then((value) => value?.data?.toString());
     });
   } else if (site == MusicSite.KuGou.name) {
     return KuGou.musicInfo(hash: songs["id"], albumAudioId: "${songs["albumAudioId"]}").then((value) => value.data["data"]["lyrics"]);

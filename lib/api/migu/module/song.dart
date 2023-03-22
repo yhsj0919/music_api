@@ -130,7 +130,7 @@ Future<Answer> _songLrc(Map params, List<Cookie> cookie) {
     cookie: cookie,
   ).then((value) async {
     var lrcUrl = value.data["data"]["songItem"]?["lrcUrl"];
-    var lrc = await Http.get(lrcUrl).then((value) => value.transform(utf8.decoder).join());
+    var lrc = await HttpDio().get(lrcUrl).then((value) => value?.data?.toString());
     return value.copy(data: lrc);
   });
 }
