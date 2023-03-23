@@ -11,13 +11,21 @@ import 'package:uuid/uuid.dart';
 import 'kuwoDES.dart';
 
 part 'module/album.dart';
+
 part 'module/artist.dart';
+
 part 'module/banner.dart';
+
 part 'module/music.dart';
+
 part 'module/mv.dart';
+
 part 'module/play_list.dart';
+
 part 'module/rank.dart';
+
 part 'module/search.dart';
+
 part 'module/song.dart';
 
 class KuWo {
@@ -245,8 +253,15 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
         dynamic data = value?.data;
+
+        if (value?.data is String) {
+          data = json.decode(value?.data.toString().replaceAll("\r", "").replaceAll("\n", "") ?? "{}");
+        } else {
+          data = value?.data;
+        }
+
         try {
-          ans = ans.copy(code: value?.statusCode, data:data);
+          ans = ans.copy(code: value?.statusCode, data: data);
           return Future.value(ans);
         } catch (e) {
           ans = ans.copy(code: value?.statusCode, data: {"data": data});
