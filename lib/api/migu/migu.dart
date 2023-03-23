@@ -288,7 +288,7 @@ Future<Answer> _get(String path,
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.MiGu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString()??"{}"));
+        ans = ans.copy(code: value?.statusCode, data: value?.data);
         return Future.value(ans);
       } else if (value?.statusCode == 302) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
