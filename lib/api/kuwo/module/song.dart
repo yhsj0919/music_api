@@ -33,7 +33,7 @@ Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
   return _get(
     "http://www.kuwo.cn/api/v1/www/music/playUrl",
     params: {
-      "mid": params["mid"],
+      "mid": params["rid"],
       "type": params["type"] ?? "music",
     },
     cookie: cookie,
@@ -45,7 +45,7 @@ Future<Answer> _playUrl3(Map params, List<Cookie> cookie) {
   return _get(
     "http://antiserver.kuwo.cn/anti.s",
     params: {
-      "mid": "MUSIC_${params["mid"]}",
+      "mid": "MUSIC_${params["rid"]}",
       "type": "convert_url3",
       "format": "mp3",
       "response": "url",
@@ -57,7 +57,7 @@ Future<Answer> _playUrl3(Map params, List<Cookie> cookie) {
 Future<Answer> _playUrl4(Map params, List<Cookie> cookie) {
   //https://m.kuwo.cn/newh5app/api/mobile/v2/music/src/261439967?httpsStatus=1&reqId=ca9e5ee5fef657bed3a5c75e0c487471
   return _get(
-    "https://m.kuwo.cn/newh5app/api/mobile/v2/music/src/${params["mid"]}",
+    "https://m.kuwo.cn/newh5app/api/mobile/v2/music/src/${params["rid"]}",
     params: {
       "httpsStatus": 1,
     },
@@ -74,8 +74,8 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
   //  static String KuWo_mp3_320="320kmp3";
   //  static String KuWo_ape_1000="1000kape";
   //  static String KuWo_flac_2000="2000kflac";
-  String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["mid"]}&priority=bitrate";
-  // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["mid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
+  String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate";
+  // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
   var encode = utf8.encode(s);
   var encrypt2 = KuwoDES.encrypt2(encode, encode.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY.length);
   var data = const Base64Codec().encode(encrypt2);

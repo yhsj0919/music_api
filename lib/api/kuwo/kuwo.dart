@@ -115,21 +115,21 @@ class KuWo {
   }
 
   static Future<Answer> playUrl2({
-    String? mid,
+    String? rid,
   }) {
-    return _playUrl2.call({"mid": mid}, []);
+    return _playUrl2.call({"rid": rid}, []);
   }
 
-  static Future<Answer> playUrl3({String? mid}) {
-    return _playUrl3.call({"mid": mid}, []);
+  static Future<Answer> playUrl3({String? rid}) {
+    return _playUrl3.call({"rid": rid}, []);
   }
 
-  static Future<Answer> playUrl4({String? mid}) {
-    return _playUrl4.call({"mid": mid}, []);
+  static Future<Answer> playUrl4({String? rid}) {
+    return _playUrl4.call({"rid": rid}, []);
   }
 
-  static Future<Answer> playUrl5({String? mid}) {
-    return _playUrl5.call({"mid": mid}, []);
+  static Future<Answer> playUrl5({String? rid}) {
+    return _playUrl5.call({"rid": rid}, []);
   }
 
   ///歌词
