@@ -185,7 +185,7 @@ class _MiGuPageState extends State<MiGuPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                       title: const Text('播放地址2(根据contentId获取播放地址，支持更多格式，更少限制)'),
                       onTap: () {
-                        MiGu.playUrl2(contentId: "600919000008266464", toneFlag: "HQ").then(onData).catchError(onError);
+                        MiGu.playUrl2(contentId: "600919000009210681", toneFlag: "HQ").then(onData).catchError(onError);
                       }),
                   ListTile(
                       title: const Text('榜单'),

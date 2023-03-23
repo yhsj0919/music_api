@@ -28,6 +28,7 @@ class HttpDio {
           connectTimeout: const Duration(milliseconds: CONNECT_TIMEOUT),
           // 响应流上前后两次接受到数据的间隔，单位为毫秒。
           receiveTimeout: const Duration(milliseconds: RECEIVE_TIMEOUT),
+          receiveDataWhenStatusError: true,
           // Http请求头.
           headers: {});
       options.extra['withCredentials'] = true;
@@ -39,7 +40,7 @@ class HttpDio {
         //只在测试的时候添加
         // _dio?.interceptors.add(LogInterceptor(request: true, requestHeader: true, responseHeader: true, responseBody: true, requestBody: true));
       }
-      _dio?.interceptors.add(ErrorInterceptor());
+      // _dio?.interceptors.add(ErrorInterceptor());
       _dio?.interceptors.add(TokenInterceptor());
     }
   }
@@ -104,8 +105,10 @@ class HttpDio {
   }
 
   ///  get
-  Future<Response?> get(String path, {Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onReceiveProgress}) async {
+  Future<Response?> get(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onReceiveProgress, bool followRedirects = true}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.followRedirects = followRedirects;
     return await _dio?.get(
       path,
       queryParameters: params,

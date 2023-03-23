@@ -110,7 +110,7 @@ Future<Answer> eApiRequest({
         code: content['code'],
       );
     } catch (e) {
-      ans = ans.copy(data: json.decode(utf8.decode(response?.data)));
+      ans = ans.copy(data: json.decode(response?.data));
     }
 
     ans = ans.copy(code: ans.code > 100 && ans.code < 600 ? ans.code : 400);

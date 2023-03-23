@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:music_api/dio/dio.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http_dio.dart';
 import 'package:universal_io/io.dart';
@@ -282,7 +283,7 @@ Future<Answer> _get(String path,
     headers.addAll(header);
   }
 
-  return HttpDio().get(path, params: params, headers: headers).then((value) async {
+  var data = await HttpDio().get(path, params: params, headers: headers, followRedirects: followRedirects).then((value) async {
     try {
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
@@ -306,5 +307,19 @@ Future<Answer> _get(String path,
       }
       return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "咪咕对象转换异常"}));
     }
+  }).catchError((e) {
+    var value = (e as DioError?)?.response;
+    if (value?.statusCode == 302) {
+      var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
+      var ans = const Answer(site: MusicSite.MiGu);
+      ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+      String data = value?.headers[HttpHeaders.locationHeader]?.first ?? "";
+      ans = ans.copy(code: value?.statusCode, data: {"url": data});
+      return Future.value(ans);
+    } else {
+      return Future.error(const Answer(site: MusicSite.MiGu, code: 500, data: {'code': 500, 'msg': "咪咕网络异常"}));
+    }
   });
+
+  return Future(() => data as Answer);
 }
