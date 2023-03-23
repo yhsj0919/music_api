@@ -14,13 +14,14 @@ dependencies:
   encrypt: ^5.0.1
   uuid: 3.0.7
   universal_io: ^2.0.4
-  diox:
-    git:
-      url: https://github.com/yhsj0919/dio
-      ref: main
-      path: diox
-  cookie_jar: ^4.0.1-beta
 
+  #dio的
+  meta: ^1.5.0
+  path: ^1.8.0
+  collection: ^1.15.0
+  source_span: ^1.8.0
+  string_scanner: ^1.1.0
+  typed_data: ^1.3.0
 
 dev_dependencies:
   flutter_test:

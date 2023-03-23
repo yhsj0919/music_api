@@ -1,5 +1,4 @@
-import 'package:diox/dio.dart';
-
+import '../dio/dio.dart';
 import 'app_exceptions.dart';
 
 /// 错误处理拦截器

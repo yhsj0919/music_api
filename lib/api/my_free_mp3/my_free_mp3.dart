@@ -35,7 +35,7 @@ Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> co
     "origin": "https://myfreemp3juices.cc",
     "referer": "https://myfreemp3juices.cc/",
   };
-  return HttpDio().post(path, params: params, headers: header).then((value) async {
+  return HttpDio().postForm(path, params: params, headers: header).then((value) async {
     try {
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader];

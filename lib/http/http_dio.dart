@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:diox/dio.dart';
-import 'package:diox/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:music_api/http/error_interceptor.dart';
 import 'package:music_api/http/token_interceptor.dart';
+
+import '../dio/dio.dart';
+import '../dio/io.dart';
 
 class HttpDio {
   ///超时时间

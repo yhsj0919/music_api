@@ -65,14 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  cookie_jar:
-    dependency: transitive
-    description:
-      name: cookie_jar
-      sha256: "985d5e483b74b87b12261a777dd2becb104a9267ab9258edf2da15bccae51fe1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1-beta"
   crypto:
     dependency: transitive
     description:
@@ -89,15 +81,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  diox:
-    dependency: transitive
-    description:
-      path: diox
-      ref: main
-      resolved-ref: "14484a3826c52aabba78a7b42f182deb8000ba99"
-      url: "https://github.com/yhsj0919/dio"
-    source: git
-    version: "5.0.3"
   encrypt:
     dependency: transitive
     description:
