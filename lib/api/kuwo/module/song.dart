@@ -75,14 +75,9 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
   //  static String KuWo_ape_1000="1000kape";
   //  static String KuWo_flac_2000="2000kflac";
   String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["mid"]}&priority=bitrate";
-     // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["mid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
-
-  print(s);
-
+  // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["mid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
   var encode = utf8.encode(s);
-  print(encode);
   var encrypt2 = KuwoDES.encrypt2(encode, encode.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY.length);
-  print(encrypt2);
   var data = const Base64Codec().encode(encrypt2);
 
   return _get(
@@ -92,7 +87,19 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
     //   "q": outstr,
     // },
     cookie: cookie,
-  );
+  ).then((value) {
+    try {
+      var data = value.data.toString();
+      var ss = data.split("\r\n").map((e) {
+        var kv = e.split("=");
+        return MapEntry(kv[0], kv[1]);
+      }).toList();
+      var resp = Map.fromEntries(ss);
+      return value.copy(data: resp);
+    } catch (e) {
+      return value;
+    }
+  });
 }
 
 ///歌词
