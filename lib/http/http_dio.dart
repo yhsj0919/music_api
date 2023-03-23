@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
+import 'package:diox/dio.dart';
+import 'package:diox/io.dart';
 import 'package:flutter/foundation.dart';
-import 'package:music_api/http/media_type_interceptor.dart';
+import 'package:music_api/http/error_interceptor.dart';
 import 'package:music_api/http/token_interceptor.dart';
 
 class HttpDio {
@@ -39,7 +38,7 @@ class HttpDio {
         //只在测试的时候添加
         _dio?.interceptors.add(LogInterceptor(request: true, requestHeader: true, responseHeader: true, responseBody: true, requestBody: true));
       }
-      _dio?.interceptors.add(MediaTypeInterceptor());
+      _dio?.interceptors.add(ErrorInterceptor());
       _dio?.interceptors.add(TokenInterceptor());
     }
   }

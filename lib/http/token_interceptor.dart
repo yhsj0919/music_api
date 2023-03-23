@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:diox/dio.dart';
 
 /// Token处理拦截器
 class TokenInterceptor extends Interceptor {

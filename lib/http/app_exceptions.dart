@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:diox/dio.dart';
 
 /// 自定义异常
 class AppException implements Exception {
