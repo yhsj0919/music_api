@@ -15,7 +15,7 @@ dependencies:
   uuid: 3.0.7
   universal_io: ^2.0.4
   dio:
-    path: dio
+    path: ./dio
   cookie_jar: ^4.0.1-beta
 
 
