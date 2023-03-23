@@ -92,9 +92,9 @@ packages:
   diox:
     dependency: transitive
     description:
-      path: dio
+      path: diox
       ref: main
-      resolved-ref: bb624f07ef786c6696172a1c008d4f2a90feb651
+      resolved-ref: "14484a3826c52aabba78a7b42f182deb8000ba99"
       url: "https://github.com/yhsj0919/dio"
     source: git
     version: "5.0.3"
@@ -132,15 +132,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  http_parser_x:
-    dependency: transitive
-    description:
-      path: "."
-      ref: master
-      resolved-ref: cf6c6bedfd56fae690a163213ac32390ee4078fe
-      url: "https://github.com/yhsj0919/http_parser_x"
-    source: git
-    version: "4.0.3-dev"
   js:
     dependency: transitive
     description:

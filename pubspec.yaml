@@ -18,7 +18,7 @@ dependencies:
     git:
       url: https://github.com/yhsj0919/dio
       ref: main
-      path: dio
+      path: diox
   cookie_jar: ^4.0.1-beta
 
 
