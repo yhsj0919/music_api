@@ -4,11 +4,9 @@ import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-
 import 'package:flutter/foundation.dart';
-import 'package:music_api/http/SQCookieManager.dart';
+import 'package:music_api/http/media_type_interceptor.dart';
 import 'package:music_api/http/token_interceptor.dart';
-import 'error_interceptor.dart';
 
 class HttpDio {
   ///超时时间
@@ -39,9 +37,9 @@ class HttpDio {
       // 添加拦截器
       if (kDebugMode == true) {
         //只在测试的时候添加
-        _dio?.interceptors.add(LogInterceptor(request: true, requestHeader: false, responseHeader: false, responseBody: true, requestBody: true));
+        _dio?.interceptors.add(LogInterceptor(request: true, requestHeader: true, responseHeader: true, responseBody: true, requestBody: true));
       }
-      // _dio?.interceptors.add(SQCookieManager(CookieJar()));
+      _dio?.interceptors.add(MediaTypeInterceptor());
       _dio?.interceptors.add(TokenInterceptor());
     }
   }

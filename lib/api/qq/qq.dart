@@ -297,7 +297,7 @@ Future<Answer> _get(
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.QQ);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        ans = ans.copy(code: value?.statusCode, data:value?.data);
+        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString()??"{}"));
         return Future.value(ans);
       } else {
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));

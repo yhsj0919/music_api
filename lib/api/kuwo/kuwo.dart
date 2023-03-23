@@ -246,7 +246,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
         }
         dynamic data = value?.data;
         try {
-          ans = ans.copy(code: value?.statusCode, data: json.decode(data));
+          ans = ans.copy(code: value?.statusCode, data: json.decode(data.toString()));
           return Future.value(ans);
         } catch (e) {
           ans = ans.copy(code: value?.statusCode, data: {"data": data});

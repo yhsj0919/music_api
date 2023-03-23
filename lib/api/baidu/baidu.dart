@@ -379,7 +379,7 @@ Future<Answer> _post(String path, {Map<String, dynamic> params = const {}, List<
         var ans = const Answer(site: MusicSite.Baidu);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
 
-        ans = ans.copy(code: value?.statusCode, data:value?.data);
+        ans = ans.copy(code: value?.statusCode, data:json.decode(value?.data.toString()??"{}"));
         return Future.value(ans);
       } else {
         return Future.value(Answer(site: MusicSite.Baidu, code: 500, data: {'code': value?.statusCode, 'msg': value}));

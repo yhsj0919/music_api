@@ -92,10 +92,9 @@ packages:
   dio:
     dependency: transitive
     description:
-      name: dio
-      sha256: "3e5c4a94d112540d0c9a6b7f3969832e1604eb8cde0f88d0808382f9f632100b"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../dio"
+      relative: true
+    source: path
     version: "5.0.3"
   encrypt:
     dependency: transitive
@@ -134,11 +133,10 @@ packages:
   http_parser:
     dependency: transitive
     description:
-      name: http_parser
-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.2"
+      path: "../dio/http_parser"
+      relative: true
+    source: path
+    version: "4.0.3-dev"
   js:
     dependency: transitive
     description:
@@ -175,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "12307e7f0605ce3da64cf0db90e5fcab0869f3ca03f76be6bb2991ce0a55e82b"
+      sha256: "3c74dbf8763d36539f114c799d8a2d87343b5067e9d796ca22b5eb8437090ee3"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.0"
+    version: "1.9.1"
   music_api:
     dependency: "direct main"
     description:
