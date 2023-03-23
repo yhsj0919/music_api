@@ -252,15 +252,15 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
+
         dynamic data = value?.data;
-
-        if (value?.data is String) {
-          data = json.decode(value?.data.toString().replaceAll("\r", "").replaceAll("\n", "") ?? "{}");
-        } else {
-          data = value?.data;
-        }
-
         try {
+          if (value?.data is String) {
+            data = json.decode(value?.data.toString().trim() ?? "{}");
+          } else {
+            data = value?.data;
+          }
+
           ans = ans.copy(code: value?.statusCode, data: data);
           return Future.value(ans);
         } catch (e) {

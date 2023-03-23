@@ -89,7 +89,7 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
     cookie: cookie,
   ).then((value) {
     try {
-      var data = value.data.toString();
+      var data = value.data["data"].toString();
       var ss = data.split("\r\n").map((e) {
         var kv = e.split("=");
         return MapEntry(kv[0], kv[1]);
