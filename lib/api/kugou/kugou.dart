@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:music_api/entity/music_entity.dart';
@@ -39,6 +40,11 @@ class KuGou {
   ///歌曲详情
   static Future<Answer> musicInfo({String? hash, String? albumAudioId}) {
     return _musicInfo.call({"hash": hash, "albumAudioId": albumAudioId}, []);
+  }
+
+  ///歌曲详情
+  static Future<Answer> lrc({String? hash}) {
+    return _lrc.call({"hash": hash}, []);
   }
 
   ///歌曲详情带歌词，不一定带地址
@@ -221,4 +227,11 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
       return Future.value(const Answer(site: MusicSite.KuGou, code: 500, data: {'code': 500, 'msg': "酷狗对象转换异常"}));
     }
   });
+}
+
+String signatureParams(Map<String,dynamic> params) {
+ var data= params.entries.sortedBy((element) => element.key).map((e) => "${e.key}=${e.value}").join();
+
+  const secret = "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt";
+  return md5.convert(utf8.encode("$secret$data$secret")).toString().toUpperCase();
 }

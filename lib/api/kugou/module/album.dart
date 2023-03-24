@@ -11,8 +11,36 @@ Future<Answer> _albumList(Map params, List<Cookie> cookie) {
   );
 }
 
-///专辑信息
+
 Future<Answer> _albumInfo(Map params, List<Cookie> cookie) {
+//https://m3ws.kugou.com/api/v1/album/info?type=1&page=1&albumid=58849245&appid=1058&srcappid=2919&clientver=20000&clienttime=1679627053360&mid=1679627053360&uuid=1679627053360&dfid=-&signature=FC42C6ACAAA68E31CB9C83FC1B9F242F
+
+  var data = {
+    "type": 1,
+    "page": "1",
+    "albumid": params["albumId"],
+    "timelength": 0,
+    "srcappid": 2919,
+    "clientver": 20000,
+    "clienttime": DateTime.now().millisecondsSinceEpoch,
+    "mid":  DateTime.now().millisecondsSinceEpoch,
+    "uuid":  DateTime.now().millisecondsSinceEpoch,
+    "dfid": "-",
+  };
+
+  var signature = signatureParams(data);
+
+  data["signature"] = signature;
+  print(signature);
+  return _get(
+    "https://m3ws.kugou.com/api/v1/album/info",
+    params: data,
+    cookie: cookie,
+  );
+}
+
+///专辑信息
+Future<Answer> _albumInfo1(Map params, List<Cookie> cookie) {
   return _get(
     "http://mobilecdnbj.kugou.com/api/v3/album/info",
     params: {
