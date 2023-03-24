@@ -11,16 +11,16 @@ Future<Answer> _musicNew(Map params, List<Cookie> cookie) {
     cookie: cookie,
   ).then((resp) async {
     var list = (resp.data["data"] as List?) ?? [];
-    var len = list.length > 10 ? 10 : list.length;
-    var songs = [];
-    var datas = list.sublist(0, len);
-    for (var element in datas) {
-      var album = (await _albumInfo({"albumId": element["album_id"]}, cookie)).data;
-      element["album_name"] = album["data"]["albumname"];
-      songs.add(element);
-    }
+    // var len = list.length > 10 ? 10 : list.length;
+    // var songs = [];
+    // var datas = list.sublist(0, len);
+    // for (var element in datas) {
+    //   var album = (await _albumInfo({"albumId": element["album_id"]}, cookie)).data;
+    //   element["album_name"] = album["data"]["albumname"];
+    //   songs.add(element);
+    // }
 
-    return resp.copy(data: songs);
+    return resp.copy(data: list);
   });
 }
 
@@ -33,33 +33,36 @@ Future<Answer> _musicList(Map params, List<Cookie> cookie) {
     },
     cookie: cookie,
   ).then((resp) async {
-    print(DateTime.now().millisecondsSinceEpoch);
+    // print(DateTime.now().millisecondsSinceEpoch);
     var list = (resp.data["newSongList"] as List?) ?? [];
 
-    var datas = splitList(list, 25);
-
-    var albums = [];
-    for (var element in datas) {
-      var datas = (await Future.wait((element).map((e) => _albumInfo({"albumId": e["album_id"]}, cookie)))).map((e) => e.data["data"]).toList();
-      albums.addAll(datas);
-      // await Future.delayed(const Duration(milliseconds: 10));
-    }
-
-    var songs = list.map((e) {
-      var album = albums.where((element) => element["albumid"].toString() == e["album_id"].toString()).first;
-      e["album_name"] = album?["albumname"] ?? "";
-      return e;
-    }).toList();
-    print(DateTime.now().millisecondsSinceEpoch);
-    return resp.copy(data: songs);
+    // var datas = splitList(list, 25);
+    //
+    // var albums = [];
+    // for (var element in datas) {
+    //   var datas = (await Future.wait((element).map((e) => _albumInfo({"albumId": e["album_id"]}, cookie)))).map((e) {
+    //     print(e.data);
+    //     return e.data["data"];
+    //   }).toList();
+    //
+    //   albums.addAll(datas);
+    //   // await Future.delayed(const Duration(milliseconds: 10));
+    // }
+    //
+    // var songs = list.map((e) {
+    //   var album = albums.where((element) => element["albumid"].toString() == e["album_id"].toString()).first;
+    //   e["album_name"] = album?["albumname"] ?? "";
+    //   return e;
+    // }).toList();
+    // print(DateTime.now().millisecondsSinceEpoch);
+    return resp.copy(data: list);
   });
 }
-
 
 Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
 //https://m3ws.kugou.com/v1/song/info?srcappid=2919&clientver=2000&clienttime=1679625193379&mid=13b99c4ecc49b8e85dde00e21160b008&uuid=13b99c4ecc49b8e85dde00e21160b008&dfid=1JdAUM1MExVq2HbWdD1cveSL&appid=1058&cmd=playInfo&hash=492DF9BEE89AF801625FE4D439F4DDF9&from=mkugou&apiver=2&platid=4&uid=0&token=&userid=0&album_id=38123847&album_audio_id=260603552&signature=38b23dada3cca277bd3f25d9a98024a5
   String hash = params["hash"];
-  String albumAudioId = params["albumAudioId"]??"";
+  String albumAudioId = params["albumAudioId"] ?? "";
 
   var data = {
     "album_audio_id": albumAudioId,
@@ -69,9 +72,9 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
     "srcappid": 2919,
     "clientver": 2000,
     "clienttime": DateTime.now().millisecondsSinceEpoch,
-    "mid":  DateTime.now().millisecondsSinceEpoch,
-    "uuid":  DateTime.now().millisecondsSinceEpoch,
-    "dfid": "-",
+    "mid": DateTime.now().millisecondsSinceEpoch,
+    "uuid": DateTime.now().millisecondsSinceEpoch,
+    "dfid": "1JdAUM1MExVq2HbWdD1cveSL",
   };
 
   var signature = signatureParams(data);
@@ -84,7 +87,6 @@ Future<Answer> _musicInfo(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
-
 
 ///歌曲信息
 Future<Answer> _musicInfo6(Map params, List<Cookie> cookie) {
@@ -99,7 +101,6 @@ Future<Answer> _musicInfo6(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
-
 
 Future<Answer> _musicInfoWithLyric(Map params, List<Cookie> cookie) {
 //https://www.kugou.com/yy/index.php?r=play/getdata&hash=DE12B818BD5FA8C3A8DF71D5940C5A08&album_audio_id=375044853
@@ -160,6 +161,7 @@ Future<Answer> _musicInfo3(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
+
 Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
 //https://m3ws.kugou.com/api/v1/song/get_song_info_v2?cmd=playInfo&from=mkugou&apiver=2&mid=1e8d9450ee27ae0e73ad10dea18dee1c&userid=0&platid=4&dfid=2B4X0T1jW4EU45wcnn4Y8nOC&hash=" + hash+"&album_id"+album_id
   String hash = params["hash"];
@@ -179,12 +181,13 @@ Future<Answer> _musicInfo4(Map params, List<Cookie> cookie) {
 
 Future<Answer> _musicInfo5(Map params, List<Cookie> cookie) {
 ////https://m3ws.kugou.com/api/v1/song/get_song_info_v2?cmd=playInfo&from=mkugou&apiver=2&mid=1e8d9450ee27ae0e73ad10dea18dee1c&userid=0&platid=4&dfid=2B4X0T1jW4EU45wcnn4Y8nOC&hash=" + hash+"&album_id"+album_id
-  return _get("https://m3ws.kugou.com/api/v1/song/get_song_info_v2",
+  return _get(
+    "https://m3ws.kugou.com/api/v1/song/get_song_info_v2",
     params: {
       // "cmd": "playInfo",
       // "from":"mkugou",
       // "apiver":"2",
-      "mid":"1e8d9450ee27ae0e73ad10dea18dee1c",
+      "mid": "1e8d9450ee27ae0e73ad10dea18dee1c",
       // "userid":"0",
       // "platid":"4",
       // "dfid":"2B4X0T1jW4EU45wcnn4Y8nOC",
@@ -208,8 +211,8 @@ Future<Answer> _lrc(Map params, List<Cookie> cookie) {
     "srcappid": 2919,
     "clientver": 20000,
     "clienttime": DateTime.now().millisecondsSinceEpoch,
-    "mid":  DateTime.now().millisecondsSinceEpoch,
-    "uuid":  DateTime.now().millisecondsSinceEpoch,
+    "mid": DateTime.now().millisecondsSinceEpoch,
+    "uuid": DateTime.now().millisecondsSinceEpoch,
     "dfid": "-",
   };
 

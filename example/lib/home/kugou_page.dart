@@ -106,7 +106,7 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌单详情,所有歌曲'),
                     onTap: () {
-                      KuGou.playListInfoAll(id: "2467396", page: 1).then(onData).catchError(onError);
+                      KuGou.playListInfoAll(id: "3717067", page: 1).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

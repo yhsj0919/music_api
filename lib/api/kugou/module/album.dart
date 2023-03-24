@@ -31,7 +31,7 @@ Future<Answer> _albumInfo(Map params, List<Cookie> cookie) {
   var signature = signatureParams(data);
 
   data["signature"] = signature;
-  print(signature);
+  // print(signature);
   return _get(
     "https://m3ws.kugou.com/api/v1/album/info",
     params: data,
