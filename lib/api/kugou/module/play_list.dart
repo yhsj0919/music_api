@@ -74,7 +74,7 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
         }));
         await Future.delayed(const Duration(milliseconds: 20));
       }
-      info["songs"] = list;
+      info["songs"] = songs;
       return value.copy(data: info);
     } catch (e) {
       print(e);
