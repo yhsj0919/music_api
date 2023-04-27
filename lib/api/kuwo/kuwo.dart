@@ -237,7 +237,8 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   };
 
   if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
-    header.remove("User-Agent");
+    header["User-Agent"] = "okhttp/3.10.0";
+    // header.remove("User-Agent");
     header.remove("cookie");
   }
 
