@@ -66,8 +66,9 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
       var list = data["data"]["musicList"] as List?;
       var total = data["data"]["total"];
       var pagesize = 100;
+      var maxTotal = params["maxTotal"];
 
-      var size = getPageSize(total, pagesize, currentTotal: list?.length ?? 0);
+      var size = getPageSize(total, pagesize, currentTotal: list?.length ?? 0, maxTotal: maxTotal);
 
       var music = (await Future.wait(
         List.generate(
@@ -85,7 +86,6 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
           list?.addAll(item);
         }
       }
-
 
       info["musicList"] = list;
 

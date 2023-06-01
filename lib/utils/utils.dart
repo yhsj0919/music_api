@@ -5,9 +5,9 @@ bool toBoolean(val) {
   return val == 'true' || val == '1';
 }
 
-int getPageSize(int total, int size, {int? currentTotal}) {
-  if (total > 1000) {
-    total = 1000;
+int getPageSize(int total, int size, {int? currentTotal, int? maxTotal}) {
+  if (maxTotal != null && total > maxTotal) {
+    total = maxTotal;
   }
   //这里防止有一些total不准确的情况导致大量请求，比如实际总数60，total是500，currentTotal是当前页数量
   if (currentTotal != null && size - currentTotal > 10) {
