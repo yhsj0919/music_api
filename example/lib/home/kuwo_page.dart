@@ -94,7 +94,13 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      KuWo.playListInfo(id: "3363944171").then(onData).catchError(onError);
+                      KuWo.playListInfo(id: "1082685104").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌单详情所有的歌曲'),
+                    onTap: () {
+                      KuWo.playListInfoAll(id: "1082685104").then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

@@ -58,7 +58,7 @@ Future<Answer> _playListInfo(Map params, List<Cookie> cookie) {
 }
 
 Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
-  // params["size"] = 100;
+  // params["size"] = 1000;
   return _playListInfo(params, cookie).then((value) async {
     var data = value.data;
     try {
@@ -69,24 +69,24 @@ Future<Answer> _playListInfoAll(Map params, List<Cookie> cookie) {
 
       var size = getPageSize(total, pagesize, currentTotal: list?.length ?? 0);
 
-      var otherSongs = (await Future.wait(
+      var music = (await Future.wait(
         List.generate(
           size - 1,
-          (data) {
-            return _playListInfo({"id": params["id"], "page": data + 2}, cookie);
+          (data) async {
+            var resp = await _playListInfo({"id": params["id"], "page": data + 2}, cookie);
+
+            return resp.data["data"]["musicList"] as List?;
           },
         ),
-      ))
-          .map(
-        (e) {
-          var data = e.data;
-          var list = data["data"]["musicList"] as List?;
-          return list;
-        },
-      ).toList();
-      for (var element in otherSongs) {
-        list?.addAll((element as List));
+      ));
+
+      for (var item in music) {
+        if (item != null) {
+          list?.addAll(item);
+        }
       }
+
+
       info["musicList"] = list;
 
       return value.copy(data: info);
