@@ -73,8 +73,8 @@ class KuWo {
   }
 
   ///歌单详情
-  static Future<Answer> playListInfoAll({String? id}) {
-    return _playListInfoAll.call({"id": id}, []);
+  static Future<Answer> playListInfoAll({String? id, int? maxTotal}) {
+    return _playListInfoAll.call({"id": id, "maxTotal": maxTotal}, []);
   }
 
   ///榜单列表
