@@ -47,16 +47,19 @@ Future<Answer> _artistDetail(Map params, List<Cookie> cookie) => request(
   0:其他
  */
 Future<Answer> _artistList(Map params, List<Cookie> cookie) {
+  final size = params['size'] ?? 30;
+  final page = params['page'] ?? 1;
+  final offset = (page - 1) * size;
   return request(
       'POST',
       'https://music.163.com/api/v1/artist/list',
       {
         'initial': (params['initial'] as String).toUpperCase().codeUnitAt(0),
-        'offset': params['offset'] ?? 0,
-        'limit': params['limit'] ?? 30,
+        'offset': offset,
+        'limit': size,
         'total': true,
         'type': params['type'] ?? '1',
-        'area': params['area']
+        'area': params['area'],
       },
       cookies: cookie,
       crypto: Crypto.weApi);

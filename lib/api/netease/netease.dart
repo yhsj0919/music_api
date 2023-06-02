@@ -177,6 +177,31 @@ class Netease {
     return _playlistTrackAll.call({"id": id}, []);
   }
 
+  /**
+   * 歌手列表
+      initial 取值 a-z/A-Z
+      type 取值
+      1:男歌手
+      2:女歌手
+      3:乐队
+
+      area 取值
+      -1:全部
+      7华语
+      96欧美
+      8:日本
+      16韩国
+      0:其他
+   */
+  static Future<Answer> artistList({String? initial, int? type, int? area, int? page, int? size}) {
+    return _artistList.call({"initial": initial, "type": type, "area": area, "page": page, "size": size}, []);
+  }
+
+  ///排行榜
+  static Future<Answer> topList() {
+    return _toplistDetail.call({}, []);
+  }
+
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer(site: MusicSite.Netease).copy(code: 500, msg: "url:“$path”未被定义, 请检查", data: _api.keys.toList()));
