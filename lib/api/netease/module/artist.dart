@@ -54,12 +54,12 @@ Future<Answer> _artistList(Map params, List<Cookie> cookie) {
       'POST',
       'https://music.163.com/api/v1/artist/list',
       {
-        'initial': (params['initial'] as String).toUpperCase().codeUnitAt(0),
+        'initial': ((params['initial'] ?? "-1") as String).toUpperCase().codeUnitAt(0),
         'offset': offset,
         'limit': size,
         'total': true,
-        'type': params['type'] ?? '1',
-        'area': params['area'],
+        'type': params['type'] ?? -1,
+        'area': params['area'] ?? -1,
       },
       cookies: cookie,
       crypto: Crypto.weApi);
