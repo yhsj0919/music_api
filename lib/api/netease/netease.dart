@@ -197,6 +197,10 @@ class Netease {
     return _artistList.call({"initial": initial, "type": type, "area": area, "page": page, "size": size}, []);
   }
 
+  static Future<Answer> topArtists() {
+    return _topArtists.call({}, []);
+  }
+
   ///排行榜
   static Future<Answer> topList() {
     return _toplistDetail.call({}, []);
