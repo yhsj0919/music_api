@@ -116,6 +116,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     },
                   ),
                   ListTile(
+                    title: const Text('榜单详情所有'),
+                    onTap: () {
+                      KuWo.rankInfoAll(id: "93").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('歌手列表'),
                     onTap: () {
                       KuWo.artistList().then(onData).catchError(onError);

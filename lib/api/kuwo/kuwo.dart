@@ -87,6 +87,13 @@ class KuWo {
     return _rankInfo.call({"id": id, "page": page, "size": size}, []);
   }
 
+  ///榜单详情
+  static Future<Answer> rankInfoAll({
+    String? id,
+  }) {
+    return _rankInfoAll.call({"id": id}, []);
+  }
+
   ///歌手详情
   static Future<Answer> artistList({String? category, int? page, int? size}) {
     return _artistList.call({"category": category, "page": page, "size": size}, []);
