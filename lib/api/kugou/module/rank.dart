@@ -32,3 +32,43 @@ Future<Answer> _rankSong(Map params, List<Cookie> cookie) {
     cookie: cookie,
   );
 }
+Future<Answer> _rankSongAll(Map params, List<Cookie> cookie) {
+  // params["size"] = 1000;
+  return _rankSong(params, cookie).then((value) async {
+    var data = value.data;
+    try {
+      var info = data["data"];
+      var list = data["data"]["info"] as List?;
+      var total = int.parse(data["data"]["total"].toString());
+      var pagesize = 30;
+      var maxTotal = params["maxTotal"];
+
+      var size = getPageSize(total, pagesize, currentTotal: list?.length ?? 0, maxTotal: maxTotal);
+
+      var music = (await Future.wait(
+        List.generate(
+          size - 1,
+              (data) async {
+            var resp = await _rankSong({"rankId": params["rankId"], "page": data + 2}, cookie);
+
+            return resp.data["data"]["info"] as List?;
+          },
+        ),
+      ));
+
+      for (var item in music) {
+        if (item != null) {
+          list?.addAll(item);
+        }
+      }
+
+      info["info"] = list;
+
+      return value.copy(data: info);
+    } catch (e) {
+      print(e);
+    }
+
+    return value;
+  });
+}

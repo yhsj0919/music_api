@@ -86,6 +86,13 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                     },
                   ),
                   ListTile(
+                    title: const Text('排行榜所有歌曲'),
+                    onTap: () {
+                      KuGou.rankSongAll(rankId: "8888").then(onData).catchError(onError);
+                    },
+                  ),
+
+                  ListTile(
                     title: const Text('专辑列表，新碟上架'),
                     onTap: () {
                       KuGou.albumList().then(onData).catchError(onError);

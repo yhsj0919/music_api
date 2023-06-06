@@ -12,12 +12,19 @@ import 'package:music_api/utils/utils.dart';
 import 'package:universal_io/io.dart';
 
 part 'module/album.dart';
+
 part 'module/banner.dart';
+
 part 'module/music.dart';
+
 part 'module/mv.dart';
+
 part 'module/play_list.dart';
+
 part 'module/rank.dart';
+
 part 'module/search.dart';
+
 part 'module/singer.dart';
 
 class KuGou {
@@ -32,7 +39,8 @@ class KuGou {
   static Future<Answer> musicNew() {
     return _musicNew.call({}, []);
   }
- ///新歌推荐
+
+  ///新歌推荐
   static Future<Answer> musicList() {
     return _musicList.call({}, []);
   }
@@ -51,11 +59,11 @@ class KuGou {
   static Future<Answer> musicInfoWithLyric({String? hash, String? albumAudioId}) {
     return _musicInfoWithLyric.call({"hash": hash, "albumAudioId": albumAudioId}, []);
   }
+
   ///歌曲详情带歌词，不一定带地址
   static Future<Answer> musicInfo2({String? hash, String? albumAudioId}) {
     return _musicInfo2.call({"hash": hash, "albumAudioId": albumAudioId}, []);
   }
-
 
   ///推荐歌单
   static Future<Answer> playList({int? page}) {
@@ -85,6 +93,10 @@ class KuGou {
   ///排行榜歌曲
   static Future<Answer> rankSong({String? rankId, int? page, int? size}) {
     return _rankSong.call({"rankId": rankId, "page": page, "size": size}, []);
+  }
+
+  static Future<Answer> rankSongAll({String? rankId}) {
+    return _rankSongAll.call({"rankId": rankId}, []);
   }
 
   ///专辑列表
@@ -208,14 +220,13 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
 
   return HttpDio().get(path, params: params, headers: header).then((value) async {
     try {
-
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuGou);
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        ans = ans.copy(code: value?.statusCode, data:json.decode(value?.data.toString()??"{}"));
+        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString() ?? "{}"));
         return Future.value(ans);
       } else {
         return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value?.statusCode, 'msg': value}));
@@ -229,8 +240,8 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   });
 }
 
-String signatureParams(Map<String,dynamic> params) {
- var data= params.entries.sortedBy((element) => element.key).map((e) => "${e.key}=${e.value}").join();
+String signatureParams(Map<String, dynamic> params) {
+  var data = params.entries.sortedBy((element) => element.key).map((e) => "${e.key}=${e.value}").join();
 
   const secret = "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt";
   return md5.convert(utf8.encode("$secret$data$secret")).toString().toUpperCase();
