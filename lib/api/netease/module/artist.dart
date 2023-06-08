@@ -133,7 +133,9 @@ Future<Answer> _artistNewSong(Map params, List<Cookie> cookie) {
 // 歌手歌曲
 Future<Answer> _artistSongs(Map params, List<Cookie> cookie) {
   cookie.add(Cookie("os", 'pc'));
-
+  final size = params['size'] ?? 100;
+  final page = params['page'] ?? 1;
+  final offset = (page - 1) * size;
   return request(
       'POST',
       'https://music.163.com/api/v1/artist/songs',
@@ -142,8 +144,8 @@ Future<Answer> _artistSongs(Map params, List<Cookie> cookie) {
         'private_cloud': true,
         'work_type': 1,
         'order': params['order'] ?? 'hot', //hot,time
-        'offset': params['offset'] ?? 0,
-        'limit': params['limit'] ?? 100,
+        'offset': offset,
+        'limit': size,
       },
       cookies: cookie,
       crypto: Crypto.weApi);
