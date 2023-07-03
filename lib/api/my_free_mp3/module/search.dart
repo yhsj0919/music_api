@@ -4,7 +4,7 @@ part of '../my_free_mp3.dart';
 ///sort data:0,Longest:1,Popular:2
 Future<Answer> _search(Map params, List<Cookie> cookie) {
   return _post(
-    "https://myfreemp3juices.cc/api/api_search.php",
+    "https://new.myfreemp3juices.cc/api/api_search.php",
     params: {
       "q": params['keyWord'],
       "page": params['page'] ?? 0,
