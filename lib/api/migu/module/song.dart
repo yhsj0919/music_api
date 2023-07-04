@@ -64,6 +64,7 @@ Future<Answer> _playUrl(Map params, List<Cookie> cookie) {
     "resourceType": 2,
     "songId": params['songId'],
     "toneFlag": params['toneFlag'] ?? 'PQ',
+    "timestamp": DateTime.now().millisecondsSinceEpoch,
   };
   return _get(
     "https://app.c.nf.migu.cn/MIGUM2.0/strategy/listen-url/v2.3",
