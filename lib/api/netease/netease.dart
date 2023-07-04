@@ -130,6 +130,10 @@ class Netease {
     return _search.call({"keyWord": keyWord, "type": type, "page": page, "size": size}, []);
   }
 
+  static Future<Answer> searchPc({String? keyWord, int? type, int? page, int? size}) {
+    return _cloudSearch.call({"keyWord": keyWord, "type": type, "page": page, "size": size}, []);
+  }
+
   static Future<Answer> songUrl({String? id, int? br}) {
     return _songUrl.call({"id": id, "br": br}, []);
   }

@@ -102,12 +102,15 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
 //搜索
 
 Future<Answer> _cloudSearch(Map params, List<Cookie> cookie) {
+  final num = params['size'] ?? 20;
+  final page = params['page'] ?? 1;
+  final offset = (page - 1) * num;
   final data = {
-    's': params['keywords'],
+    's': params['keyWord'],
     // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
     'type': params['type'] ?? 1,
-    'limit': params['limit'] ?? 30,
-    'offset': params['offset'] ?? 0
+    'limit': num,
+    'offset': offset
   };
   return request('POST', 'https://music.163.com/api/cloudsearch/pc', data, crypto: Crypto.weApi, cookies: cookie);
 }
