@@ -13,6 +13,8 @@ class KuGouPage extends StatefulWidget {
 
 class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixin {
   String result = "";
+  String qr = "";
+  String qrcode = "";
 
   @override
   void initState() {
@@ -42,6 +44,16 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
               ),
             ),
           ),
+          qr.isNotEmpty
+              ? Image.memory(
+                  base64Decode(qr),
+                  //防止重绘
+                  gaplessPlayback: true,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                )
+              : Container(),
           Expanded(
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -49,6 +61,18 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
+                  ListTile(
+                    title: const Text('登陆二维码'),
+                    onTap: () {
+                      KuGou.qrcode().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('登陆二维码校验'),
+                    onTap: () {
+                      KuGou.getUserinfoQrcode(qrcode: qrcode).then(onData).catchError(onError);
+                    },
+                  ),
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {
@@ -91,7 +115,6 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
                       KuGou.rankSongAll(rankId: "8888").then(onData).catchError(onError);
                     },
                   ),
-
                   ListTile(
                     title: const Text('专辑列表，新碟上架'),
                     onTap: () {
@@ -240,6 +263,13 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
     setState(() {
       result = json.encode(value.data);
       print(result);
+      if (value.data["data"]?["qrcode"] != null) {
+        qrcode = value.data["data"]["qrcode"].toString();
+      }
+
+      if (value.data["data"]?["qrcode_img"] != null) {
+        qr = value.data["data"]["qrcode_img"].toString().replaceAll("data:image/png;base64,", "");
+      }
     });
   }
 

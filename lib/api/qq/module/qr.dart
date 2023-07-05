@@ -1,11 +1,11 @@
 part of '../qq.dart';
 
-// void main() {
-//   var ss = ptqrtokenStr("b2961d7e1415fa6550307d6a3b3f7fbb327b26e92d1a535cc428b35c547c5fea67877dac96ffefab034fda676d27316980ab7a9635141d34");
-//
-//   print(ss);
-//
-// }
+void main() {
+  var ss = ptqrtokenStr("77c22c4269eebc7da0199094f4232ec63d7bdac7cb8bc84b6608f1fdaf7b5a1c0c522c8f31fe357690f945cb8dd3c0cf98bb7c27a4dbb0a63f43091dcfa2e83c");
+
+  print(ss);
+
+}
 ///qq网页登录界面
 ///https://ui.ptlogin2.qq.com/cgi-bin/login?pt_no_auth=1&pt_wxtest=1&pt_no_onekey=1&daid=384&style=9&hln_css=https://y.gtimg.cn/music/common/upload/t_cm3_photo_publish/1117688.png?max_age=2592000&appid=83886593&s_url=https://y.qq.com/m/login/redirect.html?login_type=1&surl=http://y.qq.com/portal/profile.html
 /*
@@ -33,10 +33,16 @@ Future<Answer> _loginQr(Map params, List<Cookie> cookie) {
 /*
 * 二维码验证
 *o1vId=1eb273e864b184bac42f950fe589d5de&pt_js_version=v1.38.0
+*
  */
 Future<Answer> _loginQrCheck(Map params, List<Cookie> cookie) {
   print('请求的cookie');
   print(cookie);
+
+  var ss = ptqrtokenStr("77c22c4269eebc7da0199094f4232ec63d7bdac7cb8bc84b6608f1fdaf7b5a1c0c522c8f31fe357690f945cb8dd3c0cf98bb7c27a4dbb0a63f43091dcfa2e83c");
+
+  print(ss);
+
   print("结束");
   final data = {
     "u1": Uri.encodeComponent("https://graph.qq.com/oauth2.0/login_jump"),
@@ -48,15 +54,15 @@ Future<Answer> _loginQrCheck(Map params, List<Cookie> cookie) {
     "from_ui": "1",
     "ptlang": "2052",
     "action": "${Random().nextInt(3)}-${Random().nextInt(3)}-${DateTime.now().millisecondsSinceEpoch.toStringAsFixed(13)}",
-    "js_ver": "22112816",
+    "js_ver": "23061410",
     "js_type": "1",
-    "login_sig": "bECjcCAc2CqPK4*X4dIGWfQjaB-odl-r*UCnq*XEkU1VzuxHE6YDrSKlVEX*giyn",
+    "login_sig": "rc09Vj-fRnFpLQ-XNoyz*e2y*p-qjTYx9lXApi5jVLT2zIh5Yn3*mmljfm3SwM76",
     "pt_uistyle": "40",
-    "daid": "383",
     "aid": "716027609",
+    "daid": "383",
     "pt_3rd_aid": "100497308",
-    "o1vId": "157cfed3688308c5f80c2d9880faea5e",
-    "pt_js_version": "v1.38.0",
+    "o1vId": "b38424a59a720c20ad08364173f29e03",
+    "pt_js_version": "v1.45.1",
   };
   return _getString(
     "https://ssl.ptlogin2.qq.com/ptqrlogin",

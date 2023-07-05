@@ -27,6 +27,8 @@ part 'module/search.dart';
 
 part 'module/singer.dart';
 
+part 'module/login.dart';
+
 class KuGou {
   KuGou._();
 
@@ -176,6 +178,16 @@ class KuGou {
     return _searchPlayList.call({"keyword": keyword, "page": page, "size": size}, []);
   }
 
+  ///登录二维码
+  static Future<Answer> qrcode() {
+    return _qrcode.call({}, []);
+  }
+
+  ///登录二维码校验
+  static Future<Answer> getUserinfoQrcode({required String qrcode, List<Cookie>? cookie}) {
+    return _getUserinfoQrcode.call({"qrcode": qrcode}, cookie ?? []);
+  }
+
   static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
       return Future.value(const Answer(site: MusicSite.KuGou).copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
@@ -226,7 +238,11 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
         if (cookies != null) {
           ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
         }
-        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString() ?? "{}"));
+        if (value?.data is Map) {
+          ans = ans.copy(code: value?.statusCode, data: value?.data);
+        } else {
+          ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString() ?? "{}"));
+        }
         return Future.value(ans);
       } else {
         return Future.value(Answer(site: MusicSite.KuGou, code: 500, data: {'code': value?.statusCode, 'msg': value}));

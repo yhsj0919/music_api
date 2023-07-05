@@ -105,11 +105,25 @@ class HttpDio {
   }
 
   ///  get
-  Future<Response?> get(String path,
+  Future<Response<T>?> get<T>(String path,
       {Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onReceiveProgress, bool followRedirects = true}) async {
     _dio?.options.headers.addAll(headers ?? {});
     _dio?.options.followRedirects = followRedirects;
-    return await _dio?.get(
+    _dio?.options.responseType = ResponseType.json;
+    return await _dio?.get<T>(
+      path,
+      queryParameters: params,
+      cancelToken: cancelToken ?? _cancelToken,
+      onReceiveProgress: onReceiveProgress,
+    );
+  }
+
+  Future<Response<T>?> img<T>(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onReceiveProgress, bool followRedirects = true}) async {
+    _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.followRedirects = followRedirects;
+    _dio?.options.responseType = ResponseType.bytes;
+    return await _dio?.get<T>(
       path,
       queryParameters: params,
       cancelToken: cancelToken ?? _cancelToken,
@@ -121,6 +135,8 @@ class HttpDio {
   Future<Response?> post(String path,
       {Map<String, dynamic>? params, data, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onSendProgress, ProgressCallback? onReceiveProgress}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.responseType = ResponseType.json;
+
     return await _dio?.post(
       path,
       data: data,
@@ -135,6 +151,8 @@ class HttpDio {
   Future<Response?> put(String path,
       {data, Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onSendProgress, ProgressCallback? onReceiveProgress}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.responseType = ResponseType.json;
+
     await _dio?.put(
       path,
       data: data,
@@ -149,6 +167,8 @@ class HttpDio {
   Future<Response?> patch(String path,
       {data, Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onSendProgress, ProgressCallback? onReceiveProgress}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.responseType = ResponseType.json;
+
     return await _dio?.patch(
       path,
       data: data,
@@ -162,6 +182,7 @@ class HttpDio {
   ///  delete
   Future<Response?> delete(String path, {data, Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.responseType = ResponseType.json;
 
     return await _dio?.delete(
       path,
@@ -175,6 +196,7 @@ class HttpDio {
   Future<Response?> postForm(String path,
       {Map<String, dynamic>? params, Map<String, dynamic>? headers, CancelToken? cancelToken, ProgressCallback? onSendProgress, ProgressCallback? onReceiveProgress}) async {
     _dio?.options.headers.addAll(headers ?? {});
+    _dio?.options.responseType = ResponseType.json;
 
     return await _dio?.post(
       path,

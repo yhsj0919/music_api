@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 import 'package:music_api/entity/music_entity.dart';
@@ -5,6 +6,8 @@ import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:universal_io/io.dart';
+
+import '../../utils/utils.dart';
 
 part 'module/album.dart';
 
@@ -297,7 +300,7 @@ Future<Answer> _get(
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
         var ans = const Answer(site: MusicSite.QQ);
         ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString()??"{}"));
+        ans = ans.copy(code: value?.statusCode, data: json.decode(value?.data.toString() ?? "{}"));
         return Future.value(ans);
       } else {
         return Future.error(const Answer(site: MusicSite.QQ, code: 500, msg: "服务异常"));
@@ -320,7 +323,7 @@ Future<Answer> _getImage(
     options.addAll(header);
   }
 
-  return HttpDio().get(path, params: params, headers: options).then((value) async {
+  return HttpDio().img(path, params: params, headers: options).then((value) async {
     try {
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];
@@ -357,8 +360,13 @@ Future<Answer> _getString(
   if (header.isNotEmpty) {
     options.addAll(header);
   }
+  LinkedHashMap signStr = LinkedHashMap();
 
-  return HttpDio().get(path, params: params, headers: options).then((value) async {
+  params.forEach((key, value) {
+    signStr[key] = value;
+  });
+  var url = "$path?${toParamsString(signStr)}";
+  return HttpDio().get(url, headers: options).then((value) async {
     try {
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader] ?? [];

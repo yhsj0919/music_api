@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 bool toBoolean(val) {
   if (val == '') return val;
@@ -77,4 +78,10 @@ List<List> splitList(List list, int len) {
     break;
   }
   return result;
+}
+
+String getRandom(int length) {
+  const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+  Random r = Random();
+  return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
@@ -235,11 +236,13 @@ final _api = <String, Api>{
 
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
+  var hm_token = getRandom(32);
   Map<String, String> header = {
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
     "Token": "7865309485D199575C04186AFF58C46D",
-    "cookie": "kw_token=SQ6EJ3Q5G6B;BAIDU_RANDOM=7n7YRwknjT7EPp7EZSiSiTZSS5byTT7Q",
+    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};BAIDU_RANDOM=7n7YRwknjT7EPp7EZSiSiTZSS5byTT7Q",
+    "Cross": md5.convert(utf8.encode(hm_token)).toString(),
     "Referer": "http://www.kuwo.cn/",
   };
 
