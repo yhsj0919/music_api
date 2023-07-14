@@ -263,13 +263,18 @@ class _KuGouPageState extends State<KuGouPage> with AutomaticKeepAliveClientMixi
     setState(() {
       result = json.encode(value.data);
       print(result);
-      if (value.data["data"]?["qrcode"] != null) {
-        qrcode = value.data["data"]["qrcode"].toString();
+      try{
+        if (value.data["data"]?["qrcode"] != null) {
+          qrcode = value.data["data"]["qrcode"].toString();
+        }
+
+        if (value.data["data"]?["qrcode_img"] != null) {
+          qr = value.data["data"]["qrcode_img"].toString().replaceAll("data:image/png;base64,", "");
+        }
+      }catch(e){
+
       }
 
-      if (value.data["data"]?["qrcode_img"] != null) {
-        qr = value.data["data"]["qrcode_img"].toString().replaceAll("data:image/png;base64,", "");
-      }
     });
   }
 
