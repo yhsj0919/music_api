@@ -56,6 +56,8 @@ Future<Answer> _playUrl3(Map params, List<Cookie> cookie) {
 
 Future<Answer> _playUrl4(Map params, List<Cookie> cookie) {
   //https://m.kuwo.cn/newh5app/api/mobile/v2/music/src/261439967?httpsStatus=1&reqId=ca9e5ee5fef657bed3a5c75e0c487471
+  //试听地址
+  //https://m.kuwo.cn/newh5app/api/mobile/v1/music/preview/15212054?httpsStatus=1&reqId=6a7fdf9bed4e928442
   return _get(
     "https://m.kuwo.cn/newh5app/api/mobile/v2/music/src/${params["rid"]}",
     params: {
