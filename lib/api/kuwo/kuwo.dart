@@ -242,7 +242,8 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
     "Token": "7865309485D199575C04186AFF58C46D",
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};BAIDU_RANDOM=7n7YRwknjT7EPp7EZSiSiTZSS5byTT7Q",
+    "Secret":"3d12021f8dfdbc44df42bf3a92d1cb890fc1babcd39e0fc020487fb7ecfb520e0443ee85",
+    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=cNxswyQMayRz67Rt2tC4ns3KX4sfHBE5",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
     "Referer": "http://www.kuwo.cn/",
   };
