@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 class KuwoDES {
   static List<int> SECRET_KEY = utf8.encode("ylzsxkwm");
@@ -1193,7 +1194,8 @@ class KuwoDES {
     // System.arraycopy(src, num * 8, szTail, 0, srcLength - num * 8);
 
     int tail64 = 0;
-    for (int i = 0; i < tail_num; i++) tail64 = tail64 | ((szTail[i] & 0xff)) << (i * 8);
+    for (int i = 0; i < tail_num; i++)
+      tail64 = tail64 | ((szTail[i] & 0xff)) << (i * 8);
 
     pEncyrpt[num] = DES64(subKey, tail64);
 
@@ -1210,5 +1212,35 @@ class KuwoDES {
 
     //return new String(Base64Coder.encode(result, result.length, null));
     return result;
+  }
+
+  //请求头Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727，Secret算法
+  static String secret(String name, String token) {
+    var n = name.codeUnits.map((e) => e.toString()).join();
+    var r = (n.length / 5).floor();
+    var o = int.parse(n[r] + n[2 * r] + n[3 * r] + n[4 * r] + n[5 * r]);
+    var l = (name.length / 2.0).ceil();
+    var c = pow(2, 31) - 1;
+    var d = ((1e9 * Random().nextDouble()).round() % 1e8).toInt();
+    n = "$n$d";
+    while (n.length > 10) {
+      var a1 = n.substring(0, 10);
+      var a2 = n.substring(10, n.length);
+      if (a2.contains("e+")) {
+        n = (double.parse(a1).toInt() + double.parse(a2.replaceAll("e+", ".")).toInt()).toString();
+      } else {
+        n = (double.parse(a1) + double.parse(a2)).toString();
+      }
+    }
+    n = ((o * double.parse(n) + l) % c).toString();
+
+    var f = token.codeUnits.map((e) {
+      var h = e ^ (double.parse(n) / c * 255).floor();
+      n = ((o * double.parse(n) + l) % c).toString();
+      return h.toRadixString(16).padLeft(2, '0');
+    }).join();
+
+    var dd = d.toRadixString(16).padLeft(8, '0');
+    return f + dd;
   }
 }

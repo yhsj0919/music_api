@@ -1,0 +1,53 @@
+```kotlin
+fun main() {
+    //t是随机的32位字符串
+    val t = "6Q5tPYAYEdQSz888887jh5FTKaMRXwdx"
+    //e是固定的Cookie名称
+    val e = "Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727"
+    //n是e的ASCII码拼接
+    var n = e.toCharArray().joinToString("") { it.code.toString() }
+    println(n)
+    val r = floor(n.length / 5.0).toInt()
+    println("r=$r")
+    val o = (n[r].toString() + n[2 * r] + n[3 * r] + n[4 * r] + n[5 * r]).toInt()
+    println("o=$o")
+    val l = ceil(e.length / 2.0).toInt()
+    println("l=$l")
+    val c = (2.0.pow(31.0) - 1).toInt()
+    println("c=$c")
+    val d = (Math.round(1e9 * Math.random()) % 1e8).toInt()
+    println("d=$d")
+    n = "$n$d"
+    //===========一个神奇的算法START，后期大概率会改===================================
+    //这是上面计算的n值7210995731171181169599100985350521025250102489910149579849545798564855504950519752555055
+    while (n.length > 10) {
+        val a1 = n.substring(0, 10)
+        val a2 = n.substring(10, n.length)
+        //第一次循环7210995731  17118116959910098535052102525010248991014957984954579856485550495051975255505545084407
+        //第二次循环1.71181169  59910098E85
+        //这里竟然生成了科学计数
+        //js中用了parseInt，但是在kotlin中‘59910098E85’带有字母会报错，这里用了parseDouble，替换了‘E’，实现了和js一样的效果
+        //最后计算出来的值是59910099
+        println("$a1  $a2")
+        n = if (a2.contains("E")) {
+            (parseDouble(a1).toInt() + parseDouble(a2.replace("E", ".")).toInt()).toString()
+        } else {
+            (parseDouble(a1) + parseDouble(a2)).toString()
+        }
+    }
+    //===========一个神奇的算法END===================================
+    println("n=$n")
+    n = ((o * n.toDouble() + l) % c).toString()
+    //由于上面算法科学计数剪切问题，随机数d被剪切丢失，这里n其实是一个固定值798334170
+    //上面算法都是废话
+    val f = t.toCharArray().joinToString("") {
+        val h = it.code xor (floor(n.toDouble() / c * 255)).toInt()
+        n = ((o * n.toDouble() + l) % c).toString()
+        h.toString(16).padStart(2, '0')
+    }
+    println(f)
+    val dd = d.toString(16).padStart(8, '0')
+    //计算出来的Secret
+    println(f + dd)
+}
+```

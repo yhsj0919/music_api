@@ -34,6 +34,7 @@ class KuWo {
 
   ///Banner
   static Future<Answer> banner() {
+
     return _banner.call({}, []);
   }
 
@@ -237,14 +238,17 @@ final _api = <String, Api>{
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   var hm_token = getRandom(32);
-  var token_sha1=sha1.convert(utf8.encode(hm_token)).toString();
+  var hm_Iuvt = getRandom(32);
+  var key="Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727";
+
+  var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
   Map<String, String> header = {
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
     "Token": "7865309485D199575C04186AFF58C46D",
-    "Secret":"3d12021f8dfdbc44df42bf3a92d1cb890fc1babcd39e0fc020487fb7ecfb520e0443ee85",
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=cNxswyQMayRz67Rt2tC4ns3KX4sfHBE5",
+    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
+    "Secret": KuwoDES.secret(key, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",
   };
 
