@@ -245,8 +245,8 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   Map<String, String> header = {
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
-    "Token": "7865309485D199575C04186AFF58C46D",
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt",
+    "Token": "A46743B8D3B49FCF7D0F103ED9888B2A",
+    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=GRTX6MWmzEJtSRaKTzbhfsdzQ76ycssM",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
     "Secret": KuwoDES.secret(key, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",
