@@ -34,7 +34,6 @@ class KuWo {
 
   ///Banner
   static Future<Answer> banner() {
-
     return _banner.call({}, []);
   }
 
@@ -239,14 +238,15 @@ final _api = <String, Api>{
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   var hm_token = getRandom(32);
   var hm_Iuvt = getRandom(32);
-  var key="Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727";
+  var baidu_random = getRandom(32);
+  var key = "Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727";
 
   var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
   Map<String, String> header = {
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
-    "Token": "A46743B8D3B49FCF7D0F103ED9888B2A",
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=GRTX6MWmzEJtSRaKTzbhfsdzQ76ycssM",
+    "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
+    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
     "Secret": KuwoDES.secret(key, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:fixnum/fixnum.dart';
+
 class KuwoDES {
   static List<int> SECRET_KEY = utf8.encode("ylzsxkwm");
   static List<int> g_arrayMask = [
@@ -1194,8 +1196,7 @@ class KuwoDES {
     // System.arraycopy(src, num * 8, szTail, 0, srcLength - num * 8);
 
     int tail64 = 0;
-    for (int i = 0; i < tail_num; i++)
-      tail64 = tail64 | ((szTail[i] & 0xff)) << (i * 8);
+    for (int i = 0; i < tail_num; i++) tail64 = tail64 | ((szTail[i] & 0xff)) << (i * 8);
 
     pEncyrpt[num] = DES64(subKey, tail64);
 
@@ -1242,5 +1243,93 @@ class KuwoDES {
 
     var dd = d.toRadixString(16).padLeft(8, '0');
     return f + dd;
+  }
+
+  //酷我客户端算法
+  static String token(String s) {
+    return y(d(m(s), 8 * s.length));
+  }
+
+  static String y(t) {
+    var e = "0123456789abcdef", n = "";
+    for (var i = 0; i < 4 * t.length; i++) {
+      n += String.fromCharCode(e.codeUnitAt(t[i >> 2] >> 8 * (3 - i % 4) + 4 & 15)) + String.fromCharCode(e.codeUnitAt(t[i >> 2] >> 8 * (3 - i % 4) & 15));
+    }
+    return n;
+  }
+
+  static List d(List t, int e) {
+    t[e >> 5] |= -(128 << 24) - e % 32;
+    t[15 + (e + 64 >> 9 << 4)] = e;
+
+    var tt = List<int>.filled((15 + (e + 64 >> 9 << 4)) + 1, 0, growable: true);
+    for (var i = 0; i < tt.length; i++) {
+      tt[i] = t[i];
+    }
+
+    List n = List<int>.filled(80, 0, growable: true);
+    var a = 1732584193;
+    var b = -271733879;
+    var o = -1732584194;
+    var r = 271733878;
+    var c = -1009589776;
+
+    for (var i = 0; i < tt.length; i += 16) {
+      var l = a, d = b, m = o, y = r, x = c;
+      for (var k = 0; k < 80; k++) {
+        n[k] = k < 16 ? tt[i + k] : h(n[k - 3] ^ n[k - 8] ^ n[k - 14] ^ n[k - 16], 1);
+        var C = v(v(h(a, 5), f(k, b, o, r)), v(v(c, n[k]), w(k)));
+        c = r;
+        r = o;
+        o = h(b, 30);
+        b = a;
+        a = C;
+      }
+      a = v(a, l);
+      b = v(b, d);
+      o = v(o, m);
+      r = v(r, y);
+      c = v(c, x);
+    }
+    return [a, b, o, r, c];
+  }
+
+  static int f(t, b, e, n) {
+    return t < 20
+        ? b & e | ~b & n
+        : t < 40
+            ? b ^ e ^ n
+            : t < 60
+                ? b & e | b & n | e & n
+                : b ^ e ^ n;
+  }
+
+  static int w(t) {
+    return t < 20
+        ? 1518500249
+        : t < 40
+            ? 1859775393
+            : t < 60
+                ? -1894007588
+                : -899497514;
+  }
+
+  static int v(t, e) {
+    var n = (65535 & t) + (65535 & e);
+    return (t >> 16) + (e >> 16) + (n >> 16) << 16 | 65535 & n;
+  }
+
+  static int h(int t, int e) {
+    return (Int32(t) << e | (t & 0xFFFFFFFF) >> 32 - e).toInt();
+  }
+
+  static List<dynamic> m(String t) {
+    List f = List<dynamic>.filled(8 * t.length, 0, growable: true);
+
+    for (var i = 0; i < 8 * t.length; i += 8) {
+      f[i >> 5] |= (255 & t.codeUnitAt(i ~/ 8)) << 24 - i % 32;
+    }
+
+    return f;
   }
 }
