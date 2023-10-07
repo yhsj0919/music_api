@@ -1215,11 +1215,20 @@ class KuwoDES {
     return result;
   }
 
-  //请求头Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727，Secret算法
+  //请求头Hm_Iuvt_cdb524f42f0cer9b268e4v7y734w5esq24，Secret算法
+
+  static String stringIndex(String n, int index) {
+    if (n.length > index) {
+      return n[index];
+    } else {
+      return "";
+    }
+  }
+
   static String secret(String name, String token) {
     var n = name.codeUnits.map((e) => e.toString()).join();
     var r = (n.length / 5).floor();
-    var o = int.parse(n[r] + n[2 * r] + n[3 * r] + n[4 * r] + n[5 * r]);
+    var o = int.parse(stringIndex(n, r) + stringIndex(n, 2 * r) + stringIndex(n, 3 * r) + stringIndex(n, 4 * r) + stringIndex(n, 5 * r));
     var l = (name.length / 2.0).ceil();
     var c = pow(2, 31) - 1;
     var d = ((1e9 * Random().nextDouble()).round() % 1e8).toInt();
@@ -1245,7 +1254,7 @@ class KuwoDES {
     return f + dd;
   }
 
-  //酷我客户端算法
+  //酷我手机网页算法
   static String token(String s) {
     return y(d(m(s), 8 * s.length));
   }

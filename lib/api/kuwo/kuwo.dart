@@ -177,6 +177,10 @@ class KuWo {
   static Future<Answer> searchMusic({String? keyWord, int? page, int? size}) {
     return _searchMusic.call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
+  ///搜索单曲
+  static Future<Answer> searchMusic2({String? keyWord, int? page, int? size}) {
+    return _searchMusic2.call({"keyWord": keyWord, "page": page, "size": size}, []);
+  }
 
   ///搜索专辑
   static Future<Answer> searchAlbum({String? keyWord, int? page, int? size}) {
@@ -239,7 +243,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   var hm_token = getRandom(32);
   var hm_Iuvt = getRandom(32);
   var baidu_random = getRandom(32);
-  var key = "Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727";
+  var key = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y734w5esq24";
 
   var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
   Map<String, String> header = {

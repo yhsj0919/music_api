@@ -218,6 +218,12 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                     },
                   ),
                   ListTile(
+                    title: const Text('搜索单曲2'),
+                    onTap: () {
+                      KuWo.searchMusic2(keyWord: "周杰伦").then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
                     title: const Text('搜索专辑'),
                     onTap: () {
                       KuWo.searchAlbum(keyWord: "周杰伦").then(onData).catchError(onError);

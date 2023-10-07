@@ -22,6 +22,33 @@ Future<Answer> _searchMusic(Map params, List<Cookie> cookie) {
   );
 }
 
+///搜索单曲
+Future<Answer> _searchMusic2(Map params, List<Cookie> cookie) {
+  return _get(
+    "http://search.kuwo.cn/r.s",
+    params: {
+      "client": "kt",
+      "all": params["keyWord"],
+      "pn": params["page"] ?? 1,
+      "rn": params["size"] ?? 30,
+      "uid": "794762570",
+      "ver": "kwplayer_ar_9.2.2.1",
+      "vipver": "1",
+      "show_copyright_off": "1",
+      "newver": "1",
+      "ft": "music",
+      "cluster": "0",
+      "strategy": "2012",
+      "encoding": "utf8",
+      "rformat": "json",
+      "vermerge": "1",
+      "mobi": "1",
+      "issubtitle": "1",
+    },
+    cookie: cookie,
+  );
+}
+
 ///搜索专辑
 Future<Answer> _searchAlbum(Map params, List<Cookie> cookie) {
   return _get(
