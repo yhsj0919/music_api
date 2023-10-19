@@ -243,19 +243,23 @@ String? key;
 
 ///获取cookie
 Future<String> getCookieHmTuvt() {
-  return HttpDio().get("http://www.kuwo.cn/").then((value) async {
-    try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader];
-        return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
-      } else {
+  if (key != null) {
+    return Future(() => key!);
+  } else {
+    return HttpDio().get("http://www.kuwo.cn/").then((value) async {
+      try {
+        if (value?.statusCode == 200) {
+          var cookies = value?.headers[HttpHeaders.setCookieHeader];
+          return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+        } else {
+          return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+        }
+      } catch (e) {
+        print(e);
         return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
       }
-    } catch (e) {
-      print(e);
-      return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-    }
-  });
+    });
+  }
 }
 
 //请求
