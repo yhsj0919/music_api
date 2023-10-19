@@ -177,6 +177,7 @@ class KuWo {
   static Future<Answer> searchMusic({String? keyWord, int? page, int? size}) {
     return _searchMusic.call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
+
   ///搜索单曲
   static Future<Answer> searchMusic2({String? keyWord, int? page, int? size}) {
     return _searchMusic2.call({"keyWord": keyWord, "page": page, "size": size}, []);
@@ -238,12 +239,31 @@ final _api = <String, Api>{
   "/search/artist": _searchArtist,
 };
 
+String? key;
+
+///获取cookie
+Future<String> getCookieHmTuvt() {
+  return HttpDio().get("http://www.kuwo.cn/").then((value) async {
+    try {
+      if (value?.statusCode == 200) {
+        var cookies = value?.headers[HttpHeaders.setCookieHeader];
+        return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+      } else {
+        return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+      }
+    } catch (e) {
+      print(e);
+      return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+    }
+  });
+}
+
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
+  key ??= await getCookieHmTuvt();
   var hm_token = getRandom(32);
   var hm_Iuvt = getRandom(32);
   var baidu_random = getRandom(32);
-  var key = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y734w5esq24";
 
   var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
   Map<String, String> header = {
@@ -252,7 +272,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
     "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
-    "Secret": KuwoDES.secret(key, hm_Iuvt),
+    "Secret": KuwoDES.secret(key!, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",
   };
 
