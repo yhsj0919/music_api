@@ -246,87 +246,87 @@ var lock = Lock();
 
 ///获取cookie
 Future<String> getCookieHmTuvt() async {
-  return await lock.synchronized(() async {
-    if (key != null) {
-      print('>>>>>>>>>返回默认值>>>>>>>>>>>');
-      return Future(() => key!);
-    } else {
-      print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
+  if (key != null) {
+    print('>>>>>>>>>返回默认值>>>>>>>>>>>');
+    return Future(() => key!);
+  } else {
+    print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
 
-      var resp = await HttpDio().get("http://www.kuwo.cn/");
-      try {
-        if (resp?.statusCode == 200) {
-          var cookies = resp?.headers[HttpHeaders.setCookieHeader];
-          return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
-        } else {
-          return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-        }
-      } catch (e) {
-        print(e);
+    var resp = await HttpDio().get("http://www.kuwo.cn/");
+    try {
+      if (resp?.statusCode == 200) {
+        var cookies = resp?.headers[HttpHeaders.setCookieHeader];
+        return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+      } else {
         return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
       }
+    } catch (e) {
+      print(e);
+      return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
     }
-  });
+  }
 }
 
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
-  // ...
-  key ??= await getCookieHmTuvt();
+  return await lock.synchronized(() async {
+    // ...
+    key ??= await getCookieHmTuvt();
 
-  var hm_token = getRandom(32);
-  var hm_Iuvt = getRandom(32);
-  var baidu_random = getRandom(32);
+    var hm_token = getRandom(32);
+    var hm_Iuvt = getRandom(32);
+    var baidu_random = getRandom(32);
 
-  var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
-  Map<String, String> header = {
-    // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
-    "csrf": "SQ6EJ3Q5G6B",
-    "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
-    "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
-    "Secret": KuwoDES.secret(key!, hm_Iuvt),
-    "Referer": "http://www.kuwo.cn/",
-  };
+    var token_sha1 = sha1.convert(utf8.encode(hm_token)).toString();
+    Map<String, String> header = {
+      // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
+      "csrf": "SQ6EJ3Q5G6B",
+      "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
+      "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
+      "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
+      "Secret": KuwoDES.secret(key!, hm_Iuvt),
+      "Referer": "http://www.kuwo.cn/",
+    };
 
-  if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
-    header["User-Agent"] = "okhttp/3.10.0";
-    // header.remove("User-Agent");
-    header.remove("cookie");
-  }
+    if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
+      header["User-Agent"] = "okhttp/3.10.0";
+      // header.remove("User-Agent");
+      header.remove("cookie");
+    }
 
-  if (params != null && params.containsKey("reqId") != true) {
-    params["reqId"] = const Uuid().v1();
-  }
-  return HttpDio().get(path, params: params, headers: header).then((value) async {
-    try {
-      if (value?.statusCode == 200) {
-        var cookies = value?.headers[HttpHeaders.setCookieHeader];
-        var ans = const Answer(site: MusicSite.KuWo);
-        if (cookies != null) {
-          ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
-        }
-
-        dynamic data = value?.data;
-        try {
-          if (value?.data is String) {
-            data = json.decode(value?.data.toString().trim() ?? "{}");
-          } else {
-            data = value?.data;
+    if (params != null && params.containsKey("reqId") != true) {
+      params["reqId"] = const Uuid().v1();
+    }
+    return HttpDio().get(path, params: params, headers: header).then((value) async {
+      try {
+        if (value?.statusCode == 200) {
+          var cookies = value?.headers[HttpHeaders.setCookieHeader];
+          var ans = const Answer(site: MusicSite.KuWo);
+          if (cookies != null) {
+            ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
           }
 
-          ans = ans.copy(code: value?.statusCode, data: data);
-          return Future.value(ans);
-        } catch (e) {
-          ans = ans.copy(code: value?.statusCode, data: {"data": data});
-          return Future.value(ans);
+          dynamic data = value?.data;
+          try {
+            if (value?.data is String) {
+              data = json.decode(value?.data.toString().trim() ?? "{}");
+            } else {
+              data = value?.data;
+            }
+
+            ans = ans.copy(code: value?.statusCode, data: data);
+            return Future.value(ans);
+          } catch (e) {
+            ans = ans.copy(code: value?.statusCode, data: {"data": data});
+            return Future.value(ans);
+          }
+        } else {
+          return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value?.statusCode, 'msg': value}));
         }
-      } else {
-        return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value?.statusCode, 'msg': value}));
+      } catch (e) {
+        print(e);
+        return Future.error(const Answer(site: MusicSite.KuWo, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
       }
-    } catch (e) {
-      print(e);
-      return Future.error(const Answer(site: MusicSite.KuWo, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
-    }
+    });
   });
 }
