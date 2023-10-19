@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:crypto/crypto.dart';
 import 'package:music_api/entity/music_entity.dart';
@@ -6,6 +7,7 @@ import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:music_api/utils/utils.dart';
+import 'package:synchronized/synchronized.dart';
 import 'package:universal_io/io.dart';
 import 'package:uuid/uuid.dart';
 
@@ -240,31 +242,37 @@ final _api = <String, Api>{
 };
 
 String? key;
+var lock = Lock();
 
 ///获取cookie
-Future<String> getCookieHmTuvt() {
+Future<String> getCookieHmTuvt() async {
   if (key != null) {
-    return Future(() => key!);
+    return key!;
   } else {
-    return HttpDio().get("http://www.kuwo.cn/").then((value) async {
-      try {
-        if (value?.statusCode == 200) {
-          var cookies = value?.headers[HttpHeaders.setCookieHeader];
-          return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
-        } else {
-          return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-        }
-      } catch (e) {
-        print(e);
+    print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
+
+    var resp = await HttpDio().get("http://www.kuwo.cn/");
+    try {
+      if (resp?.statusCode == 200) {
+        var cookies = resp?.headers[HttpHeaders.setCookieHeader];
+        return Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+      } else {
         return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
       }
-    });
+    } catch (e) {
+      print(e);
+      return "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+    }
   }
 }
 
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
-  key ??= await getCookieHmTuvt();
+  // ...
+  key ??= await lock.synchronized(() async {
+    return getCookieHmTuvt();
+  });
+
   var hm_token = getRandom(32);
   var hm_Iuvt = getRandom(32);
   var baidu_random = getRandom(32);
