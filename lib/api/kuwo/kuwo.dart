@@ -252,9 +252,8 @@ Future<String> getCookieHmTuvt() async {
       return Future(() => tmpKey!);
     } else {
       print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
-
-      var resp = await HttpDio().get("http://www.kuwo.cn/", followRedirects: false);
       try {
+        var resp = await HttpDio().get("http://www.kuwo.cn/", followRedirects: false);
         if (resp?.statusCode == 200) {
           var cookies = resp?.headers[HttpHeaders.setCookieHeader];
           tmpKey = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
