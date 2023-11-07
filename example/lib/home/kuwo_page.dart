@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:music_api/api/kuwo/kuwo.dart';
+import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 
 class KuwoPage extends StatefulWidget {
@@ -49,6 +50,14 @@ class _KuwoPageState extends State<KuwoPage> with AutomaticKeepAliveClientMixin 
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
                 children: [
+                  ListTile(
+                    title: const Text('Banner'),
+                    onTap: () async {
+                      print(DateTime.now());
+                      var resp = await HttpDio().get("http://www.kuwo.cn/",followRedirects: false);
+                      print(DateTime.now());
+                    },
+                  ),
                   ListTile(
                     title: const Text('Banner'),
                     onTap: () {

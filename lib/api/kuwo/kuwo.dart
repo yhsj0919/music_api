@@ -241,39 +241,41 @@ final _api = <String, Api>{
   "/search/artist": _searchArtist,
 };
 
-String? key;
+String? tmpKey;
 var lock = Lock();
 
 ///获取cookie
 Future<String> getCookieHmTuvt() async {
-  if (key != null) {
-    print('>>>>>>>>>返回默认值>>>>>>>>>>>');
-    return Future(() => key!);
-  } else {
-    print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
+  return await lock.synchronized(() async {
+    if (tmpKey != null) {
+      print('>>>>>>>>>返回默认值>>>>>>>>>>>');
+      return Future(() => tmpKey!);
+    } else {
+      print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
 
-    var resp = await HttpDio().get("http://www.kuwo.cn/");
-    try {
-      if (resp?.statusCode == 200) {
-        var cookies = resp?.headers[HttpHeaders.setCookieHeader];
-        key = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
-        return key!;
-      } else {
-        key= "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-        return key!;
+      var resp = await HttpDio().get("http://www.kuwo.cn/", followRedirects: false);
+      try {
+        if (resp?.statusCode == 200) {
+          var cookies = resp?.headers[HttpHeaders.setCookieHeader];
+          tmpKey = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+          return tmpKey!;
+        } else {
+          tmpKey = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+          return tmpKey!;
+        }
+      } catch (e) {
+        print(e);
+        tmpKey = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
+        return tmpKey!;
       }
-    } catch (e) {
-      print(e);
-      key= "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-      return key!;
     }
-  }
+  });
 }
 
 //请求
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   // ...
-  key ??= await getCookieHmTuvt();
+  var key = await getCookieHmTuvt();
 
   var hm_token = getRandom(32);
   var hm_Iuvt = getRandom(32);
@@ -286,7 +288,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
     "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
     "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
-    "Secret": KuwoDES.secret(key!, hm_Iuvt),
+    "Secret": KuwoDES.secret(key, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",
   };
 

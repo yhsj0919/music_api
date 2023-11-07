@@ -333,7 +333,7 @@ Future<Answer> _getImage(
         var content = base64.encode(value?.data);
         print("data:image/png;base64,$content");
 
-        print(cookies);
+        // print(cookies);
 
         var data = {"domain": "data:image/png;base64,", "qr": content, "qrsig": ans.cookie.where((element) => element.name == "qrsig").first.value};
 
@@ -375,7 +375,7 @@ Future<Answer> _getString(
 
         String? content = value?.data?.toString();
 
-        print(content);
+        // print(content);
 
         var data = {"data": content};
 

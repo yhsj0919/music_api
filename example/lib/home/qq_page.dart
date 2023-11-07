@@ -317,7 +317,7 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
       }
 
       print(result);
-      print(cookie);
+      // print(cookie);
       // print(value.data["qrsig"]);
     });
   }
