@@ -29,6 +29,9 @@ class HttpDio {
           // 响应流上前后两次接受到数据的间隔，单位为毫秒。
           receiveTimeout: const Duration(milliseconds: RECEIVE_TIMEOUT),
           receiveDataWhenStatusError: true,
+          validateStatus: (int? status) {
+            return status != null && status >= 200 && status < 300 || status == 302;
+          },
           // Http请求头.
           headers: {});
       options.extra['withCredentials'] = true;
