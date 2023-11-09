@@ -13,7 +13,7 @@ Future<Answer> _search(Map params, List<Cookie> cookie) {
     data['pageSize'] = params['size'] ?? 20;
     data['timestamp'] = DateTime.now().millisecondsSinceEpoch;
     data['type'] = params['type'] ?? 0;
-    data['word'] = params['keyWord'];
+    data['word'] = params['word'];
   } else {
     data['timestamp'] = DateTime.now().millisecondsSinceEpoch;
     data['type'] = params['type'] ?? 0;

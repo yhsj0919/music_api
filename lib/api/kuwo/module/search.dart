@@ -11,11 +11,16 @@ Future<Answer> _hotSearch(Map params, List<Cookie> cookie) {
 
 ///搜索单曲
 Future<Answer> _searchMusic(Map params, List<Cookie> cookie) {
+  //https://www.kuwo.cn/search/searchMusicBykeyWord?vipver=1&ft=music&encoding=utf8&mobi=1&pn=0&rn=20&all=%E8%96%9B%E4%B9%8B%E8%B0%A6
   return _get(
-    "http://kuwo.cn/api/www/search/searchMusicBykeyWord",
+    "http://www.kuwo.cn/search/searchMusicBykeyWord",
     params: {
-      "key": params["keyWord"],
-      "pn": params["page"] ?? 1,
+      "vipver": "1",
+      "ft": "music",
+      "encoding": "utf8",
+      "mobi": "1",
+      "all": params["keyWord"],
+      "pn": params["page"] ?? 0,
       "rn": params["size"] ?? 30,
     },
     cookie: cookie,
@@ -52,7 +57,7 @@ Future<Answer> _searchMusic2(Map params, List<Cookie> cookie) {
 ///搜索专辑
 Future<Answer> _searchAlbum(Map params, List<Cookie> cookie) {
   return _get(
-    "http://kuwo.cn/api/www/search/searchAlbumBykeyWord",
+    "http://www.kuwo.cn/api/www/search/searchAlbumBykeyWord",
     params: {
       "key": params["keyWord"],
       "pn": params["page"] ?? 1,

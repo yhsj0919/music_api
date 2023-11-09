@@ -253,15 +253,11 @@ Future<String> getCookieHmTuvt() async {
     } else {
       print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
       try {
-        var resp = await HttpDio().get("http://www.kuwo.cn/", followRedirects: false);
-        if (resp?.statusCode == 200) {
-          var cookies = resp?.headers[HttpHeaders.setCookieHeader];
-          tmpKey = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
-          return tmpKey!;
-        } else {
-          tmpKey = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
-          return tmpKey!;
-        }
+        var request = await HttpClient().getUrl(Uri.parse("http://www.kuwo.cn/"));
+        var response = await request.close();
+        var cookies = response.headers[HttpHeaders.setCookieHeader];
+        tmpKey = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
+        return tmpKey!;
       } catch (e) {
         print(e);
         tmpKey = "Hm_Iuvt_cdb524f42f0cer9b268e4v7y735ewrq2324";
