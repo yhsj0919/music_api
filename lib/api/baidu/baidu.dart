@@ -122,7 +122,7 @@ class Baidu {
 
   ///搜索
   static Future<Answer> search({String? keyWord, int? page, int? size, int? type}) {
-    return _search.call({"keyWord": keyWord, "page": page, "size": size, "type": type}, []);
+    return _search.call({"word": keyWord, "page": page, "size": size, "type": type}, []);
   }
 
   ///搜索热词
