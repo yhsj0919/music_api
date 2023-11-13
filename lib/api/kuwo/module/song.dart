@@ -77,7 +77,8 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
   //  static String KuWo_ape_1000="1000kape";
   //  static String KuWo_flac_2000="2000kflac";
   // String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate";
-  String s = "user=0&android_id=0&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=3&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
+  String s =
+      "user=0&android_id=0&prod=kwplayer_ar_8.5.5.0&corp=kuwo&newver=3&vipver=8.5.5.0&source=kwplayer_ar_8.5.5.0_apk_keluze.apk&p2p=1&notrace=0&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
   // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
   var encode = utf8.encode(s);
   var encrypt2 = KuwoDES.encrypt2(encode, encode.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY.length);
@@ -85,6 +86,44 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
 
   return _get(
     "http://nmobi.kuwo.cn/mobi.s?f=kuwo&q=$data",
+    // params: {
+    //   "f": "kuwo",
+    //   "q": outstr,
+    // },
+    cookie: cookie,
+  ).then((value) {
+    try {
+      var data = value.data["data"].toString();
+      var ss = data.split("\r\n").map((e) {
+        var kv = e.split("=");
+        return MapEntry(kv[0], kv[1]);
+      }).toList();
+      var resp = Map.fromEntries(ss);
+      return value.copy(data: resp);
+    } catch (e) {
+      return value;
+    }
+  });
+}
+
+Future<Answer> _playUrl6(Map params, List<Cookie> cookie) async {
+  //code from https://github.com/59799517/flutter_sqmusic
+  //    String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=${brvalue}&format=flac|mp3|aac&sig=0&rid=${musicId}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
+  //  br属性
+  //  static String KuWo_mp3_128="128kmp3";
+  //  static String KuWo_mp3_192="192kmp3";
+  //  static String KuWo_mp3_320="320kmp3";
+  //  static String KuWo_ape_1000="1000kape";
+  //  static String KuWo_flac_2000="2000kflac";
+  String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate";
+  // String s = "user=0&android_id=0&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=3&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
+  // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
+  var encode = utf8.encode(s);
+  var encrypt2 = KuwoDES.encrypt2(encode, encode.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY.length);
+  var data = const Base64Codec().encode(encrypt2);
+
+  return _get(
+    "http://mobi.kuwo.cn/mobi.s?f=kuwo&q=$data",
     // params: {
     //   "f": "kuwo",
     //   "q": outstr,

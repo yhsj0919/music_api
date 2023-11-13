@@ -150,6 +150,10 @@ class KuWo {
     return _playUrl5.call({"rid": rid}, []);
   }
 
+  static Future<Answer> playUrl6({String? rid}) {
+    return _playUrl6.call({"rid": rid}, []);
+  }
+
   ///歌词
   static Future<Answer> songLrc({String? rid}) {
     return _songLrc.call({"rid": rid}, []);
@@ -288,7 +292,7 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   };
 
   if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
-    header["User-Agent"] = "okhttp/3.10.0";
+    header["User-Agent"] = "Dalvik/2.1.0 (Linux; U; Android 8.0.0; MI 5 MIUI/9.10.10)";
     // header.remove("User-Agent");
     header.remove("cookie");
   }
