@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:music_api_example/home/audiomack_page.dart';
 import 'package:music_api_example/home/kuwo_page.dart';
 import 'package:music_api_example/home/netease_page.dart';
 import 'package:music_api_example/home/qq_page.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   var pages = {
     "服务": const ServerPage(),
     "MyFreeMp3": const MyFreeMp3Page(),
+    "AudioMack": const AudioMackPage(),
     "百度": const BaiduPage(),
     "酷我": const KuwoPage(),
     "酷狗": const KuGouPage(),

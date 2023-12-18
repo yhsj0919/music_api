@@ -1,4 +1,5 @@
-enum MusicSite { None, Mix, MyFreeMp3, Baidu, KuGou, KuWo, MiGu, Netease, QQ }
+enum MusicSite { None, Mix, MyFreeMp3, Baidu, KuGou, KuWo, MiGu, Netease, QQ, AudioMack }
+
 enum MusicFormat { LQ, PQ, HQ, SQ, ZQ24 }
 
 const allSite = [
@@ -9,6 +10,7 @@ const allSite = [
   MusicSite.MiGu,
   MusicSite.Netease,
   MusicSite.QQ,
+  MusicSite.AudioMack,
 ];
 
 Map Resp({int? code = 200, String? msg = "操作成功", dynamic data}) {
