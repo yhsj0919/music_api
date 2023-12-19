@@ -55,6 +55,12 @@ class _AudioMackPageState extends State<AudioMackPage> with AutomaticKeepAliveCl
                       AudioMack.search(keyWord: "周杰伦").then(onData).catchError(onError);
                     },
                   ),
+                  ListTile(
+                    title: const Text('播放地址'),
+                    onTap: () {
+                      AudioMack.playUrl(id: "19068297").then(onData).catchError(onError);
+                    },
+                  ),
                 ],
               ),
             ),

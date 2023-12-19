@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http_dio.dart';
+import 'package:synchronized/synchronized.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:music_api/utils/answer.dart';
@@ -11,11 +12,17 @@ import 'package:music_api/utils/types.dart';
 
 part 'module/search.dart';
 
+part 'module/music.dart';
+
 class AudioMack {
   AudioMack._();
 
-  static Future<Answer> search({String? keyWord, int? page, int? sort}) {
-    return _search.call({"keyWord": keyWord, "page": page, "sort": sort}, []);
+  static Future<Answer> playUrl({String? id}) {
+    return _playUrl.call({"id": id}, []);
+  }
+
+  static Future<Answer> search({String? keyWord, int? page}) {
+    return _search.call({"keyWord": keyWord, "page": page}, []);
   }
 
   static Future<Answer> api(String? path, {Map? params, List<Cookie> cookie = const []}) {
@@ -57,8 +64,12 @@ Future<Answer> _post(String path, {Map<String, dynamic>? params, List<Cookie> co
 }
 
 Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
+  // ...
+  var buildId = await getBuildId();
+
   var signature = getSignature(method: "GET", urlPath: path, params: params);
   params?["oauth_signature"] = signature;
+
   Map<String, String> header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43"
   };
@@ -78,6 +89,36 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
       }
     } catch (e) {
       return Future.error(const Answer(site: MusicSite.AudioMack, code: 500, data: {'code': 500, 'msg': "AudioMack对象转换异常"}));
+    }
+  });
+}
+
+String? buildId;
+var lock = Lock();
+
+///获取BuildId
+Future<String> getBuildId() async {
+  return await lock.synchronized(() async {
+    if (buildId != null) {
+      print('>>>>>>>>>返回默认值>>>>>>>>>>>');
+      return Future(() => buildId!);
+    } else {
+      print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
+      try {
+        var request = await HttpClient().getUrl(Uri.parse("https://audiomack.com"));
+        var response = await request.close();
+        String responseBody = await response.transform(utf8.decoder).join();
+        RegExp reg = RegExp(r'(\"buildId\"):\"(\w+)\"');
+        Iterable<RegExpMatch> matches = reg.allMatches(responseBody);
+        for (RegExpMatch match in matches) {
+          buildId = match.group(0)?.replaceAll('"buildId":"', "").replaceAll('"', "");
+        }
+        return buildId!;
+      } catch (e) {
+        print(e);
+        buildId = "TuaK02qQSW5yCimqKJb74";
+        return buildId!;
+      }
     }
   });
 }
