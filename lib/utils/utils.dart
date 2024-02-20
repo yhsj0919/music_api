@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:math';
+import 'dart:typed_data';
 
 bool toBoolean(val) {
   if (val == '') return val;
@@ -85,3 +86,58 @@ String getRandom(int length) {
   Random r = Random();
   return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
 }
+
+extension Uint8ListExt on String {
+  Uint8List get uint8List {
+    var ss = Uint8List.fromList(codeUnits);
+    return ss;
+  }
+
+  Uint8List get hexToUint8List {
+    if (isEmpty == true) {
+      return Uint8List.fromList([]);
+    }
+    var tmpHex = toUpperCase();
+
+    var array = <int>[];
+
+    var str = StringBuffer();
+    for (int i = 0; i < length; i++) {
+      str.write(tmpHex[i]);
+
+      if (str.length == 2 || i == length - 1) {
+        var num = int.parse(str.toString(), radix: 16);
+        array.add(num);
+
+        str.clear();
+      }
+    }
+
+    return Uint8List.fromList(array);
+  }
+}
+
+extension HexExt on Uint8List {
+  String get hex {
+    return map((e) => e.toRadixString(16).padLeft(2, '0')).join().toUpperCase();
+  }
+
+  String get str {
+    return String.fromCharCodes(this);
+  }
+}
+
+Uint8List? restoreQrc(String hexText) {
+  if (hexText.length % 2 != 0) return null;
+
+  final arrBuf = Uint8List(hexText.length ~/ 2);
+
+
+
+  for (var i = 0; i < hexText.length; i += 2) {
+    arrBuf[i ~/ 2] = int.parse(hexText.substring(i, i + 2), radix: 16);
+  }
+
+  return arrBuf;
+}
+

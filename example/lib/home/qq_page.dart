@@ -29,31 +29,33 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
-        children: [ Container(
-          width: double.infinity,
-          height: 150.0,
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black12, width: 1),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-            child: SingleChildScrollView(
-              child: Text(result, style: const TextStyle(fontSize: 16)),
+        children: [
+          Container(
+            width: double.infinity,
+            height: 150.0,
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black12, width: 1),
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              child: SingleChildScrollView(
+                child: Text(result, style: const TextStyle(fontSize: 16)),
+              ),
             ),
           ),
-        ),
-          qr.isNotEmpty?
-          Image.memory(
-            base64Decode(qr),
-            //防止重绘
-            gaplessPlayback: true,
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
-          ):Container(),
+          qr.isNotEmpty
+              ? Image.memory(
+                  base64Decode(qr),
+                  //防止重绘
+                  gaplessPlayback: true,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                )
+              : Container(),
           Expanded(
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -245,6 +247,12 @@ class _QQPageState extends State<QQPage> with AutomaticKeepAliveClientMixin {
                     title: const Text('歌词2'),
                     onTap: () {
                       QQ.songLyric2(songMid: "001zMQr71F1Qo8", songId: 718477).then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('歌词(逐字)'),
+                    onTap: () {
+                      QQ.songLyric3(songMid: "001zMQr71F1Qo8", songId: 718477).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(

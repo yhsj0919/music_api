@@ -1,33 +1,27 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:music_api/entity/music_entity.dart';
 import 'package:music_api/http/http_dio.dart';
 import 'package:music_api/utils/answer.dart';
 import 'package:music_api/utils/types.dart';
 import 'package:universal_io/io.dart';
+import 'package:xml/xml.dart';
 
 import '../../utils/utils.dart';
+import 'QrcDecoder.dart';
 
 part 'module/album.dart';
-
 part 'module/home.dart';
-
 part 'module/mv.dart';
-
 part 'module/playlist.dart';
-
-part 'module/radio.dart';
-
-part 'module/rank.dart';
-
-part 'module/search.dart';
-
-part 'module/singer.dart';
-
-part 'module/song.dart';
-
 part 'module/qr.dart';
+part 'module/radio.dart';
+part 'module/rank.dart';
+part 'module/search.dart';
+part 'module/singer.dart';
+part 'module/song.dart';
 
 class QQ {
   QQ._();
@@ -176,6 +170,10 @@ class QQ {
   static Future<Answer> songLyric2({String? songMid, int? songId}) {
     return _songLyric.call({"songMid": songMid, "songId": songId}, []);
   }
+  ///歌词
+  static Future<Answer> songLyric3({String? songMid, int? songId}) {
+    return _songLyric3.call({"songMid": songMid, "songId": songId}, []);
+  }
 
   ///相关MV
   static Future<Answer> songMv({String? songMid}) {
@@ -261,6 +259,7 @@ final _api = <String, Api>{
   "/song/info": _songInfo,
   "/song/lrc2": _songLyric,
   "/song/lrc": _songLyricNew,
+  "/song/lrc3": _songLyric3,
   "/song/mv": _songMv,
   "/song/playlist": _songPlayList,
   "/song/url": _songListen,
