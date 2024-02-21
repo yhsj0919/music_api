@@ -87,7 +87,7 @@
 
 信息: 只有一个搜索，官网也没啥能用的api
 
-## audiomack MyFreeMp3 MusicApi同步信息
+## audiomack MusicApi同步信息
 
 版本: Web
 
