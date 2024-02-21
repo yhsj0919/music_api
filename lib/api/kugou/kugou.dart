@@ -57,6 +57,10 @@ class KuGou {
     return _lrc.call({"hash": hash}, []);
   }
 
+  static Future<Answer> krc({String? hash}) {
+    return _krc.call({"hash": hash}, []);
+  }
+
   ///歌曲详情带歌词，不一定带地址
   static Future<Answer> musicInfoWithLyric({String? hash, String? albumAudioId}) {
     return _musicInfoWithLyric.call({"hash": hash, "albumAudioId": albumAudioId}, []);
@@ -261,4 +265,16 @@ String signatureParams(Map<String, dynamic> params) {
 
   const secret = "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt";
   return md5.convert(utf8.encode("$secret$data$secret")).toString().toUpperCase();
+}
+
+String decodeKrc(String krc) {
+  List<int> encKey = [0x40, 0x47, 0x61, 0x77, 0x5e, 0x32, 0x74, 0x47, 0x51, 0x36, 0x31, 0x2d, 0xce, 0xd2, 0x6e, 0x69];
+
+  List<int> contentBytes = base64Decode(krc).sublist(4);
+
+  for (int i = 0; i < contentBytes.length; i++) {
+    contentBytes[i] ^= encKey[i % 16];
+  }
+  List<int> decompressedBytes = zlib.decode(contentBytes);
+  return utf8.decode(decompressedBytes);
 }
