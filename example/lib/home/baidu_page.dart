@@ -13,7 +13,8 @@ class BaiduPage extends StatefulWidget {
   _BaiduPageState createState() => _BaiduPageState();
 }
 
-class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixin {
+class _BaiduPageState extends State<BaiduPage>
+    with AutomaticKeepAliveClientMixin {
   String result = "";
 
   @override
@@ -24,8 +25,6 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -41,7 +40,8 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: SingleChildScrollView(
                 child: Text(result, style: const TextStyle(fontSize: 16)),
               ),
@@ -49,7 +49,8 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
           ),
           Expanded(
             child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 40),
@@ -73,7 +74,13 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                     },
                   ),
                   ListTile(
-                    title: const Text('专辑列表(最新专辑)'),
+                    title: const Text('最新专辑'),
+                    onTap: () {
+                      Baidu.albumNew().then(onData).catchError(onError);
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('专辑列表'),
                     onTap: () {
                       Baidu.albumList().then(onData).catchError(onError);
                     },
@@ -81,7 +88,9 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('专辑详情'),
                     onTap: () {
-                      Baidu.albumInfo(albumAssetCode: "P10003979544").then(onData).catchError(onError);
+                      Baidu.albumInfo(albumAssetCode: "P10003979544")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -93,13 +102,17 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌曲详情'),
                     onTap: () {
-                      Baidu.songInfo(tsId: "T10062508184").then(onData).catchError(onError);
+                      Baidu.songInfo(tsId: "T10062508184")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌曲下载'),
                     onTap: () {
-                      Baidu.songDownload(tsId: "T10062508184").then(onData).catchError(onError);
+                      Baidu.songDownload(tsId: "T10062508184")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -111,37 +124,49 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌手信息'),
                     onTap: () {
-                      Baidu.artistInfo(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistInfo(artistCode: "A10047720")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手歌曲'),
                     onTap: () {
-                      Baidu.artistSong(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistSong(artistCode: "A10048883")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手专辑'),
                     onTap: () {
-                      Baidu.artistAlbum(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistAlbum(artistCode: "A10048883")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌手视频'),
                     onTap: () {
-                      Baidu.artistVideo(artistCode: "A10047720").then(onData).catchError(onError);
+                      Baidu.artistVideo(artistCode: "A10048883")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索'),
                     onTap: () {
-                      Baidu.search(keyWord: "薛之谦").then(onData).catchError(onError);
+                      Baidu.search(keyWord: "薛之谦")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('搜索热词'),
                     onTap: () {
-                      Baidu.searchSug(word: "薛之谦").then(onData).catchError(onError);
+                      Baidu.searchSug(word: "薛之谦")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -153,7 +178,9 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('榜单歌曲列表'),
                     onTap: () {
-                      Baidu.rankList(bdid: "257851").then(onData).catchError(onError);
+                      Baidu.rankList(bdid: "257851")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -171,13 +198,17 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('歌单列表'),
                     onTap: () {
-                      Baidu.playList(subCateId: "2368").then(onData).catchError(onError);
+                      Baidu.playList(subCateId: "2368")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('歌单详情'),
                     onTap: () {
-                      Baidu.playListInfo(id: '295299').then(onData).catchError(onError);
+                      Baidu.playListInfo(id: '295299')
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -189,7 +220,9 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('视频详情'),
                     onTap: () {
-                      Baidu.videoInfo(assetCode: 'V10000002698').then(onData).catchError(onError);
+                      Baidu.videoInfo(assetCode: 'V10000002698')
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
@@ -201,31 +234,43 @@ class _BaiduPageState extends State<BaiduPage> with AutomaticKeepAliveClientMixi
                   ListTile(
                     title: const Text('视频下载'),
                     onTap: () {
-                      Baidu.videoDownload(assetCode: 'V10000002698').then(onData).catchError(onError);
+                      Baidu.videoDownload(assetCode: 'V10000002698')
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('短信验证码'),
                     onTap: () {
-                      Baidu.sendSms(phone: '15612345678').then(onData).catchError(onError);
+                      Baidu.sendSms(phone: '15612345678')
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('登录'),
                     onTap: () {
-                      Baidu.login(phone: '15612345678', code: "7223").then(onData).catchError(onError);
+                      Baidu.login(phone: '15612345678', code: "7223")
+                          .then(onData)
+                          .catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('账户信息'),
                     onTap: () {
-                      Baidu.accountInfo(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
+                      Baidu.accountInfo(cookie: [
+                        Cookie("auth",
+                            "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")
+                      ]).then(onData).catchError(onError);
                     },
                   ),
                   ListTile(
                     title: const Text('签到'),
                     onTap: () {
-                      Baidu.signIn(cookie: [Cookie("auth", "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")]).then(onData).catchError(onError);
+                      Baidu.signIn(cookie: [
+                        Cookie("auth",
+                            "NjVhNTMzM2QyZWEyZTlhOTI5OTJiMjZiNWE2YTkwMjY=")
+                      ]).then(onData).catchError(onError);
                     },
                   ),
                 ],

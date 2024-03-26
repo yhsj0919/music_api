@@ -8,7 +8,8 @@ Future<Answer> _albumNew(Map query, List<Cookie> cookie) {
     cookie: cookie,
   ).then((value) {
     var data = value.data;
-    var album = (data["data"] as List?)?.lastWhere((element) => element["type"] == "album");
+    var album = (data["data"] as List?)
+        ?.lastWhere((element) => element["type"] == "album");
     data["data"] = album;
     return Future.value(value.copy(data: data));
   });
