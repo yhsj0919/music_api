@@ -150,7 +150,14 @@ Future<Answer> _playlistTag(Map params, List<Cookie> cookie) {
         "module": "music.playlist.PlaylistSquare",
         "param": {},
       },
-      "comm": {"g_tk": 5381, "uin": 0, "format": "json", "ct": 20, "cv": 1807, "platform": "wk_v17"}
+      "comm": {
+        "g_tk": 5381,
+        "uin": 0,
+        "format": "json",
+        "ct": 20,
+        "cv": 1807,
+        "platform": "wk_v17",
+      }
     })
   };
   return _get(
