@@ -51,7 +51,8 @@ class KuWo {
 
   ///专辑详情
   static Future<Answer> albumInfo({String? albumId, int? page, int? size}) {
-    return _albumInfo.call({"albumId": albumId, "page": page, "size": size}, []);
+    return _albumInfo
+        .call({"albumId": albumId, "page": page, "size": size}, []);
   }
 
   ///歌单推荐
@@ -66,8 +67,10 @@ class KuWo {
 
   ///歌单列表
   ///tagId,order不共存，优先id
-  static Future<Answer> playList({String? tagId, String? order, int? page, int? size}) {
-    return _playList.call({"id": tagId, "order": order, "page": page, "size": size}, []);
+  static Future<Answer> playList(
+      {String? tagId, String? order, int? page, int? size}) {
+    return _playList
+        .call({"id": tagId, "order": order, "page": page, "size": size}, []);
   }
 
   ///歌单详情
@@ -99,7 +102,8 @@ class KuWo {
 
   ///歌手详情
   static Future<Answer> artistList({String? category, int? page, int? size}) {
-    return _artistList.call({"category": category, "page": page, "size": size}, []);
+    return _artistList
+        .call({"category": category, "page": page, "size": size}, []);
   }
 
   ///歌手详情
@@ -109,17 +113,20 @@ class KuWo {
 
   ///歌手单曲
   static Future<Answer> artistMusic({String? artistId, int? page, int? size}) {
-    return _artistMusic.call({"artistId": artistId, "page": page, "size": size}, []);
+    return _artistMusic
+        .call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
   static Future<Answer> artistAlbum({String? artistId, int? page, int? size}) {
-    return _artistAlbum.call({"artistId": artistId, "page": page, "size": size}, []);
+    return _artistAlbum
+        .call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///歌手专辑
   static Future<Answer> artistMv({String? artistId, int? page, int? size}) {
-    return _artistMv.call({"artistId": artistId, "page": page, "size": size}, []);
+    return _artistMv
+        .call({"artistId": artistId, "page": page, "size": size}, []);
   }
 
   ///MV列表
@@ -181,17 +188,20 @@ class KuWo {
 
   ///搜索单曲
   static Future<Answer> searchMusic({String? keyWord, int? page, int? size}) {
-    return _searchMusic.call({"keyWord": keyWord, "page": page, "size": size}, []);
+    return _searchMusic
+        .call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
 
   ///搜索单曲
   static Future<Answer> searchMusic2({String? keyWord, int? page, int? size}) {
-    return _searchMusic2.call({"keyWord": keyWord, "page": page, "size": size}, []);
+    return _searchMusic2
+        .call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
 
   ///搜索专辑
   static Future<Answer> searchAlbum({String? keyWord, int? page, int? size}) {
-    return _searchAlbum.call({"keyWord": keyWord, "page": page, "size": size}, []);
+    return _searchAlbum
+        .call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
 
   ///搜索MV
@@ -200,18 +210,26 @@ class KuWo {
   }
 
   ///搜索歌单
-  static Future<Answer> searchPlayList({String? keyWord, int? page, int? size}) {
-    return _searchPlayList.call({"keyWord": keyWord, "page": page, "size": size}, []);
+  static Future<Answer> searchPlayList(
+      {String? keyWord, int? page, int? size}) {
+    return _searchPlayList
+        .call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
 
   ///搜索歌手
   static Future<Answer> searchArtist({String? keyWord, int? page, int? size}) {
-    return _searchArtist.call({"keyWord": keyWord, "page": page, "size": size}, []);
+    return _searchArtist
+        .call({"keyWord": keyWord, "page": page, "size": size}, []);
   }
 
-  static Future<Answer> api(String path, {Map? params, List<Cookie> cookie = const []}) {
+  static Future<Answer> api(String path,
+      {Map? params, List<Cookie> cookie = const []}) {
     if (!_api.containsKey(path)) {
-      return Future.value(const Answer(site: MusicSite.KuWo).copy(data: {'code': 500, 'msg': "url:“$path”未被定义, 请检查", 'path': _api.keys.toList()}));
+      return Future.value(const Answer(site: MusicSite.KuWo).copy(data: {
+        'code': 500,
+        'msg': "url:“$path”未被定义, 请检查",
+        'path': _api.keys.toList()
+      }));
     }
     return _api[path]!.call(params ?? {}, cookie);
   }
@@ -257,7 +275,8 @@ Future<String> getCookieHmTuvt() async {
     } else {
       print('>>>>>>>>>触发网络请求>>>>>>>>>>>');
       try {
-        var request = await HttpClient().getUrl(Uri.parse("http://www.kuwo.cn/"));
+        var request =
+            await HttpClient().getUrl(Uri.parse("http://www.kuwo.cn/"));
         var response = await request.close();
         var cookies = response.headers[HttpHeaders.setCookieHeader];
         tmpKey = Cookie.fromSetCookieValue(cookies?.first ?? "").name;
@@ -272,7 +291,8 @@ Future<String> getCookieHmTuvt() async {
 }
 
 //请求
-Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
+Future<Answer> _get(String path,
+    {Map<String, dynamic>? params, List<Cookie> cookie = const []}) async {
   // ...
   var key = await getCookieHmTuvt();
 
@@ -284,29 +304,42 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
   Map<String, String> header = {
     // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.55 Safari/537.36 Edg/96.0.1054.43",
     "csrf": "SQ6EJ3Q5G6B",
-    "Token": md5.convert(utf8.encode(KuwoDES.token(baidu_random))).toString().toUpperCase(),
-    "cookie": "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
+    "Token": md5
+        .convert(utf8.encode(KuwoDES.token(baidu_random)))
+        .toString()
+        .toUpperCase(),
+    "cookie":
+        "Hm_token=$hm_token;kw_token=${getRandom(11)};$key=$hm_Iuvt;BAIDU_RANDOM=$baidu_random",
     "Cross": md5.convert(utf8.encode(token_sha1)).toString(),
     "Secret": KuwoDES.secret(key, hm_Iuvt),
     "Referer": "http://www.kuwo.cn/",
   };
 
   if (path.contains("http://nmobi.kuwo.cn/mobi.s")) {
-    header["User-Agent"] = "Dalvik/2.1.0 (Linux; U; Android 8.0.0; MI 5 MIUI/9.10.10)";
-    // header.remove("User-Agent");
-    header.remove("cookie");
+    header.clear();
+    header["User-Agent"] = "okhttp/3.10.0";
+  }
+
+  if (path.contains("http://mobi.kuwo.cn/mobi.s")) {
+    header.clear();
+    header["User-Agent"] = "okhttp/3.10.0";
   }
 
   if (params != null && params.containsKey("reqId") != true) {
     params["reqId"] = const Uuid().v1();
   }
-  return HttpDio().get(path, params: params, headers: header).then((value) async {
+  return HttpDio()
+      .get(path, params: params, headers: header)
+      .then((value) async {
     try {
       if (value?.statusCode == 200) {
         var cookies = value?.headers[HttpHeaders.setCookieHeader];
         var ans = const Answer(site: MusicSite.KuWo);
         if (cookies != null) {
-          ans = ans.copy(cookie: cookies.map((str) => Cookie.fromSetCookieValue(str)).toList());
+          ans = ans.copy(
+              cookie: cookies
+                  .map((str) => Cookie.fromSetCookieValue(str))
+                  .toList());
         }
 
         dynamic data = value?.data;
@@ -324,11 +357,17 @@ Future<Answer> _get(String path, {Map<String, dynamic>? params, List<Cookie> coo
           return Future.value(ans);
         }
       } else {
-        return Future.error(Answer(site: MusicSite.KuWo, code: 500, data: {'code': value?.statusCode, 'msg': value}));
+        return Future.error(Answer(
+            site: MusicSite.KuWo,
+            code: 500,
+            data: {'code': value?.statusCode, 'msg': value}));
       }
     } catch (e) {
       print(e);
-      return Future.error(const Answer(site: MusicSite.KuWo, code: 500, data: {'code': 500, 'msg': "酷我对象转换异常"}));
+      return Future.error(const Answer(
+          site: MusicSite.KuWo,
+          code: 500,
+          data: {'code': 500, 'msg': "酷我对象转换异常"}));
     }
   });
 }

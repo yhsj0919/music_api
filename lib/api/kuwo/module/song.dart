@@ -22,6 +22,7 @@ Future<Answer> _playUrl(Map params, List<Cookie> cookie) {
       "format": params["format"] ?? "mp3",
       "response": "url",
       "type": "convert_url",
+      "source": "kwplayer_ar_8.1.9_jiakong_118980_320.apk",
       "br": "320kmp3",
     },
     cookie: cookie,
@@ -78,7 +79,7 @@ Future<Answer> _playUrl5(Map params, List<Cookie> cookie) async {
   //  static String KuWo_flac_2000="2000kflac";
   // String s = "corp=kuwo&p2p=1&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate";
   String s =
-      "user=0&android_id=0&prod=kwplayer_ar_8.5.5.0&corp=kuwo&newver=3&vipver=8.5.5.0&source=kwplayer_ar_8.5.5.0_apk_keluze.apk&p2p=1&notrace=0&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
+      "user=0&android_id=0&prod=kwplayer_ar_5.1.0.0_B&corp=kuwo&newver=3&vipver=5.1.0.0&source=kwplayer_ar_5.1.0.0_B_jiakong_vh.apk&p2p=1&notrace=0&type=convert_url2&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
   // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
   var encode = utf8.encode(s);
   var encrypt2 = KuwoDES.encrypt2(encode, encode.length, KuwoDES.SECRET_KEY, KuwoDES.SECRET_KEY.length);
@@ -115,7 +116,9 @@ Future<Answer> _playUrl6(Map params, List<Cookie> cookie) async {
   //  static String KuWo_mp3_320="320kmp3";
   //  static String KuWo_ape_1000="1000kape";
   //  static String KuWo_flac_2000="2000kflac";
-  String s = "corp=kuwo&p2p=1&type=convert_url2&source=kwplayer_ar_8.5.5.0_apk_keluze.apk&br=320kmp3&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate";
+
+  //corp=kuwo&source=kwplayer_ar_5.1.0.0_B_jiakong_vh.apk&p2p=1&type=convert_url2&sig=0&format=
+  String s = "corp=kuwo&source=kwplayer_ar_5.1.0.0_B_jiakong_vh.apk&p2p=1&type=convert_url2&sig=0&format=flac|mp3&rid=${params["rid"]}";
   // String s = "user=0&android_id=0&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=3&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=0&network=WIFI&loginSid=0&mode=download";
   // String s = "user=e3cc098fd4c59ce2&android_id=e3cc098fd4c59ce2&prod=kwplayer_ar_9.3.1.3&corp=kuwo&newver=2&vipver=9.3.1.3&source=kwplayer_ar_9.3.1.3_qq.apk&p2p=1&notrace=0&type=convert_url2&br=2000kflac&format=flac|mp3|aac&sig=0&rid=${params["rid"]}&priority=bitrate&loginUid=435947810&network=WIFI&loginSid=1694167478&mode=download&uid=658048466";
   var encode = utf8.encode(s);
@@ -159,6 +162,8 @@ Future<Answer> _songLrc(Map params, List<Cookie> cookie) {
     return value.copy(data: lyric?.map((e) => "[${_formatTime(e["time"])}]${e["lineLyric"]}").join("\n"));
   });
 }
+// 逐字歌词api
+// http://newlyric.kuwo.cn/newlyric.lrc
 
 String _formatTime(String time) {
   double value = double.parse(time);
