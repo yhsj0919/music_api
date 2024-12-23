@@ -1192,7 +1192,7 @@ class KuwoDES {
     int len = srcLength;
     int tail_num = len % 8;
     List<int> szTail = List.filled(srcLength - num * 8, 0, growable: false);
-    List.copyRange(src, num * 8, szTail, 0, srcLength - num * 8);
+    List.copyRange(szTail, 0, src, num * 8, srcLength);
     // System.arraycopy(src, num * 8, szTail, 0, srcLength - num * 8);
 
     int tail64 = 0;
