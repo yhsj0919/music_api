@@ -57,6 +57,12 @@ Future<Answer> _songNew(Map params, List<Cookie> cookie) {
 /*
 * 播放地址
  */
+// const qualitys = {
+//   '128k': 'PQ',
+//   '320k': 'HQ',
+//   flac: 'SQ',
+//   flac24bit: 'ZQ',
+// }
 Future<Answer> _playUrl(Map params, List<Cookie> cookie) {
   final data = {
     // "albumId": params['albumId'],
@@ -112,7 +118,13 @@ Future<Answer> _playUrl2(Map params, List<Cookie> cookie) {
     followRedirects: false,
   );
 }
-
+// resourceId 可以是专辑id，可以是歌曲id
+// obj[typeMap[formatType]] = url.replace(/ftp:\/\/[^/]+/, 'https://freetyst.nf.migu.cn');
+// 2003专辑 2 歌曲  2021歌单
+// https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do?needSimple=01&resourceId=1003767159&resourceType=2003
+//https://app.c.nf.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do?needSimple=01&resourceId=600929000002872565&resourceType=2
+// https://c.musicapp.migu.cn/MIGUM2.0/v1.0/content/resourceinfo.do?copyrightId=60054704981&resourceType=2
+// https://app.c.nf.migu.cn/MIGUM2.0/v2.0/content/querySongBySongId.do?songId=1141310219
 /*
 * 歌词
  */
